@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html lang="sq">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>DOK AI - Medical Device</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 
 <style>
+
+/* =====================================================
+   GLOBAL
+   ===================================================== */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -19,9 +31,11 @@
 body {
   background: #f4f6f9;
   min-height: 100vh;
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
+
   padding: 30px 0;
 }
 
@@ -39,7 +53,9 @@ body {
   background: white;
   border-radius: 18px;
   padding: 30px;
-  box-shadow: 0 10px 35px rgba(0,0,0,.08);
+
+  box-shadow:
+    0 10px 35px rgba(0,0,0,.08);
 }
 
 h1 {
@@ -54,25 +70,38 @@ h1 {
   margin-bottom: 25px;
 }
 
+/* =====================================================
+   FORM
+   ===================================================== */
+
 .section {
   margin-top: 18px;
 }
 
 label {
   display: block;
+
   font-weight: bold;
+
   margin-bottom: 8px;
+
   color: #374151;
 }
 
 input,
 textarea {
   width: 100%;
+
   padding: 13px;
+
   border: 1px solid #d1d5db;
+
   border-radius: 9px;
+
   font-size: 16px;
+
   outline: none;
+
   font-family: inherit;
 }
 
@@ -81,16 +110,30 @@ textarea:focus {
   border-color: #2563eb;
 }
 
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
 button {
   width: 100%;
+
   border: 0;
+
   border-radius: 9px;
+
   padding: 13px;
+
   margin-top: 12px;
+
   font-size: 16px;
+
   font-weight: bold;
+
   cursor: pointer;
-  transition: background .15s ease;
+
+  transition:
+    background .15s ease;
+
   font-family: inherit;
 }
 
@@ -137,7 +180,9 @@ button:disabled {
 
 .outline {
   background: white;
+
   color: #2563eb;
+
   border: 1px solid #2563eb;
 }
 
@@ -149,100 +194,157 @@ button:disabled {
   display: none !important;
 }
 
+/* =====================================================
+   MESSAGES
+   ===================================================== */
+
 .message {
   margin-top: 15px;
+
   padding: 12px;
+
   border-radius: 9px;
+
   display: none;
+
   line-height: 1.4;
 }
 
 .success {
   display: block;
+
   background: #dcfce7;
+
   color: #166534;
 }
 
 .error {
   display: block;
+
   background: #fee2e2;
+
   color: #991b1b;
 }
 
 .warning {
   display: block;
+
   background: #fef3c7;
+
   color: #92400e;
 }
 
 .info {
   display: block;
+
   background: #dbeafe;
+
   color: #1e40af;
 }
 
+/* =====================================================
+   USER
+   ===================================================== */
+
 .user-box {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   background: #f8fafc;
+
   padding: 15px;
+
   border-radius: 10px;
+
   margin-bottom: 10px;
 }
 
 .user-box .name {
   font-weight: bold;
+
   color: #111827;
 }
 
 .user-box .email {
   font-size: 13px;
+
   color: #6b7280;
+
   margin-top: 2px;
 }
 
 .user-box button {
   width: auto;
+
   margin: 0;
+
   padding: 9px 16px;
+
   font-size: 13px;
 }
 
+/* =====================================================
+   PANELS
+   ===================================================== */
+
 .panel {
   margin-top: 22px;
+
   border: 1px solid #e5e7eb;
+
   border-radius: 14px;
+
   padding: 20px;
 }
 
 .panel-title {
   font-size: 16px;
+
   font-weight: bold;
+
   color: #111827;
+
   margin-bottom: 4px;
+
   display: flex;
+
   align-items: center;
+
   gap: 8px;
 }
 
 .panel-desc {
   font-size: 13px;
+
   color: #6b7280;
+
   margin-bottom: 14px;
 }
 
+/* =====================================================
+   DEVICE
+   ===================================================== */
+
 .device-box {
   margin-top: 16px;
+
   padding: 16px;
+
   border-radius: 12px;
+
   background: #eff6ff;
 }
 
 .device-row {
   display: flex;
+
   justify-content: space-between;
+
   padding: 7px 0;
+
   border-bottom: 1px solid #dbeafe;
 }
 
@@ -252,73 +354,106 @@ button:disabled {
 
 .available {
   color: #16a34a;
+
   font-weight: bold;
 }
 
 .busy {
   color: #dc2626;
+
   font-weight: bold;
 }
 
 .connected {
   color: #2563eb;
+
   font-weight: bold;
 }
 
+/* =====================================================
+   STATUS
+   ===================================================== */
+
 .status-box {
   margin-top: 18px;
+
   padding: 16px;
+
   border-radius: 12px;
+
   background: #f3f4f6;
 }
 
 .status-title {
   font-size: 15px;
+
   font-weight: bold;
+
   margin-bottom: 10px;
 }
 
 .connection {
   font-weight: bold;
+
   color: #2563eb;
 }
 
+/* =====================================================
+   SENSOR
+   ===================================================== */
+
 .sensor-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
   gap: 10px;
+
   margin-top: 15px;
 }
 
 .sensor {
   background: white;
+
   border: 1px solid #e5e7eb;
+
   border-radius: 10px;
+
   padding: 15px;
+
   text-align: center;
 }
 
 .sensor-title {
   color: #6b7280;
+
   font-size: 13px;
 }
 
 .sensor-value {
   font-size: 24px;
+
   font-weight: bold;
+
   margin-top: 5px;
 }
 
 .loader {
   text-align: center;
+
   color: #6b7280;
+
   margin-top: 15px;
+
   display: none;
 }
 
 .small {
   font-size: 12px;
+
   color: #6b7280;
+
   margin-top: 8px;
 }
 
@@ -328,13 +463,19 @@ button:disabled {
 
 .ecg-box {
   margin-top: 16px;
+
   width: 100%;
+
   border: 1px solid #fecdd3;
+
   border-radius: 14px;
+
   padding: 14px;
+
   background-color: #fff5f5;
 
   background-image:
+
     repeating-linear-gradient(
       0deg,
       rgba(220,38,38,.09) 0,
@@ -342,6 +483,7 @@ button:disabled {
       transparent 1px,
       transparent 20px
     ),
+
     repeating-linear-gradient(
       90deg,
       rgba(220,38,38,.09) 0,
@@ -349,6 +491,7 @@ button:disabled {
       transparent 1px,
       transparent 20px
     ),
+
     repeating-linear-gradient(
       0deg,
       rgba(220,38,38,.18) 0,
@@ -356,6 +499,7 @@ button:disabled {
       transparent 1px,
       transparent 100px
     ),
+
     repeating-linear-gradient(
       90deg,
       rgba(220,38,38,.18) 0,
@@ -367,48 +511,77 @@ button:disabled {
 
 .ecg-box .ecg-title {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   color: #991b1b;
+
   font-size: 12px;
+
   font-weight: bold;
+
   letter-spacing: .06em;
+
   text-transform: uppercase;
+
   margin-bottom: 8px;
 }
 
 .ecg-title .live-dot {
   display: inline-block;
+
   width: 8px;
+
   height: 8px;
+
   border-radius: 50%;
+
   background: #dc2626;
+
   margin-right: 6px;
-  box-shadow: 0 0 0 0 rgba(220,38,38,.6);
-  animation: pulseDot 1.3s infinite;
+
+  box-shadow:
+    0 0 0 0 rgba(220,38,38,.6);
+
+  animation:
+    pulseDot 1.3s infinite;
 }
 
 @keyframes pulseDot {
+
   0% {
-    box-shadow: 0 0 0 0 rgba(220,38,38,.55);
+    box-shadow:
+      0 0 0 0 rgba(220,38,38,.55);
   }
 
   70% {
-    box-shadow: 0 0 0 8px rgba(220,38,38,0);
+    box-shadow:
+      0 0 0 8px rgba(220,38,38,0);
   }
 
   100% {
-    box-shadow: 0 0 0 0 rgba(220,38,38,0);
+    box-shadow:
+      0 0 0 0 rgba(220,38,38,0);
   }
+
 }
 
 .ecg-scroll {
   width: 100%;
+
   overflow-x: auto;
+
   overflow-y: hidden;
+
   border-radius: 10px;
+
   scrollbar-width: thin;
-  scrollbar-color: #dc2626 #fee2e2;
+
+  scrollbar-color:
+    #dc2626
+    #fee2e2;
 }
 
 .ecg-scroll::-webkit-scrollbar {
@@ -417,23 +590,29 @@ button:disabled {
 
 .ecg-scroll::-webkit-scrollbar-track {
   background: #fee2e2;
+
   border-radius: 10px;
 }
 
 .ecg-scroll::-webkit-scrollbar-thumb {
   background: #dc2626;
+
   border-radius: 10px;
 }
 
 .ecg-track {
   width: 200%;
+
   min-width: 200%;
+
   height: 300px;
 }
 
 #ecgCanvas {
   width: 100%;
+
   height: 300px;
+
   display: block;
 }
 
@@ -443,16 +622,23 @@ button:disabled {
 
 .upload-box {
   margin-top: 14px;
+
   border: 2px dashed #cbd5e1;
+
   border-radius: 12px;
+
   padding: 18px;
+
   text-align: center;
+
   background: #f8fafc;
+
   cursor: pointer;
 }
 
 .upload-box:hover {
   border-color: #93c5fd;
+
   background: #eff6ff;
 }
 
@@ -462,45 +648,65 @@ button:disabled {
 
 .upload-box .txt {
   color: #374151;
+
   font-weight: bold;
+
   margin-top: 6px;
+
   font-size: 14px;
 }
 
 .upload-box .hint {
   color: #9ca3af;
+
   font-size: 12px;
+
   margin-top: 4px;
 }
 
 .file-chip {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   margin-top: 12px;
+
   padding: 12px 14px;
+
   background: #f0fdf4;
+
   border: 1px solid #bbf7d0;
+
   border-radius: 10px;
 }
 
 .file-chip .fname {
   font-size: 13px;
+
   font-weight: bold;
+
   color: #166534;
 }
 
 .file-chip .fmeta {
   font-size: 12px;
+
   color: #16a34a;
 }
 
 .file-chip button {
   width: auto;
+
   margin: 0;
+
   padding: 6px 10px;
+
   font-size: 12px;
+
   background: #fee2e2;
+
   color: #991b1b;
 }
 
@@ -514,22 +720,40 @@ button:disabled {
 
 .chat-fab {
   position: fixed;
+
   right: 24px;
+
   bottom: 24px;
+
   width: 62px;
+
   height: 62px;
+
   border-radius: 50%;
+
   background: #dc2626;
+
   color: white;
+
   border: 0;
+
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(220,38,38,.4);
+
+  box-shadow:
+    0 10px 25px rgba(220,38,38,.4);
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   font-size: 26px;
+
   z-index: 60;
+
   margin: 0;
+
   transition:
     transform .15s ease,
     background .15s ease;
@@ -537,38 +761,68 @@ button:disabled {
 
 .chat-fab:hover {
   background: #b91c1c;
+
   transform: scale(1.06);
 }
 
 .chat-fab .fab-badge {
   position: absolute;
+
   top: 2px;
+
   right: 2px;
+
   width: 14px;
+
   height: 14px;
+
   border-radius: 50%;
+
   background: #22c55e;
+
   border: 2px solid white;
 }
 
 .chat-panel {
   position: fixed;
+
   right: 24px;
+
   bottom: 100px;
+
   width: 360px;
-  max-width: calc(100vw - 32px);
+
+  max-width:
+    calc(100vw - 32px);
+
   height: 480px;
-  max-height: calc(100vh - 140px);
+
+  max-height:
+    calc(100vh - 140px);
+
   background: white;
+
   border-radius: 16px;
-  box-shadow: 0 20px 50px rgba(0,0,0,.25);
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.25);
+
   display: flex;
+
   flex-direction: column;
+
   overflow: hidden;
+
   z-index: 60;
+
   opacity: 0;
-  transform: translateY(16px) scale(.98);
+
+  transform:
+    translateY(16px)
+    scale(.98);
+
   pointer-events: none;
+
   transition:
     opacity .18s ease,
     transform .18s ease;
@@ -576,24 +830,37 @@ button:disabled {
 
 .chat-panel.open {
   opacity: 1;
-  transform: translateY(0) scale(1);
+
+  transform:
+    translateY(0)
+    scale(1);
+
   pointer-events: auto;
 }
 
 .chat-header {
   background: #111827;
+
   color: white;
+
   padding: 14px 16px;
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 }
 
 .chat-header .dot {
   width: 34px;
+
   height: 34px;
+
   border-radius: 50%;
+
   background: #dc2626;
+
   flex-shrink: 0;
 }
 
@@ -603,77 +870,114 @@ button:disabled {
 
 .chat-header .title {
   font-weight: bold;
+
   font-size: 14px;
 }
 
 .chat-header .status {
   font-size: 11px;
+
   color: #9ca3af;
+
   margin-top: 1px;
 }
 
 .chat-header .closeBtn {
   width: auto;
+
   margin: 0;
+
   padding: 6px 10px;
+
   background: transparent;
+
   color: #9ca3af;
+
   font-size: 18px;
+
   line-height: 1;
 }
 
 .chat-header .closeBtn:hover {
   color: white;
-  background: rgba(255,255,255,.08);
+
+  background:
+    rgba(255,255,255,.08);
 }
 
 .chat-window {
   flex: 1;
+
   overflow-y: auto;
+
   background: #f8fafc;
+
   padding: 14px;
+
   display: flex;
+
   flex-direction: column;
+
   gap: 10px;
 }
 
 .msg {
   max-width: 82%;
+
   padding: 10px 13px;
+
   border-radius: 14px;
+
   font-size: 14px;
+
   line-height: 1.4;
+
   white-space: pre-wrap;
+
   word-break: break-word;
 }
 
 .msg.bot {
   align-self: flex-start;
+
   background: white;
+
   border: 1px solid #e5e7eb;
+
   color: #111827;
+
   border-bottom-left-radius: 4px;
 }
 
 .msg.user {
   align-self: flex-end;
+
   background: #2563eb;
+
   color: white;
+
   border-bottom-right-radius: 4px;
 }
 
 .msg.typing {
   align-self: flex-start;
+
   background: white;
+
   border: 1px solid #e5e7eb;
+
   color: #9ca3af;
+
   font-style: italic;
 }
 
 .chat-input-row {
   display: flex;
+
   gap: 8px;
+
   padding: 12px;
+
   border-top: 1px solid #e5e7eb;
 }
 
@@ -683,35 +987,49 @@ button:disabled {
 
 .chat-input-row button {
   width: auto;
+
   margin: 0;
+
   padding: 13px 18px;
+
   white-space: nowrap;
 }
 
 /* =====================================================
-   CHAT HISTORY BUTTONS
+   CHAT HISTORY
    ===================================================== */
 
 .chat-history-bar {
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
+
   padding: 7px 12px;
+
   background: #f1f5f9;
+
   border-bottom: 1px solid #e5e7eb;
 }
 
 .chat-history-label {
   font-size: 11px;
+
   color: #64748b;
 }
 
 .clear-chat-button {
   width: auto;
+
   margin: 0;
+
   padding: 5px 8px;
+
   font-size: 11px;
+
   background: transparent;
+
   color: #dc2626;
 }
 
@@ -720,6 +1038,7 @@ button:disabled {
    ===================================================== */
 
 @media (max-width: 700px) {
+
   body {
     padding: 10px 0;
   }
@@ -727,11 +1046,13 @@ button:disabled {
   .container,
   .container.wide {
     max-width: 100%;
+
     padding: 10px;
   }
 
   .card {
     padding: 18px;
+
     border-radius: 14px;
   }
 
@@ -749,22 +1070,33 @@ button:disabled {
 
   .chat-fab {
     right: 16px;
+
     bottom: 16px;
   }
 
   .chat-panel {
     right: 16px;
+
     bottom: 90px;
   }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
-<div class="container" id="pageContainer">
+<div
+  class="container"
+  id="pageContainer"
+>
 
-<div class="card" id="pageCard">
+<div
+  class="card"
+  id="pageCard"
+>
 
 <h1>DOK AI</h1>
 
@@ -772,49 +1104,180 @@ button:disabled {
   ESP32 Medical Device
 </div>
 
-<!-- ================================================= -->
-<!-- AUTH -->
-<!-- ================================================= -->
+
+<!-- =====================================================
+     AUTH
+     ===================================================== -->
 
 <div id="authSection">
 
-  <div class="section">
 
-    <label>Email</label>
+  <!-- ===================================================
+       LOGIN FORM
+       =================================================== -->
 
-    <input
-      id="email"
-      type="email"
-      placeholder="Email"
+  <div id="loginForm">
+
+    <div class="section">
+
+      <label>
+        Email
+      </label>
+
+      <input
+        id="email"
+        type="email"
+        placeholder="Shkruaj email-in"
+        autocomplete="email"
+      >
+
+    </div>
+
+
+    <div class="section">
+
+      <label>
+        Password
+      </label>
+
+      <input
+        id="password"
+        type="password"
+        placeholder="Shkruaj password-in"
+        autocomplete="current-password"
+      >
+
+    </div>
+
+
+    <button
+      id="loginButton"
+      class="primary"
+      type="button"
     >
+      Login
+    </button>
+
+
+    <button
+      id="showRegisterButton"
+      class="green"
+      type="button"
+    >
+      Krijo Account
+    </button>
 
   </div>
 
-  <div class="section">
 
-    <label>Password</label>
+  <!-- ===================================================
+       REGISTER FORM
+       =================================================== -->
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
+  <div
+    id="registerForm"
+    class="hidden"
+  >
+
+    <div class="section">
+
+      <label>
+        Emër
+      </label>
+
+      <input
+        id="registerName"
+        type="text"
+        placeholder="Shkruaj emrin"
+        autocomplete="given-name"
+      >
+
+    </div>
+
+
+    <div class="section">
+
+      <label>
+        Mbiemër
+      </label>
+
+      <input
+        id="registerSurname"
+        type="text"
+        placeholder="Shkruaj mbiemrin"
+        autocomplete="family-name"
+      >
+
+    </div>
+
+
+    <div class="section">
+
+      <label>
+        Email
+      </label>
+
+      <input
+        id="registerEmail"
+        type="email"
+        placeholder="Shkruaj email-in"
+        autocomplete="email"
+      >
+
+    </div>
+
+
+    <div class="section">
+
+      <label>
+        Password
+      </label>
+
+      <input
+        id="registerPassword"
+        type="password"
+        placeholder="Minimum 6 karaktere"
+        autocomplete="new-password"
+      >
+
+    </div>
+
+
+    <div class="section">
+
+      <label>
+        Konfirmo Password
+      </label>
+
+      <input
+        id="registerConfirmPassword"
+        type="password"
+        placeholder="Përsërit password-in"
+        autocomplete="new-password"
+      >
+
+    </div>
+
+
+    <button
+      id="registerButton"
+      class="green"
+      type="button"
     >
+      Register
+    </button>
+
+
+    <button
+      id="showLoginButton"
+      class="outline"
+      type="button"
+    >
+      Kthehu te Login
+    </button>
 
   </div>
 
-  <button
-    id="loginButton"
-    class="primary"
-  >
-    Login
-  </button>
-
-  <button
-    id="registerButton"
-    class="green"
-  >
-    Register
-  </button>
 
   <div
     id="authMessage"
@@ -823,11 +1286,20 @@ button:disabled {
 
 </div>
 
-<!-- ================================================= -->
-<!-- MAIN -->
-<!-- ================================================= -->
 
-<div id="mainSection" class="hidden">
+<!-- =====================================================
+     MAIN
+     ===================================================== -->
+
+<div
+  id="mainSection"
+  class="hidden"
+>
+
+
+  <!-- ===================================================
+       USER
+       =================================================== -->
 
   <div class="user-box">
 
@@ -849,6 +1321,7 @@ button:disabled {
 
     </div>
 
+
     <button
       id="logoutButton"
       class="gray"
@@ -858,9 +1331,10 @@ button:disabled {
 
   </div>
 
-  <!-- ================================================= -->
-  <!-- DEVICE -->
-  <!-- ================================================= -->
+
+  <!-- ===================================================
+       DEVICE
+       =================================================== -->
 
   <div class="panel">
 
@@ -871,6 +1345,7 @@ button:disabled {
     <div class="panel-desc">
       Lidhu me pajisjen ESP32 dhe shiko të dhënat live
     </div>
+
 
     <label>
       Device ID
@@ -883,12 +1358,14 @@ button:disabled {
       autocomplete="off"
     >
 
+
     <button
       id="checkDeviceButton"
       class="primary"
     >
       Kontrollo pajisjen
     </button>
+
 
     <div
       id="loader"
@@ -897,10 +1374,12 @@ button:disabled {
       Duke kontrolluar...
     </div>
 
+
     <div
       id="deviceMessage"
       class="message"
     ></div>
+
 
     <div
       id="deviceInfo"
@@ -908,36 +1387,64 @@ button:disabled {
     >
 
       <div class="device-row">
-        <span>Device</span>
 
-        <strong id="displayDeviceId">
+        <span>
+          Device
+        </span>
+
+        <strong
+          id="displayDeviceId"
+        >
           -
         </strong>
+
       </div>
+
 
       <div class="device-row">
-        <span>Status</span>
 
-        <strong id="displayStatus">
+        <span>
+          Status
+        </span>
+
+        <strong
+          id="displayStatus"
+        >
           -
         </strong>
+
       </div>
+
 
       <div class="device-row">
-        <span>Connected</span>
 
-        <strong id="displayConnected">
+        <span>
+          Connected
+        </span>
+
+        <strong
+          id="displayConnected"
+        >
           -
         </strong>
+
       </div>
+
 
       <div class="device-row">
-        <span>Session</span>
 
-        <strong id="displaySession">
+        <span>
+          Session
+        </span>
+
+        <strong
+          id="displaySession"
+        >
           -
         </strong>
+
       </div>
+
 
       <button
         id="connectButton"
@@ -945,6 +1452,7 @@ button:disabled {
       >
         Connecto pajisjen
       </button>
+
 
       <button
         id="disconnectButton"
@@ -955,9 +1463,10 @@ button:disabled {
 
     </div>
 
-    <!-- ================================================= -->
-    <!-- LIVE DATA -->
-    <!-- ================================================= -->
+
+    <!-- =================================================
+         LIVE DATA
+         ================================================= -->
 
     <div
       id="connectionStatus"
@@ -968,6 +1477,7 @@ button:disabled {
         Connection Status
       </div>
 
+
       <div
         id="connectionText"
         class="connection"
@@ -975,12 +1485,14 @@ button:disabled {
         -
       </div>
 
+
       <div
         id="lastSeenText"
         class="small"
       >
         Last seen: -
       </div>
+
 
       <div
         id="sensorGrid"
@@ -1002,6 +1514,7 @@ button:disabled {
 
         </div>
 
+
         <div class="sensor">
 
           <div class="sensor-title">
@@ -1016,6 +1529,7 @@ button:disabled {
           </div>
 
         </div>
+
 
         <div class="sensor">
 
@@ -1034,24 +1548,30 @@ button:disabled {
 
       </div>
 
-      <!-- ================================================= -->
-      <!-- ECG -->
-      <!-- ================================================= -->
+
+      <!-- =================================================
+           ECG
+           ================================================= -->
 
       <div class="ecg-box">
 
         <div class="ecg-title">
 
           <span>
+
             <span class="live-dot"></span>
+
             ECG LIVE · 30S
+
           </span>
+
 
           <span id="ecgBpmTag">
             0 BPM
           </span>
 
         </div>
+
 
         <div
           id="ecgScroll"
@@ -1077,9 +1597,10 @@ button:disabled {
 
   </div>
 
-  <!-- ================================================= -->
-  <!-- BLOOD TEST -->
-  <!-- ================================================= -->
+
+  <!-- ===================================================
+       BLOOD TEST
+       =================================================== -->
 
   <div class="panel">
 
@@ -1088,8 +1609,10 @@ button:disabled {
     </div>
 
     <div class="panel-desc">
-      Ngarko PDF ose Word (.docx) me rezultatet — DOK AI do t'i përdorë kur të përgjigjet në chat
+      Ngarko PDF ose Word (.docx) me rezultatet —
+      DOK AI do t'i përdorë kur të përgjigjet në chat
     </div>
+
 
     <div
       id="uploadBox"
@@ -1110,6 +1633,7 @@ button:disabled {
 
     </div>
 
+
     <input
       id="bloodFileInput"
       type="file"
@@ -1117,10 +1641,12 @@ button:disabled {
       class="hidden"
     >
 
+
     <div
       id="bloodStatus"
       class="message"
     ></div>
+
 
     <div
       id="fileChip"
@@ -1145,6 +1671,7 @@ button:disabled {
 
       </div>
 
+
       <button
         id="removeFileButton"
       >
@@ -1158,11 +1685,13 @@ button:disabled {
 </div>
 
 </div>
+
 </div>
 
-<!-- ================================================= -->
-<!-- CHAT FAB -->
-<!-- ================================================= -->
+
+<!-- =====================================================
+     CHAT FAB
+     ===================================================== -->
 
 <button
   id="chatFab"
@@ -1170,12 +1699,15 @@ button:disabled {
   title="Bisedo me DOK AI"
 >
   💬
+
   <span class="fab-badge"></span>
+
 </button>
 
-<!-- ================================================= -->
-<!-- CHAT PANEL -->
-<!-- ================================================= -->
+
+<!-- =====================================================
+     CHAT PANEL
+     ===================================================== -->
 
 <div
   id="chatPanel"
@@ -1185,6 +1717,7 @@ button:disabled {
   <div class="chat-header">
 
     <div class="dot"></div>
+
 
     <div class="info">
 
@@ -1198,6 +1731,7 @@ button:disabled {
 
     </div>
 
+
     <button
       id="chatCloseButton"
       class="closeBtn"
@@ -1207,11 +1741,13 @@ button:disabled {
 
   </div>
 
+
   <div class="chat-history-bar">
 
     <span class="chat-history-label">
       💾 Biseda ruhet automatikisht
     </span>
+
 
     <button
       id="clearChatButton"
@@ -1222,10 +1758,12 @@ button:disabled {
 
   </div>
 
+
   <div
     id="chatWindow"
     class="chat-window"
   ></div>
+
 
   <div class="chat-input-row">
 
@@ -1235,6 +1773,7 @@ button:disabled {
       placeholder="Shkruaj një mesazh..."
       autocomplete="off"
     >
+
 
     <button
       id="chatSendButton"
@@ -1247,6 +1786,7 @@ button:disabled {
 
 </div>
 
+
 <script type="module">
 
 // =====================================================
@@ -1255,7 +1795,9 @@ button:disabled {
 
 import {
   initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 import {
   getAuth,
@@ -1263,7 +1805,9 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 import {
   getDatabase,
@@ -1275,7 +1819,9 @@ import {
   push,
   runTransaction,
   onValue
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 
 // =====================================================
 // FIREBASE CONFIG
@@ -1306,11 +1852,20 @@ const firebaseConfig = {
 
 };
 
-const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const app =
+  initializeApp(
+    firebaseConfig
+  );
 
-const database = getDatabase(app);
+
+const auth =
+  getAuth(app);
+
+
+const database =
+  getDatabase(app);
+
 
 // =====================================================
 // PDF WORKER
@@ -1318,10 +1873,13 @@ const database = getDatabase(app);
 
 if (window.pdfjsLib) {
 
-  window.pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  window.pdfjsLib
+    .GlobalWorkerOptions
+    .workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
 }
+
 
 // =====================================================
 // STATE
@@ -1337,8 +1895,9 @@ let deviceHeartbeatTimer = null;
 
 let sensorListener = null;
 
+
 // =====================================================
-// ECG SETTINGS
+// ECG
 // =====================================================
 
 const ECG_WINDOW_SECONDS = 30;
@@ -1353,8 +1912,9 @@ let ecgCycle = 0;
 
 let lastEcgValue = null;
 
+
 // =====================================================
-// CHAT STATE
+// CHAT
 // =====================================================
 
 let chatMessages = [];
@@ -1365,131 +1925,315 @@ let chatOpen = false;
 
 let chatHistoryLoaded = false;
 
+
 // =====================================================
-// BLOOD TEST
+// BLOOD
 // =====================================================
 
 let bloodTestText = "";
 
 let bloodTestFileName = "";
 
+
 // =====================================================
 // ELEMENTS
 // =====================================================
 
 const authSection =
-  document.getElementById("authSection");
+  document.getElementById(
+    "authSection"
+  );
+
 
 const mainSection =
-  document.getElementById("mainSection");
+  document.getElementById(
+    "mainSection"
+  );
+
+
+/* LOGIN */
+
+const loginForm =
+  document.getElementById(
+    "loginForm"
+  );
+
+
+const registerForm =
+  document.getElementById(
+    "registerForm"
+  );
+
 
 const emailInput =
-  document.getElementById("email");
+  document.getElementById(
+    "email"
+  );
+
 
 const passwordInput =
-  document.getElementById("password");
+  document.getElementById(
+    "password"
+  );
+
 
 const loginButton =
-  document.getElementById("loginButton");
+  document.getElementById(
+    "loginButton"
+  );
+
+
+const showRegisterButton =
+  document.getElementById(
+    "showRegisterButton"
+  );
+
+
+const showLoginButton =
+  document.getElementById(
+    "showLoginButton"
+  );
+
+
+/* REGISTER */
 
 const registerButton =
-  document.getElementById("registerButton");
+  document.getElementById(
+    "registerButton"
+  );
+
+
+const registerNameInput =
+  document.getElementById(
+    "registerName"
+  );
+
+
+const registerSurnameInput =
+  document.getElementById(
+    "registerSurname"
+  );
+
+
+const registerEmailInput =
+  document.getElementById(
+    "registerEmail"
+  );
+
+
+const registerPasswordInput =
+  document.getElementById(
+    "registerPassword"
+  );
+
+
+const registerConfirmPasswordInput =
+  document.getElementById(
+    "registerConfirmPassword"
+  );
+
+
+/* GENERAL */
 
 const logoutButton =
-  document.getElementById("logoutButton");
+  document.getElementById(
+    "logoutButton"
+  );
+
 
 const authMessage =
-  document.getElementById("authMessage");
+  document.getElementById(
+    "authMessage"
+  );
+
 
 const homeUserName =
-  document.getElementById("homeUserName");
+  document.getElementById(
+    "homeUserName"
+  );
+
 
 const homeUserEmail =
-  document.getElementById("homeUserEmail");
+  document.getElementById(
+    "homeUserEmail"
+  );
+
+
+/* DEVICE */
 
 const deviceMessage =
-  document.getElementById("deviceMessage");
+  document.getElementById(
+    "deviceMessage"
+  );
+
 
 const deviceIdInput =
-  document.getElementById("deviceId");
+  document.getElementById(
+    "deviceId"
+  );
+
 
 const checkDeviceButton =
-  document.getElementById("checkDeviceButton");
+  document.getElementById(
+    "checkDeviceButton"
+  );
+
 
 const connectButton =
-  document.getElementById("connectButton");
+  document.getElementById(
+    "connectButton"
+  );
+
 
 const disconnectButton =
-  document.getElementById("disconnectButton");
+  document.getElementById(
+    "disconnectButton"
+  );
+
 
 const deviceInfo =
-  document.getElementById("deviceInfo");
+  document.getElementById(
+    "deviceInfo"
+  );
+
 
 const connectionStatus =
-  document.getElementById("connectionStatus");
+  document.getElementById(
+    "connectionStatus"
+  );
+
 
 const connectionText =
-  document.getElementById("connectionText");
+  document.getElementById(
+    "connectionText"
+  );
+
 
 const loader =
-  document.getElementById("loader");
+  document.getElementById(
+    "loader"
+  );
+
+
+/* ECG */
 
 const ecgCanvas =
-  document.getElementById("ecgCanvas");
+  document.getElementById(
+    "ecgCanvas"
+  );
+
 
 const ecgCtx =
-  ecgCanvas.getContext("2d");
+  ecgCanvas.getContext(
+    "2d"
+  );
+
 
 const ecgScroll =
-  document.getElementById("ecgScroll");
+  document.getElementById(
+    "ecgScroll"
+  );
+
 
 const ecgTrack =
-  document.getElementById("ecgTrack");
+  document.getElementById(
+    "ecgTrack"
+  );
+
 
 const ecgBpmTag =
-  document.getElementById("ecgBpmTag");
+  document.getElementById(
+    "ecgBpmTag"
+  );
+
+
+/* BLOOD */
 
 const uploadBox =
-  document.getElementById("uploadBox");
+  document.getElementById(
+    "uploadBox"
+  );
+
 
 const bloodFileInput =
-  document.getElementById("bloodFileInput");
+  document.getElementById(
+    "bloodFileInput"
+  );
+
 
 const bloodStatus =
-  document.getElementById("bloodStatus");
+  document.getElementById(
+    "bloodStatus"
+  );
+
 
 const fileChip =
-  document.getElementById("fileChip");
+  document.getElementById(
+    "fileChip"
+  );
+
 
 const fileChipName =
-  document.getElementById("fileChipName");
+  document.getElementById(
+    "fileChipName"
+  );
+
 
 const fileChipMeta =
-  document.getElementById("fileChipMeta");
+  document.getElementById(
+    "fileChipMeta"
+  );
+
 
 const removeFileButton =
-  document.getElementById("removeFileButton");
+  document.getElementById(
+    "removeFileButton"
+  );
+
+
+/* CHAT */
 
 const chatFab =
-  document.getElementById("chatFab");
+  document.getElementById(
+    "chatFab"
+  );
+
 
 const chatPanel =
-  document.getElementById("chatPanel");
+  document.getElementById(
+    "chatPanel"
+  );
+
 
 const chatCloseButton =
-  document.getElementById("chatCloseButton");
+  document.getElementById(
+    "chatCloseButton"
+  );
+
 
 const chatWindow =
-  document.getElementById("chatWindow");
+  document.getElementById(
+    "chatWindow"
+  );
+
 
 const chatInput =
-  document.getElementById("chatInput");
+  document.getElementById(
+    "chatInput"
+  );
+
 
 const chatSendButton =
-  document.getElementById("chatSendButton");
+  document.getElementById(
+    "chatSendButton"
+  );
+
 
 const clearChatButton =
-  document.getElementById("clearChatButton");
+  document.getElementById(
+    "clearChatButton"
+  );
+
 
 // =====================================================
 // PAGE
@@ -1502,36 +2246,48 @@ function showPage(page) {
     page !== "auth"
   );
 
+
   mainSection.classList.toggle(
     "hidden",
     page !== "main"
   );
+
 
   chatFab.classList.toggle(
     "hidden",
     page !== "main"
   );
 
+
   document
-    .getElementById("pageContainer")
+    .getElementById(
+      "pageContainer"
+    )
     .classList.toggle(
       "wide",
       page === "main"
     );
 
+
   if (page !== "main") {
+
     closeChat();
+
   }
 
 }
+
 
 // =====================================================
 // HELPERS
 // =====================================================
 
 function currentUser() {
+
   return auth.currentUser;
+
 }
+
 
 function getDeviceRef(deviceId) {
 
@@ -1542,14 +2298,18 @@ function getDeviceRef(deviceId) {
 
 }
 
+
 function getChatHistoryRef(uid) {
 
   return ref(
     database,
-    "users/" + uid + "/chatHistory"
+    "users/" +
+    uid +
+    "/chatHistory"
   );
 
 }
+
 
 function showMessage(
   element,
@@ -1557,23 +2317,29 @@ function showMessage(
   type
 ) {
 
-  element.textContent = text;
+  element.textContent =
+    text;
 
   element.className =
-    "message " + type;
+    "message " +
+    type;
 
 }
+
 
 function hideMessage(element) {
 
-  element.textContent = "";
+  element.textContent =
+    "";
 
-  element.className = "message";
+  element.className =
+    "message";
 
 }
 
+
 // =====================================================
-// CHAT DATABASE
+// CHAT SAVE
 // =====================================================
 
 async function saveChatMessage(
@@ -1584,9 +2350,16 @@ async function saveChatMessage(
   const user =
     currentUser();
 
-  if (!user || !content) {
+
+  if (
+    !user ||
+    !content
+  ) {
+
     return;
+
   }
+
 
   try {
 
@@ -1595,19 +2368,32 @@ async function saveChatMessage(
         user.uid
       );
 
+
     const messageRef =
-      push(messagesRef);
+      push(
+        messagesRef
+      );
+
 
     await set(
       messageRef,
       {
-        role: role,
-        content: String(content),
-        timestamp: Date.now()
+
+        role:
+          role,
+
+        content:
+          String(content),
+
+        timestamp:
+          Date.now()
+
       }
     );
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
       "CHAT SAVE ERROR:",
@@ -1618,8 +2404,9 @@ async function saveChatMessage(
 
 }
 
+
 // =====================================================
-// LOAD CHAT HISTORY
+// LOAD CHAT
 // =====================================================
 
 async function loadChatHistory() {
@@ -1627,15 +2414,25 @@ async function loadChatHistory() {
   const user =
     currentUser();
 
+
   if (!user) {
+
     return;
+
   }
 
-  chatHistoryLoaded = false;
 
-  chatMessages = [];
+  chatHistoryLoaded =
+    false;
 
-  chatWindow.innerHTML = "";
+
+  chatMessages =
+    [];
+
+
+  chatWindow.innerHTML =
+    "";
+
 
   try {
 
@@ -1646,13 +2443,17 @@ async function loadChatHistory() {
         )
       );
 
+
     if (snapshot.exists()) {
 
       const raw =
-        snapshot.val() || {};
+        snapshot.val() ||
+        {};
+
 
       const loadedMessages =
         Object.values(raw)
+
           .filter(
             item =>
               item &&
@@ -1662,27 +2463,37 @@ async function loadChatHistory() {
               ) &&
               typeof item.content === "string"
           )
+
           .sort(
             (a, b) =>
-              Number(a.timestamp || 0) -
-              Number(b.timestamp || 0)
+              Number(
+                a.timestamp || 0
+              ) -
+              Number(
+                b.timestamp || 0
+              )
           );
+
 
       chatMessages =
         loadedMessages.map(
           item => ({
-            role: item.role,
-            content: item.content
+
+            role:
+              item.role,
+
+            content:
+              item.content
+
           })
         );
 
-      /*
-        Shfaqim maksimum 100 mesazhe në UI.
-        Historiku në Firebase mbetet i ruajtur.
-      */
 
       const displayMessages =
-        loadedMessages.slice(-100);
+        loadedMessages.slice(
+          -100
+        );
+
 
       displayMessages.forEach(
         message => {
@@ -1697,9 +2508,7 @@ async function loadChatHistory() {
 
           }
 
-          else if (
-            message.role === "assistant"
-          ) {
+          else {
 
             renderBotMessage(
               message.content
@@ -1712,13 +2521,10 @@ async function loadChatHistory() {
 
     }
 
-    chatHistoryLoaded = true;
 
-    /*
-      Nëse nuk ka histori, mos vendosim
-      mesazh artificial në Firebase.
-      Mesazhi i mirëseardhjes shfaqet vetëm në UI.
-    */
+    chatHistoryLoaded =
+      true;
+
 
     if (
       chatMessages.length === 0
@@ -1730,14 +2536,19 @@ async function loadChatHistory() {
 
     }
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
       "CHAT LOAD ERROR:",
       error
     );
 
-    chatHistoryLoaded = true;
+
+    chatHistoryLoaded =
+      true;
+
 
     renderBotMessage(
       "Nuk arrita të ngarkoj historikun e bisedës."
@@ -1747,8 +2558,9 @@ async function loadChatHistory() {
 
 }
 
+
 // =====================================================
-// CLEAR CHAT HISTORY
+// CLEAR CHAT
 // =====================================================
 
 async function clearChatHistory() {
@@ -1756,20 +2568,30 @@ async function clearChatHistory() {
   const user =
     currentUser();
 
+
   if (!user) {
+
     return;
+
   }
+
 
   const confirmed =
     confirm(
       "A dëshiron ta fshish të gjithë historikun e bisedës?"
     );
 
+
   if (!confirmed) {
+
     return;
+
   }
 
-  clearChatButton.disabled = true;
+
+  clearChatButton.disabled =
+    true;
+
 
   try {
 
@@ -1779,20 +2601,28 @@ async function clearChatHistory() {
       )
     );
 
-    chatMessages = [];
 
-    chatWindow.innerHTML = "";
+    chatMessages =
+      [];
+
+
+    chatWindow.innerHTML =
+      "";
+
 
     renderBotMessage(
       "Historiku u fshi. Mund të fillojmë një bisedë të re."
     );
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
       "CHAT CLEAR ERROR:",
       error
     );
+
 
     alert(
       "Nuk u fshi historiku: " +
@@ -1801,14 +2631,76 @@ async function clearChatHistory() {
 
   }
 
-  clearChatButton.disabled = false;
+
+  clearChatButton.disabled =
+    false;
 
 }
+
 
 clearChatButton.addEventListener(
   "click",
   clearChatHistory
 );
+
+
+// =====================================================
+// SHOW REGISTER
+// =====================================================
+
+showRegisterButton.addEventListener(
+  "click",
+  () => {
+
+    loginForm.classList.add(
+      "hidden"
+    );
+
+
+    registerForm.classList.remove(
+      "hidden"
+    );
+
+
+    hideMessage(
+      authMessage
+    );
+
+
+    registerNameInput.focus();
+
+  }
+);
+
+
+// =====================================================
+// SHOW LOGIN
+// =====================================================
+
+showLoginButton.addEventListener(
+  "click",
+  () => {
+
+    registerForm.classList.add(
+      "hidden"
+    );
+
+
+    loginForm.classList.remove(
+      "hidden"
+    );
+
+
+    hideMessage(
+      authMessage
+    );
+
+
+    emailInput.focus();
+
+  }
+);
+
 
 // =====================================================
 // REGISTER
@@ -1818,22 +2710,74 @@ registerButton.addEventListener(
   "click",
   async () => {
 
+    const name =
+      registerNameInput.value.trim();
+
+
+    const surname =
+      registerSurnameInput.value.trim();
+
+
     const email =
-      emailInput.value.trim();
+      registerEmailInput.value.trim();
+
 
     const password =
-      passwordInput.value;
+      registerPasswordInput.value;
 
-    if (!email || !password) {
+
+    const confirmPassword =
+      registerConfirmPasswordInput.value;
+
+
+    // -------------------------------------------------
+    // VALIDATION
+    // -------------------------------------------------
+
+    if (
+      !name ||
+      !surname ||
+      !email ||
+      !password ||
+      !confirmPassword
+    ) {
 
       showMessage(
         authMessage,
-        "Shkruaj email dhe password.",
+        "Ju lutem plotësoni të gjitha fushat.",
         "error"
       );
 
       return;
+
     }
+
+
+    if (name.length < 2) {
+
+      showMessage(
+        authMessage,
+        "Emri duhet të ketë së paku 2 karaktere.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (surname.length < 2) {
+
+      showMessage(
+        authMessage,
+        "Mbiemri duhet të ketë së paku 2 karaktere.",
+        "error"
+      );
+
+      return;
+
+    }
+
 
     if (password.length < 6) {
 
@@ -1844,11 +2788,35 @@ registerButton.addEventListener(
       );
 
       return;
+
     }
 
-    registerButton.disabled = true;
+
+    if (
+      password !==
+      confirmPassword
+    ) {
+
+      showMessage(
+        authMessage,
+        "Password-et nuk përputhen.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    registerButton.disabled =
+      true;
+
 
     try {
+
+      // ------------------------------------------------
+      // CREATE ACCOUNT
+      // ------------------------------------------------
 
       const credential =
         await createUserWithEmailAndPassword(
@@ -1857,49 +2825,163 @@ registerButton.addEventListener(
           password
         );
 
+
       const user =
         credential.user;
+
+
+      // ------------------------------------------------
+      // SAVE USER
+      // ------------------------------------------------
 
       await set(
         ref(
           database,
-          "users/" + user.uid
+          "users/" +
+          user.uid
         ),
         {
-          email: user.email,
-          name: "",
-          surname: "",
+
+          uid:
+            user.uid,
+
+          name:
+            name,
+
+          surname:
+            surname,
+
+          email:
+            user.email,
+
           createdAt:
             new Date().toISOString()
+
         }
       );
 
+
+      // ------------------------------------------------
+      // SUCCESS
+      // ------------------------------------------------
+
       showMessage(
         authMessage,
-        "Account u krijua me sukses.",
+        "Account u krijua me sukses. Mirë se vini, " +
+        name +
+        "!",
         "success"
       );
 
-    } catch (error) {
+
+      // Clear register
+
+      registerNameInput.value =
+        "";
+
+      registerSurnameInput.value =
+        "";
+
+      registerEmailInput.value =
+        "";
+
+      registerPasswordInput.value =
+        "";
+
+      registerConfirmPasswordInput.value =
+        "";
+
+
+      // Go login
+
+      registerForm.classList.add(
+        "hidden"
+      );
+
+
+      loginForm.classList.remove(
+        "hidden"
+      );
+
+
+      emailInput.value =
+        email;
+
+
+      passwordInput.value =
+        "";
+
+
+      passwordInput.focus();
+
+    }
+
+    catch (error) {
 
       console.error(
         "REGISTER ERROR:",
         error
       );
 
+
+      let message =
+        "Regjistrimi dështoi.";
+
+
+      if (
+        error.code ===
+        "auth/email-already-in-use"
+      ) {
+
+        message =
+          "Ky email ekziston tashmë. Ju lutem përdorni Login.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/invalid-email"
+      ) {
+
+        message =
+          "Emaili nuk është valid.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/weak-password"
+      ) {
+
+        message =
+          "Password duhet të ketë së paku 6 karaktere.";
+
+      }
+
+      else {
+
+        message +=
+          " " +
+          error.message;
+
+      }
+
+
       showMessage(
         authMessage,
-        "Register dështoi: " +
-        error.message,
+        message,
         "error"
       );
 
     }
 
-    registerButton.disabled = false;
+
+    registerButton.disabled =
+      false;
 
   }
 );
+
 
 // =====================================================
 // LOGIN
@@ -1912,10 +2994,15 @@ loginButton.addEventListener(
     const email =
       emailInput.value.trim();
 
+
     const password =
       passwordInput.value;
 
-    if (!email || !password) {
+
+    if (
+      !email ||
+      !password
+    ) {
 
       showMessage(
         authMessage,
@@ -1924,9 +3011,13 @@ loginButton.addEventListener(
       );
 
       return;
+
     }
 
-    loginButton.disabled = true;
+
+    loginButton.disabled =
+      true;
+
 
     try {
 
@@ -1936,21 +3027,26 @@ loginButton.addEventListener(
         password
       );
 
+
       showMessage(
         authMessage,
         "Login u krye me sukses.",
         "success"
       );
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(
         "LOGIN ERROR:",
         error
       );
 
+
       let message =
         "Login dështoi.";
+
 
       if (
         error.code ===
@@ -1982,6 +3078,7 @@ loginButton.addEventListener(
 
       }
 
+
       showMessage(
         authMessage,
         message,
@@ -1990,10 +3087,13 @@ loginButton.addEventListener(
 
     }
 
-    loginButton.disabled = false;
+
+    loginButton.disabled =
+      false;
 
   }
 );
+
 
 // =====================================================
 // AUTH STATE
@@ -2005,17 +3105,18 @@ onAuthStateChanged(
 
     if (user) {
 
-      showPage("main");
+      showPage(
+        "main"
+      );
+
 
       homeUserEmail.textContent =
-        user.email || "-";
+        user.email ||
+        "-";
+
 
       await loadUserData();
 
-      /*
-        KËTU NGARKOHET HISTORIKU.
-        Pra pas login-it biseda rikthehet.
-      */
 
       await loadChatHistory();
 
@@ -2023,7 +3124,10 @@ onAuthStateChanged(
 
     else {
 
-      showPage("auth");
+      showPage(
+        "auth"
+      );
+
 
       stopDeviceHeartbeat();
 
@@ -2031,16 +3135,18 @@ onAuthStateChanged(
 
       resetConnection();
 
-      /*
-        Nuk e fshijmë Firebase chat history.
-        Vetëm e pastrojmë nga RAM/UI.
-      */
 
-      chatMessages = [];
+      chatMessages =
+        [];
 
-      chatHistoryLoaded = false;
 
-      chatWindow.innerHTML = "";
+      chatHistoryLoaded =
+        false;
+
+
+      chatWindow.innerHTML =
+        "";
+
 
       clearBloodTest();
 
@@ -2049,8 +3155,9 @@ onAuthStateChanged(
   }
 );
 
+
 // =====================================================
-// LOAD USER
+// LOAD USER DATA
 // =====================================================
 
 async function loadUserData() {
@@ -2058,7 +3165,13 @@ async function loadUserData() {
   const user =
     currentUser();
 
-  if (!user) return;
+
+  if (!user) {
+
+    return;
+
+  }
+
 
   try {
 
@@ -2066,24 +3179,38 @@ async function loadUserData() {
       await get(
         ref(
           database,
-          "users/" + user.uid
+          "users/" +
+          user.uid
         )
       );
+
 
     let displayName =
       user.email;
 
+
     if (snap.exists()) {
 
       const data =
-        snap.val() || {};
+        snap.val() ||
+        {};
+
 
       const name =
-        (data.name || "") +
+        (
+          data.name ||
+          ""
+        ) +
         " " +
-        (data.surname || "");
+        (
+          data.surname ||
+          ""
+        );
 
-      if (name.trim()) {
+
+      if (
+        name.trim()
+      ) {
 
         displayName =
           name.trim();
@@ -2092,15 +3219,19 @@ async function loadUserData() {
 
     }
 
+
     homeUserName.textContent =
       displayName;
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
       "USER LOAD ERROR:",
       error
     );
+
 
     homeUserName.textContent =
       user.email;
@@ -2108,6 +3239,7 @@ async function loadUserData() {
   }
 
 }
+
 
 // =====================================================
 // CHECK DEVICE
@@ -2120,6 +3252,7 @@ checkDeviceButton.addEventListener(
     const deviceId =
       deviceIdInput.value.trim();
 
+
     if (!deviceId) {
 
       showMessage(
@@ -2129,19 +3262,28 @@ checkDeviceButton.addEventListener(
       );
 
       return;
+
     }
+
 
     loader.style.display =
       "block";
 
-    hideMessage(deviceMessage);
+
+    hideMessage(
+      deviceMessage
+    );
+
 
     try {
 
       const snap =
         await get(
-          getDeviceRef(deviceId)
+          getDeviceRef(
+            deviceId
+          )
         );
+
 
       if (!snap.exists()) {
 
@@ -2151,22 +3293,30 @@ checkDeviceButton.addEventListener(
           "error"
         );
 
+
         loader.style.display =
           "none";
 
+
         return;
+
       }
 
+
       const device =
-        snap.val() || {};
+        snap.val() ||
+        {};
+
 
       connectedDeviceId =
         deviceId;
+
 
       document.getElementById(
         "displayDeviceId"
       ).textContent =
         deviceId;
+
 
       document.getElementById(
         "displayConnected"
@@ -2175,14 +3325,18 @@ checkDeviceButton.addEventListener(
           ? "Po"
           : "Jo";
 
+
       document.getElementById(
         "displaySession"
       ).textContent =
-        device.sessionId || "-";
+        device.sessionId ||
+        "-";
+
 
       deviceInfo.classList.remove(
         "hidden"
       );
+
 
       if (
         !device.activeUserUid ||
@@ -2194,10 +3348,12 @@ checkDeviceButton.addEventListener(
         ).textContent =
           "AVAILABLE";
 
+
         document.getElementById(
           "displayStatus"
         ).className =
           "available";
+
 
         showMessage(
           deviceMessage,
@@ -2205,15 +3361,18 @@ checkDeviceButton.addEventListener(
           "success"
         );
 
+
         connectButton.classList.remove(
           "hidden"
         );
+
 
         disconnectButton.classList.add(
           "hidden"
         );
 
       }
+
 
       else if (
         device.activeUserUid ===
@@ -2223,18 +3382,22 @@ checkDeviceButton.addEventListener(
         activeSessionId =
           device.sessionId;
 
+
         deviceConnected =
           true;
+
 
         document.getElementById(
           "displayStatus"
         ).textContent =
           "CONNECTED";
 
+
         document.getElementById(
           "displayStatus"
         ).className =
           "connected";
+
 
         showMessage(
           deviceMessage,
@@ -2242,26 +3405,32 @@ checkDeviceButton.addEventListener(
           "success"
         );
 
+
         connectButton.classList.add(
           "hidden"
         );
+
 
         disconnectButton.classList.remove(
           "hidden"
         );
 
+
         connectionStatus.classList.remove(
           "hidden"
         );
 
+
         connectionText.textContent =
           "Connected";
+
 
         startDeviceHeartbeat();
 
         startSensorListener();
 
       }
+
 
       else {
 
@@ -2270,10 +3439,12 @@ checkDeviceButton.addEventListener(
         ).textContent =
           "BUSY";
 
+
         document.getElementById(
           "displayStatus"
         ).className =
           "busy";
+
 
         showMessage(
           deviceMessage,
@@ -2281,9 +3452,11 @@ checkDeviceButton.addEventListener(
           "warning"
         );
 
+
         connectButton.classList.add(
           "hidden"
         );
+
 
         disconnectButton.classList.add(
           "hidden"
@@ -2291,12 +3464,15 @@ checkDeviceButton.addEventListener(
 
       }
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(
         "CHECK DEVICE ERROR:",
         error
       );
+
 
       showMessage(
         deviceMessage,
@@ -2307,11 +3483,13 @@ checkDeviceButton.addEventListener(
 
     }
 
+
     loader.style.display =
       "none";
 
   }
 );
+
 
 // =====================================================
 // CONNECT DEVICE
@@ -2324,6 +3502,7 @@ connectButton.addEventListener(
     const user =
       currentUser();
 
+
     if (!user) {
 
       showMessage(
@@ -2333,7 +3512,9 @@ connectButton.addEventListener(
       );
 
       return;
+
     }
+
 
     if (!connectedDeviceId) {
 
@@ -2344,9 +3525,13 @@ connectButton.addEventListener(
       );
 
       return;
+
     }
 
-    connectButton.disabled = true;
+
+    connectButton.disabled =
+      true;
+
 
     try {
 
@@ -2355,8 +3540,10 @@ connectButton.addEventListener(
           connectedDeviceId
         );
 
+
       const sessionId =
         crypto.randomUUID();
+
 
       const result =
         await runTransaction(
@@ -2364,10 +3551,13 @@ connectButton.addEventListener(
           (currentData) => {
 
             const current =
-              currentData || {};
+              currentData ||
+              {};
+
 
             const owner =
               current.activeUserUid;
+
 
             if (
               owner &&
@@ -2379,30 +3569,40 @@ connectButton.addEventListener(
 
             }
 
+
             current.activeUserUid =
               user.uid;
+
 
             current.connected =
               true;
 
+
             current.sessionId =
               sessionId;
+
 
             current.sessionStartedAt =
               Date.now();
 
+
             current.lastSeen =
               Date.now();
 
+
             current.status =
               "connected";
+
 
             return current;
 
           }
         );
 
-      if (!result.committed) {
+
+      if (
+        !result.committed
+      ) {
 
         showMessage(
           deviceMessage,
@@ -2410,15 +3610,20 @@ connectButton.addEventListener(
           "warning"
         );
 
+
         connectButton.disabled =
           false;
+
 
         return;
 
       }
 
+
       const device =
-        result.snapshot.val() || {};
+        result.snapshot.val() ||
+        {};
+
 
       if (
         device.activeUserUid !==
@@ -2431,31 +3636,38 @@ connectButton.addEventListener(
 
       }
 
+
       activeSessionId =
         device.sessionId;
 
+
       deviceConnected =
         true;
+
 
       document.getElementById(
         "displayStatus"
       ).textContent =
         "CONNECTED";
 
+
       document.getElementById(
         "displayStatus"
       ).className =
         "connected";
+
 
       document.getElementById(
         "displayConnected"
       ).textContent =
         "Po";
 
+
       document.getElementById(
         "displaySession"
       ).textContent =
         activeSessionId;
+
 
       showMessage(
         deviceMessage,
@@ -2463,31 +3675,39 @@ connectButton.addEventListener(
         "success"
       );
 
+
       connectButton.classList.add(
         "hidden"
       );
+
 
       disconnectButton.classList.remove(
         "hidden"
       );
 
+
       connectionStatus.classList.remove(
         "hidden"
       );
 
+
       connectionText.textContent =
         "Connected";
+
 
       startDeviceHeartbeat();
 
       startSensorListener();
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(
         "CONNECT ERROR:",
         error
       );
+
 
       showMessage(
         deviceMessage,
@@ -2498,10 +3718,13 @@ connectButton.addEventListener(
 
     }
 
-    connectButton.disabled = false;
+
+    connectButton.disabled =
+      false;
 
   }
 );
+
 
 // =====================================================
 // HEARTBEAT
@@ -2511,12 +3734,14 @@ function startDeviceHeartbeat() {
 
   stopDeviceHeartbeat();
 
+
   deviceHeartbeatTimer =
     setInterval(
       async () => {
 
         const user =
           currentUser();
+
 
         if (
           !user ||
@@ -2529,6 +3754,7 @@ function startDeviceHeartbeat() {
 
         }
 
+
         try {
 
           const snap =
@@ -2538,6 +3764,7 @@ function startDeviceHeartbeat() {
               )
             );
 
+
           if (!snap.exists()) {
 
             stopDeviceHeartbeat();
@@ -2546,8 +3773,11 @@ function startDeviceHeartbeat() {
 
           }
 
+
           const device =
-            snap.val() || {};
+            snap.val() ||
+            {};
+
 
           if (
             device.activeUserUid !==
@@ -2559,12 +3789,15 @@ function startDeviceHeartbeat() {
             deviceConnected =
               false;
 
+
             stopDeviceHeartbeat();
 
             stopSensorListener();
 
+
             connectionText.textContent =
               "Disconnected";
+
 
             showMessage(
               deviceMessage,
@@ -2572,17 +3805,21 @@ function startDeviceHeartbeat() {
               "warning"
             );
 
+
             disconnectButton.classList.add(
               "hidden"
             );
+
 
             connectButton.classList.remove(
               "hidden"
             );
 
+
             return;
 
           }
+
 
           await update(
             getDeviceRef(
@@ -2594,7 +3831,9 @@ function startDeviceHeartbeat() {
             }
           );
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
           console.error(
             "HEARTBEAT ERROR:",
@@ -2604,18 +3843,23 @@ function startDeviceHeartbeat() {
         }
 
       },
+
       5000
     );
 
 }
 
+
 function stopDeviceHeartbeat() {
 
-  if (deviceHeartbeatTimer) {
+  if (
+    deviceHeartbeatTimer
+  ) {
 
     clearInterval(
       deviceHeartbeatTimer
     );
+
 
     deviceHeartbeatTimer =
       null;
@@ -2624,50 +3868,81 @@ function stopDeviceHeartbeat() {
 
 }
 
+
 // =====================================================
 // ECG RESET
 // =====================================================
 
 function resetEcgGraph() {
 
-  ecgHistory = [];
+  ecgHistory =
+    [];
 
-  ecgStartTime = null;
 
-  lastEcgValue = null;
+  ecgStartTime =
+    null;
+
+
+  lastEcgValue =
+    null;
+
 
   ecgCycle++;
+
 
   resizeEcgCanvas();
 
   drawEcgChart();
 
-  ecgScroll.scrollLeft = 0;
+
+  ecgScroll.scrollLeft =
+    0;
 
 }
 
+
 // =====================================================
-// ADD REAL ECG SAMPLE
+// ADD ECG
 // =====================================================
 
-function addRealEcgSample(rawValue) {
+function addRealEcgSample(
+  rawValue
+) {
 
   const value =
     Number(rawValue);
 
-  if (!Number.isFinite(value)) {
+
+  if (
+    !Number.isFinite(value)
+  ) {
+
     return;
+
   }
+
 
   const now =
     performance.now();
 
-  if (ecgStartTime === null) {
-    ecgStartTime = now;
+
+  if (
+    ecgStartTime ===
+    null
+  ) {
+
+    ecgStartTime =
+      now;
+
   }
 
+
   const elapsed =
-    (now - ecgStartTime) / 1000;
+    (
+      now -
+      ecgStartTime
+    ) / 1000;
+
 
   if (
     elapsed >=
@@ -2676,24 +3951,37 @@ function addRealEcgSample(rawValue) {
 
     resetEcgGraph();
 
+
     ecgStartTime =
       performance.now();
 
   }
 
+
   const timestamp =
-    (performance.now() -
-      ecgStartTime) / 1000;
+    (
+      performance.now() -
+      ecgStartTime
+    ) / 1000;
+
 
   ecgHistory.push({
-    time: timestamp,
-    value: value
+
+    time:
+      timestamp,
+
+    value:
+      value
+
   });
+
 
   lastEcgValue =
     value;
 
+
   drawEcgChart();
+
 
   requestAnimationFrame(
     () => {
@@ -2707,11 +3995,14 @@ function addRealEcgSample(rawValue) {
 
 }
 
+
 // =====================================================
 // GET ECG
 // =====================================================
 
-function getEcgFromData(data) {
+function getEcgFromData(
+  data
+) {
 
   if (
     data &&
@@ -2723,6 +4014,7 @@ function getEcgFromData(data) {
 
   }
 
+
   if (
     data &&
     data.ECG !== undefined &&
@@ -2732,6 +4024,7 @@ function getEcgFromData(data) {
     return data.ECG;
 
   }
+
 
   if (
     data &&
@@ -2743,9 +4036,11 @@ function getEcgFromData(data) {
 
   }
 
+
   return null;
 
 }
+
 
 // =====================================================
 // SENSOR LISTENER
@@ -2755,9 +4050,13 @@ function startSensorListener() {
 
   stopSensorListener();
 
+
   if (!connectedDeviceId) {
+
     return;
+
   }
+
 
   const dataRef =
     ref(
@@ -2767,36 +4066,48 @@ function startSensorListener() {
       "/currentData"
     );
 
+
   sensorListener =
     onValue(
       dataRef,
       (snap) => {
 
         if (!snap.exists()) {
+
           return;
+
         }
 
+
         const data =
-          snap.val() || {};
+          snap.val() ||
+          {};
+
 
         const hr =
           Number(
-            data.heartRate || 0
+            data.heartRate ||
+            0
           );
+
 
         document.getElementById(
           "heartRate"
         ).textContent =
           hr.toFixed(0);
 
+
         ecgBpmTag.textContent =
           hr.toFixed(0) +
           " BPM";
 
+
         const spo2 =
           Number(
-            data.spo2 || 0
+            data.spo2 ||
+            0
           );
+
 
         document.getElementById(
           "spo2"
@@ -2804,10 +4115,13 @@ function startSensorListener() {
           spo2.toFixed(0) +
           "%";
 
+
         const temperature =
           Number(
-            data.temperature || 0
+            data.temperature ||
+            0
           );
+
 
         document.getElementById(
           "temperature"
@@ -2815,14 +4129,20 @@ function startSensorListener() {
           temperature.toFixed(1) +
           " °C";
 
+
         document.getElementById(
           "lastSeenText"
         ).textContent =
           "Last seen: " +
-          new Date().toLocaleTimeString();
+          new Date()
+            .toLocaleTimeString();
+
 
         const ecgValue =
-          getEcgFromData(data);
+          getEcgFromData(
+            data
+          );
+
 
         if (
           ecgValue !== null
@@ -2839,29 +4159,41 @@ function startSensorListener() {
 
 }
 
+
 // =====================================================
 // STOP SENSOR
 // =====================================================
 
 function stopSensorListener() {
 
-  if (sensorListener) {
+  if (
+    sensorListener
+  ) {
 
     sensorListener();
 
-    sensorListener = null;
+    sensorListener =
+      null;
 
   }
 
-  ecgHistory = [];
 
-  ecgStartTime = null;
+  ecgHistory =
+    [];
 
-  lastEcgValue = null;
+
+  ecgStartTime =
+    null;
+
+
+  lastEcgValue =
+    null;
+
 
   drawEcgChart();
 
 }
+
 
 // =====================================================
 // ECG RESIZE
@@ -2870,10 +4202,14 @@ function stopSensorListener() {
 function resizeEcgCanvas() {
 
   const trackRect =
-    ecgTrack.getBoundingClientRect();
+    ecgTrack
+      .getBoundingClientRect();
+
 
   const dpr =
-    window.devicePixelRatio || 1;
+    window.devicePixelRatio ||
+    1;
+
 
   const cssWidth =
     Math.max(
@@ -2881,21 +4217,27 @@ function resizeEcgCanvas() {
       trackRect.width
     );
 
+
   const cssHeight =
     Math.max(
       1,
       trackRect.height
     );
 
+
   ecgCanvas.width =
     Math.floor(
-      cssWidth * dpr
+      cssWidth *
+      dpr
     );
+
 
   ecgCanvas.height =
     Math.floor(
-      cssHeight * dpr
+      cssHeight *
+      dpr
     );
+
 
   ecgCtx.setTransform(
     dpr,
@@ -2908,6 +4250,7 @@ function resizeEcgCanvas() {
 
 }
 
+
 // =====================================================
 // ECG RANGE
 // =====================================================
@@ -2919,24 +4262,33 @@ function calculateEcgRange() {
   ) {
 
     return {
-      min: -1,
-      max: 1
+
+      min:
+        -1,
+
+      max:
+        1
+
     };
 
   }
 
+
   let min =
     Infinity;
 
+
   let max =
     -Infinity;
+
 
   for (
     const sample of ecgHistory
   ) {
 
     if (
-      sample.value < min
+      sample.value <
+      min
     ) {
 
       min =
@@ -2944,8 +4296,10 @@ function calculateEcgRange() {
 
     }
 
+
     if (
-      sample.value > max
+      sample.value >
+      max
     ) {
 
       max =
@@ -2955,37 +4309,51 @@ function calculateEcgRange() {
 
   }
 
+
   if (
     min === max
   ) {
 
     const extra =
       Math.max(
-        Math.abs(min) * 0.1,
+        Math.abs(min) *
+        0.1,
         1
       );
 
-    min -= extra;
 
-    max += extra;
+    min -=
+      extra;
+
+
+    max +=
+      extra;
 
   }
 
+
   const padding =
-    (max - min) *
+    (
+      max -
+      min
+    ) *
     0.12;
+
 
   return {
 
     min:
-      min - padding,
+      min -
+      padding,
 
     max:
-      max + padding
+      max +
+      padding
 
   };
 
 }
+
 
 // =====================================================
 // ECG DRAW
@@ -2994,10 +4362,16 @@ function calculateEcgRange() {
 function drawEcgChart() {
 
   const w =
-    ecgCanvas.getBoundingClientRect().width;
+    ecgCanvas
+      .getBoundingClientRect()
+      .width;
+
 
   const h =
-    ecgCanvas.getBoundingClientRect().height;
+    ecgCanvas
+      .getBoundingClientRect()
+      .height;
+
 
   if (
     !w ||
@@ -3008,12 +4382,14 @@ function drawEcgChart() {
 
   }
 
+
   ecgCtx.clearRect(
     0,
     0,
     w,
     h
   );
+
 
   if (
     ecgHistory.length < 2
@@ -3023,33 +4399,45 @@ function drawEcgChart() {
 
   }
 
+
   const range =
     calculateEcgRange();
+
 
   const min =
     range.min;
 
+
   const max =
     range.max;
 
+
   const valueRange =
-    max - min;
+    max -
+    min;
+
 
   const graphWidth =
     w;
 
+
   const paddingTop =
     20;
 
+
   const paddingBottom =
     20;
+
 
   const graphHeight =
     h -
     paddingTop -
     paddingBottom;
 
-  function pointAt(sample) {
+
+  function pointAt(
+    sample
+  ) {
 
     const x =
       (
@@ -3058,6 +4446,7 @@ function drawEcgChart() {
       ) *
       graphWidth;
 
+
     const normalized =
       (
         sample.value -
@@ -3065,11 +4454,13 @@ function drawEcgChart() {
       ) /
       valueRange;
 
+
     const y =
       h -
       paddingBottom -
       normalized *
       graphHeight;
+
 
     return [
       x,
@@ -3078,17 +4469,21 @@ function drawEcgChart() {
 
   }
 
+
   ecgCtx.beginPath();
+
 
   const firstPoint =
     pointAt(
       ecgHistory[0]
     );
 
+
   ecgCtx.moveTo(
     firstPoint[0],
     firstPoint[1]
   );
+
 
   for (
     let i = 1;
@@ -3101,12 +4496,14 @@ function drawEcgChart() {
         ecgHistory[i]
       );
 
+
     ecgCtx.lineTo(
       point[0],
       point[1]
     );
 
   }
+
 
   const lastPoint =
     pointAt(
@@ -3115,34 +4512,43 @@ function drawEcgChart() {
       ]
     );
 
+
   ecgCtx.lineTo(
     lastPoint[0],
     h
   );
+
 
   ecgCtx.lineTo(
     firstPoint[0],
     h
   );
 
+
   ecgCtx.closePath();
+
 
   ecgCtx.fillStyle =
     "rgba(220,38,38,.06)";
 
+
   ecgCtx.fill();
 
+
   ecgCtx.beginPath();
+
 
   const first =
     pointAt(
       ecgHistory[0]
     );
 
+
   ecgCtx.moveTo(
     first[0],
     first[1]
   );
+
 
   for (
     let i = 1;
@@ -3155,10 +4561,12 @@ function drawEcgChart() {
         ecgHistory[i - 1]
       );
 
+
     const current =
       pointAt(
         ecgHistory[i]
       );
+
 
     const middleX =
       (
@@ -3166,11 +4574,13 @@ function drawEcgChart() {
         current[0]
       ) / 2;
 
+
     const middleY =
       (
         previous[1] +
         current[1]
       ) / 2;
+
 
     ecgCtx.quadraticCurveTo(
       previous[0],
@@ -3181,6 +4591,7 @@ function drawEcgChart() {
 
   }
 
+
   const finalPoint =
     pointAt(
       ecgHistory[
@@ -3188,26 +4599,34 @@ function drawEcgChart() {
       ]
     );
 
+
   ecgCtx.lineTo(
     finalPoint[0],
     finalPoint[1]
   );
 
+
   ecgCtx.strokeStyle =
     "#dc2626";
+
 
   ecgCtx.lineWidth =
     2.5;
 
+
   ecgCtx.lineJoin =
     "round";
+
 
   ecgCtx.lineCap =
     "round";
 
+
   ecgCtx.stroke();
 
+
   ecgCtx.beginPath();
+
 
   ecgCtx.arc(
     finalPoint[0],
@@ -3217,15 +4636,18 @@ function drawEcgChart() {
     Math.PI * 2
   );
 
+
   ecgCtx.fillStyle =
     "#dc2626";
+
 
   ecgCtx.fill();
 
 }
 
+
 // =====================================================
-// WINDOW RESIZE
+// RESIZE
 // =====================================================
 
 window.addEventListener(
@@ -3239,6 +4661,7 @@ window.addEventListener(
   }
 );
 
+
 // =====================================================
 // DISCONNECT
 // =====================================================
@@ -3250,6 +4673,7 @@ disconnectButton.addEventListener(
     const user =
       currentUser();
 
+
     if (
       !user ||
       !connectedDeviceId ||
@@ -3260,8 +4684,10 @@ disconnectButton.addEventListener(
 
     }
 
+
     disconnectButton.disabled =
       true;
+
 
     try {
 
@@ -3270,21 +4696,26 @@ disconnectButton.addEventListener(
           connectedDeviceId
         );
 
+
       const result =
         await runTransaction(
           deviceRef,
           (currentData) => {
 
             if (
-              currentData === null
+              currentData ===
+              null
             ) {
 
               return;
 
             }
 
+
             const device =
-              currentData || {};
+              currentData ||
+              {};
+
 
             if (
               device.activeUserUid !==
@@ -3297,34 +4728,45 @@ disconnectButton.addEventListener(
 
             }
 
+
             device.activeUserUid =
               "";
+
 
             device.connected =
               false;
 
+
             device.sessionId =
               "";
+
 
             device.sessionStartedAt =
               0;
 
+
             device.lastSeen =
               Date.now();
 
+
             device.status =
               "available";
+
 
             return device;
 
           }
         );
 
+
       stopDeviceHeartbeat();
 
       stopSensorListener();
 
-      if (result.committed) {
+
+      if (
+        result.committed
+      ) {
 
         showMessage(
           deviceMessage,
@@ -3344,14 +4786,18 @@ disconnectButton.addEventListener(
 
       }
 
+
       resetConnection();
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(
         "DISCONNECT ERROR:",
         error
       );
+
 
       showMessage(
         deviceMessage,
@@ -3362,11 +4808,13 @@ disconnectButton.addEventListener(
 
     }
 
+
     disconnectButton.disabled =
       false;
 
   }
 );
+
 
 // =====================================================
 // RESET CONNECTION
@@ -3377,31 +4825,39 @@ function resetConnection() {
   connectedDeviceId =
     null;
 
+
   activeSessionId =
     null;
 
+
   deviceConnected =
     false;
+
 
   stopDeviceHeartbeat();
 
   stopSensorListener();
 
+
   connectionStatus.classList.add(
     "hidden"
   );
+
 
   disconnectButton.classList.add(
     "hidden"
   );
 
+
   connectButton.classList.remove(
     "hidden"
   );
 
+
   resetEcgGraph();
 
 }
+
 
 // =====================================================
 // LOGOUT
@@ -3413,6 +4869,7 @@ logoutButton.addEventListener(
 
     const user =
       currentUser();
+
 
     try {
 
@@ -3427,20 +4884,25 @@ logoutButton.addEventListener(
             connectedDeviceId
           );
 
+
         await runTransaction(
           deviceRef,
           (currentData) => {
 
             if (
-              currentData === null
+              currentData ===
+              null
             ) {
 
               return;
 
             }
 
+
             const device =
-              currentData || {};
+              currentData ||
+              {};
+
 
             if (
               device.activeUserUid ===
@@ -3452,24 +4914,31 @@ logoutButton.addEventListener(
               device.activeUserUid =
                 "";
 
+
               device.connected =
                 false;
+
 
               device.sessionId =
                 "";
 
+
               device.sessionStartedAt =
                 0;
+
 
               device.lastSeen =
                 Date.now();
 
+
               device.status =
                 "available";
+
 
               return device;
 
             }
+
 
             return;
 
@@ -3478,7 +4947,9 @@ logoutButton.addEventListener(
 
       }
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(
         "LOGOUT RELEASE ERROR:",
@@ -3487,28 +4958,24 @@ logoutButton.addEventListener(
 
     }
 
+
     stopDeviceHeartbeat();
 
     stopSensorListener();
 
     resetConnection();
 
-    /*
-      SHUMË E RËNDËSISHME:
 
-      Nuk bëjmë remove(chatHistory).
-      Historiku mbetet në Firebase.
-
-      Vetëm signOut.
-    */
-
-    await signOut(auth);
+    await signOut(
+      auth
+    );
 
   }
 );
 
+
 // =====================================================
-// BLOOD TEST UPLOAD
+// BLOOD UPLOAD
 // =====================================================
 
 uploadBox.addEventListener(
@@ -3520,6 +4987,7 @@ uploadBox.addEventListener(
   }
 );
 
+
 bloodFileInput.addEventListener(
   "change",
   async () => {
@@ -3527,13 +4995,18 @@ bloodFileInput.addEventListener(
     const file =
       bloodFileInput.files[0];
 
+
     if (!file) {
+
       return;
+
     }
+
 
     hideMessage(
       bloodStatus
     );
+
 
     showMessage(
       bloodStatus,
@@ -3541,15 +5014,21 @@ bloodFileInput.addEventListener(
       "info"
     );
 
+
     try {
 
       const lowerName =
         file.name.toLowerCase();
 
-      let text = "";
+
+      let text =
+        "";
+
 
       if (
-        lowerName.endsWith(".pdf")
+        lowerName.endsWith(
+          ".pdf"
+        )
       ) {
 
         text =
@@ -3560,7 +5039,9 @@ bloodFileInput.addEventListener(
       }
 
       else if (
-        lowerName.endsWith(".docx")
+        lowerName.endsWith(
+          ".docx"
+        )
       ) {
 
         text =
@@ -3578,15 +5059,19 @@ bloodFileInput.addEventListener(
           "error"
         );
 
+
         bloodFileInput.value =
           "";
+
 
         return;
 
       }
 
+
       text =
         text.trim();
+
 
       if (!text) {
 
@@ -3596,30 +5081,41 @@ bloodFileInput.addEventListener(
           "warning"
         );
 
+
         return;
 
       }
 
+
       bloodTestText =
-        text.slice(0, 6000);
+        text.slice(
+          0,
+          6000
+        );
+
 
       bloodTestFileName =
         file.name;
 
+
       fileChipName.textContent =
         file.name;
+
 
       fileChipMeta.textContent =
         bloodTestText.length +
         " karaktere u lexuan";
 
+
       fileChip.classList.remove(
         "hidden"
       );
 
+
       hideMessage(
         bloodStatus
       );
+
 
       showMessage(
         bloodStatus,
@@ -3627,12 +5123,15 @@ bloodFileInput.addEventListener(
         "success"
       );
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.error(
         "BLOOD FILE ERROR:",
         error
       );
+
 
       showMessage(
         bloodStatus,
@@ -3646,6 +5145,11 @@ bloodFileInput.addEventListener(
   }
 );
 
+
+// =====================================================
+// CLEAR BLOOD
+// =====================================================
+
 removeFileButton.addEventListener(
   "click",
   (e) => {
@@ -3657,20 +5161,25 @@ removeFileButton.addEventListener(
   }
 );
 
+
 function clearBloodTest() {
 
   bloodTestText =
     "";
 
+
   bloodTestFileName =
     "";
+
 
   bloodFileInput.value =
     "";
 
+
   fileChip.classList.add(
     "hidden"
   );
+
 
   hideMessage(
     bloodStatus
@@ -3678,18 +5187,29 @@ function clearBloodTest() {
 
 }
 
-async function extractPdfText(file) {
+
+// =====================================================
+// PDF
+// =====================================================
+
+async function extractPdfText(
+  file
+) {
 
   const arrayBuffer =
     await file.arrayBuffer();
 
+
   const pdf =
     await window.pdfjsLib.getDocument({
-      data: arrayBuffer
+      data:
+        arrayBuffer
     }).promise;
+
 
   let text =
     "";
+
 
   for (
     let i = 1;
@@ -3698,38 +5218,54 @@ async function extractPdfText(file) {
   ) {
 
     const page =
-      await pdf.getPage(i);
+      await pdf.getPage(
+        i
+      );
+
 
     const content =
       await page.getTextContent();
 
+
     text +=
       content.items
         .map(
-          item => item.str
+          item =>
+            item.str
         )
         .join(" ") +
       "\n";
 
   }
 
+
   return text;
 
 }
 
-async function extractDocxText(file) {
+
+// =====================================================
+// DOCX
+// =====================================================
+
+async function extractDocxText(
+  file
+) {
 
   const arrayBuffer =
     await file.arrayBuffer();
+
 
   const result =
     await window.mammoth.extractRawText({
       arrayBuffer
     });
 
+
   return result.value;
 
 }
+
 
 // =====================================================
 // CHAT OPEN
@@ -3740,21 +5276,26 @@ function openChat() {
   chatOpen =
     true;
 
+
   chatPanel.classList.add(
     "open"
   );
 
+
   setTimeout(
-    () => chatInput.focus(),
+    () =>
+      chatInput.focus(),
     150
   );
 
 }
 
+
 function closeChat() {
 
   chatOpen =
     false;
+
 
   chatPanel.classList.remove(
     "open"
@@ -3762,25 +5303,32 @@ function closeChat() {
 
 }
 
+
 chatFab.addEventListener(
   "click",
   () => {
 
     if (chatOpen) {
+
       closeChat();
+
     }
 
     else {
+
       openChat();
+
     }
 
   }
 );
 
+
 chatCloseButton.addEventListener(
   "click",
   closeChat
 );
+
 
 // =====================================================
 // SYSTEM PROMPT
@@ -3791,39 +5339,51 @@ function getSystemPrompt() {
   let liveData =
     "Nuk ka të dhëna live nga pajisja në këtë moment.";
 
-  if (deviceConnected) {
+
+  if (
+    deviceConnected
+  ) {
 
     const hr =
       document.getElementById(
         "heartRate"
       ).textContent;
 
+
     const spo2 =
       document.getElementById(
         "spo2"
       ).textContent;
+
 
     const temp =
       document.getElementById(
         "temperature"
       ).textContent;
 
+
     liveData =
       `Rrahjet e zemrës: ${hr} bpm, SpO2: ${spo2}, Temperatura: ${temp}.`;
 
   }
 
+
   let bloodInfo =
     "Përdoruesi nuk ka ngarkuar analiza gjaku.";
 
-  if (bloodTestText) {
+
+  if (
+    bloodTestText
+  ) {
 
     bloodInfo =
       `Rezultatet e analizave të gjakut (nga dokumenti "${bloodTestFileName}"):\n${bloodTestText}`;
 
   }
 
+
   return (
+
     "Ti je DOK AI, asistent shëndetësor për aplikacionin e pajisjes ESP32 DOK AI. " +
 
     "Përgjigju gjithmonë në shqip, shkurt dhe qartë. " +
@@ -3845,57 +5405,81 @@ function getSystemPrompt() {
     "\n\n" +
 
     bloodInfo
+
   );
 
 }
 
+
 // =====================================================
-// CHAT RENDER
+// CHAT RENDER USER
 // =====================================================
 
-function renderUserMessage(text) {
+function renderUserMessage(
+  text
+) {
 
   const el =
     document.createElement(
       "div"
     );
+
 
   el.className =
     "msg user";
 
+
   el.textContent =
     text;
+
 
   chatWindow.appendChild(
     el
   );
+
 
   chatWindow.scrollTop =
     chatWindow.scrollHeight;
 
 }
 
-function renderBotMessage(text) {
+
+// =====================================================
+// CHAT RENDER BOT
+// =====================================================
+
+function renderBotMessage(
+  text
+) {
 
   const el =
     document.createElement(
       "div"
     );
 
+
   el.className =
     "msg bot";
 
+
   el.textContent =
     text;
+
 
   chatWindow.appendChild(
     el
   );
 
+
   chatWindow.scrollTop =
     chatWindow.scrollHeight;
 
 }
+
+
+// =====================================================
+// TYPING
+// =====================================================
 
 function showTypingIndicator() {
 
@@ -3904,23 +5488,29 @@ function showTypingIndicator() {
       "div"
     );
 
+
   el.className =
     "msg typing";
+
 
   el.id =
     "typingIndicator";
 
+
   el.textContent =
     "DOK AI po shkruan...";
+
 
   chatWindow.appendChild(
     el
   );
 
+
   chatWindow.scrollTop =
     chatWindow.scrollHeight;
 
 }
+
 
 function hideTypingIndicator() {
 
@@ -3929,11 +5519,15 @@ function hideTypingIndicator() {
       "typingIndicator"
     );
 
+
   if (el) {
+
     el.remove();
+
   }
 
 }
+
 
 // =====================================================
 // SEND CHAT
@@ -3944,6 +5538,7 @@ async function sendChatMessage() {
   const text =
     chatInput.value.trim();
 
+
   if (
     !text ||
     chatBusy
@@ -3953,8 +5548,10 @@ async function sendChatMessage() {
 
   }
 
+
   const user =
     currentUser();
+
 
   if (!user) {
 
@@ -3962,29 +5559,32 @@ async function sendChatMessage() {
       "Duhet të bësh login për të përdorur chat-in."
     );
 
+
     return;
 
   }
 
+
   chatBusy =
     true;
+
 
   chatInput.value =
     "";
 
+
   chatInput.disabled =
     true;
 
+
   chatSendButton.disabled =
     true;
+
 
   renderUserMessage(
     text
   );
 
-  /*
-    Shtoje menjëherë në memory.
-  */
 
   chatMessages.push({
 
@@ -3996,26 +5596,23 @@ async function sendChatMessage() {
 
   });
 
-  /*
-    RUJE USER MESSAGE NË FIREBASE.
-  */
 
   await saveChatMessage(
     "user",
     text
   );
 
+
   showTypingIndicator();
+
 
   try {
 
-    /*
-      AI merr vetëm 20 mesazhet e fundit.
-      Historiku komplet mbetet në Firebase.
-    */
-
     const aiMessages =
-      chatMessages.slice(-20);
+      chatMessages.slice(
+        -20
+      );
+
 
     const response =
       await fetch(
@@ -4026,8 +5623,10 @@ async function sendChatMessage() {
             "POST",
 
           headers: {
+
             "Content-Type":
               "application/json"
+
           },
 
           body:
@@ -4044,12 +5643,17 @@ async function sendChatMessage() {
         }
       );
 
+
     const data =
       await response.json();
 
+
     hideTypingIndicator();
 
-    if (!response.ok) {
+
+    if (
+      !response.ok
+    ) {
 
       renderBotMessage(
         "Gabim: " +
@@ -4067,13 +5671,11 @@ async function sendChatMessage() {
         data.reply ||
         "Nuk mora përgjigje.";
 
+
       renderBotMessage(
         reply
       );
 
-      /*
-        Shto përgjigjen në memory.
-      */
 
       chatMessages.push({
 
@@ -4085,9 +5687,6 @@ async function sendChatMessage() {
 
       });
 
-      /*
-        RUJE PËRGJIGJEN E AI NË FIREBASE.
-      */
 
       await saveChatMessage(
         "assistant",
@@ -4096,14 +5695,18 @@ async function sendChatMessage() {
 
     }
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
       "CHAT ERROR:",
       error
     );
 
+
     hideTypingIndicator();
+
 
     renderBotMessage(
       "Nuk u lidha dot me serverin. Provo përsëri."
@@ -4111,18 +5714,23 @@ async function sendChatMessage() {
 
   }
 
+
   chatInput.disabled =
     false;
+
 
   chatSendButton.disabled =
     false;
 
+
   chatBusy =
     false;
+
 
   chatInput.focus();
 
 }
+
 
 // =====================================================
 // CHAT EVENTS
@@ -4132,6 +5740,7 @@ chatSendButton.addEventListener(
   "click",
   sendChatMessage
 );
+
 
 chatInput.addEventListener(
   "keydown",
@@ -4150,6 +5759,7 @@ chatInput.addEventListener(
 
   }
 );
+
 
 // =====================================================
 // ENTER LOGIN
@@ -4171,6 +5781,28 @@ passwordInput.addEventListener(
   }
 );
 
+
+// =====================================================
+// ENTER REGISTER
+// =====================================================
+
+registerConfirmPasswordInput.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key ===
+      "Enter"
+    ) {
+
+      registerButton.click();
+
+    }
+
+  }
+);
+
+
 // =====================================================
 // ENTER DEVICE
 // =====================================================
@@ -4190,6 +5822,7 @@ deviceIdInput.addEventListener(
 
   }
 );
+
 
 // =====================================================
 // INIT
