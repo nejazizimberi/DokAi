@@ -161,8 +161,8 @@
   var ecgPoints = [];
   var MAX_ECG_POINTS = 150;
 
-  // === VENDOS API KEY-N TENDE KETU (server-side eshte me e sigurt, shih shenimin ne fund) ===
-  var GROQ_API_KEY = "VENDOS_GROQ_API_KEY_KETU";
+  // API key nuk qendron me ketu — thirret /api/chat, nje Vercel serverless function
+  // qe mban GROQ_API_KEY si environment variable ne server (shih api/chat.js).
 
   function dbUrl(){
     var v = document.getElementById('pl-dburl').value.trim();
@@ -358,26 +358,25 @@
       'Mos jep diagnoza mjekesore te sakta - jep vetem vezhgime te pergjithshme dhe sygjero konsultim me mjek nese diçka duket shqetesuese.';
 
     try{
-      var response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      var response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + GROQ_API_KEY
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: text }
-          ]
+          systemPrompt: systemPrompt,
+          messages: [{ role: "user", content: text }]
         })
       });
       var data = await response.json();
-      var reply = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content)
-        ? data.choices[0].message.content.trim()
-        : 'Nuk mora pergjigje te vlefshme.';
+      if(!response.ok){
+        thinking.innerHTML = '';
+        thinking.textContent = (data && data.error) ? 'Gabim: ' + data.error : 'Gabim ne komunikim me chatbot-in.';
+        return;
+      }
+      var reply = (data && data.reply) ? data.reply.trim() : 'Nuk mora pergjigje te vlefshme.';
+      thinking.innerHTML = '';
       thinking.textContent = reply;
     }catch(err){
+      thinking.innerHTML = '';
       thinking.textContent = 'Gabim ne komunikim me chatbot-in.';
     }finally{
       sendBtn.disabled = false;
@@ -391,6 +390,7 @@
 
   function openDrawer(){
     drawerOpen = true;
+    document.getElementById('pl-fab-tip').style.display = 'none';
     drawer.classList.add('pl-open');
     fabOpenIcon.style.display = 'none';
     fabCloseIcon.style.display = 'block';
@@ -405,6 +405,7 @@
 
   function closeDrawer(){
     drawerOpen = false;
+    document.getElementById('pl-fab-tip').style.display = '';
     drawer.classList.remove('pl-show');
     fabOpenIcon.style.display = 'block';
     fabCloseIcon.style.display = 'none';
