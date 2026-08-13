@@ -3,436 +3,4210 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dok AI - Monitorim Shendetesor</title>
-</head>
-<body style="margin:0;background:#FBF9F5;">
-<div style="font-family:'IBM Plex Sans',system-ui,sans-serif;color:#1B2430;">
+<title>DOK AI - Medical Device</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Space+Mono:wght@400;700&display=swap');
-.pl-serif{font-family:'Fraunces',serif;}
-.pl-mono{font-family:'Space Mono',monospace;}
-.pl-card{background:#fff;border:1px solid #E3E0D8;border-radius:10px;padding:16px 18px;}
-.pl-btn{background:#1B2430;color:#FDF3F0;border:none;border-radius:6px;padding:12px 22px;font-size:14px;font-weight:500;cursor:pointer;}
-.pl-btn:hover{background:#2A3543;}
-.pl-btn:disabled{opacity:.5;cursor:default;}
-.pl-input{border:1px solid #D9B8B2;border-radius:4px;padding:8px 10px;font-size:13px;font-family:inherit;background:#fff;width:100%;box-sizing:border-box;}
-.pl-input:focus{outline:2px solid #1B2430;outline-offset:-1px}
-.pl-label{font-size:11px;color:#8A5A50;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px;}
-.pl-scroll::-webkit-scrollbar{width:6px}
-.pl-scroll::-webkit-scrollbar-thumb{background:#D9B8B2;border-radius:4px}
-.pl-fab-wrap{position:absolute;right:24px;bottom:24px;width:64px;height:64px;z-index:20;}
-.pl-fab-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid #C1121F;opacity:0;animation:pl-ping 2.6s cubic-bezier(.2,.6,.35,1) infinite;pointer-events:none;}
-.pl-fab-ring.d2{animation-delay:1.3s;}
-@keyframes pl-ping{0%{transform:scale(.85);opacity:.55;}100%{transform:scale(1.9);opacity:0;}}
-.pl-fab{position:relative;width:64px;height:64px;border-radius:50%;background:linear-gradient(145deg,#D3242F,#A80E1A);color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 20px rgba(168,14,26,0.4),inset 0 1px 0 rgba(255,255,255,0.25);z-index:2;transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease;}
-.pl-fab:hover{transform:scale(1.08) rotate(-4deg);box-shadow:0 10px 26px rgba(168,14,26,0.48),inset 0 1px 0 rgba(255,255,255,0.3);}
-.pl-fab:active{transform:scale(.96);}
-.pl-fab i{font-size:26px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .2s ease;}
-.pl-fab .ti-x{position:absolute;}
-.pl-fab-dot{position:absolute;top:5px;right:5px;width:11px;height:11px;border-radius:50%;background:#3DDC97;border:2px solid #FDF3F0;z-index:3;}
-.pl-drawer{position:absolute;right:24px;bottom:98px;width:352px;max-width:calc(100% - 48px);background:#fff;border-radius:16px;border:1px solid #E3E0D8;box-shadow:0 20px 48px rgba(27,36,48,0.22),0 2px 8px rgba(27,36,48,0.08);z-index:21;overflow:hidden;display:none;opacity:0;transform:translateY(14px) scale(.97);transform-origin:bottom right;transition:opacity .28s cubic-bezier(.2,.8,.3,1),transform .28s cubic-bezier(.2,.8,.3,1);}
-.pl-drawer.pl-open{display:flex;flex-direction:column;}
-.pl-drawer.pl-show{opacity:1;transform:translateY(0) scale(1);}
-.pl-drawer-head{background:linear-gradient(120deg,#1B2430,#232F3F);color:#FDF3F0;padding:14px 16px;font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;position:relative;overflow:hidden;}
-.pl-drawer-head::after{content:'';position:absolute;right:-30px;top:-30px;width:90px;height:90px;background:radial-gradient(circle,rgba(193,18,31,0.35),transparent 70%);}
-.pl-drawer-title{display:flex;align-items:center;gap:9px;position:relative;z-index:1;}
-.pl-avatar{width:26px;height:26px;border-radius:50%;background:linear-gradient(145deg,#D3242F,#A80E1A);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.pl-avatar i{font-size:14px;}
-.pl-typing{display:flex;gap:4px;align-items:center;padding:2px 4px;}
-.pl-typing span{width:6px;height:6px;border-radius:50%;background:#B98D85;animation:pl-bounce 1.2s ease-in-out infinite;}
-.pl-typing span:nth-child(2){animation-delay:.15s;}
-.pl-typing span:nth-child(3){animation-delay:.3s;}
-.pl-fab-tip{position:absolute;right:72px;bottom:20px;background:#1B2430;color:#FDF3F0;font-size:12px;font-weight:500;padding:7px 12px;border-radius:7px;white-space:nowrap;opacity:0;pointer-events:none;transform:translateX(6px);transition:opacity .2s ease,transform .2s ease;z-index:19;}
-.pl-fab-tip::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);border-width:5px 0 5px 5px;border-style:solid;border-color:transparent transparent transparent #1B2430;}
-.pl-fab-wrap:hover .pl-fab-tip{opacity:1;transform:translateX(0);}
-@keyframes pl-bounce{0%,60%,100%{transform:translateY(0);opacity:.5;}30%{transform:translateY(-4px);opacity:1;}}
-@keyframes pl-trace{ to { stroke-dashoffset: -2000; } }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 640px;
+  padding: 20px;
+}
+
+.container.wide {
+  max-width: 1100px;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 10px 35px rgba(0,0,0,.08);
+}
+
+h1 {
+  text-align: center;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 25px;
+}
+
+.section {
+  margin-top: 18px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  font-size: 16px;
+  outline: none;
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #2563eb;
+}
+
+button {
+  width: 100%;
+  border: 0;
+  border-radius: 9px;
+  padding: 13px;
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background .15s ease;
+  font-family: inherit;
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: #2563eb;
+  color: white;
+}
+
+.primary:hover {
+  background: #1d4ed8;
+}
+
+.green {
+  background: #16a34a;
+  color: white;
+}
+
+.green:hover {
+  background: #15803d;
+}
+
+.red {
+  background: #dc2626;
+  color: white;
+}
+
+.red:hover {
+  background: #b91c1c;
+}
+
+.gray {
+  background: #6b7280;
+  color: white;
+}
+
+.gray:hover {
+  background: #4b5563;
+}
+
+.outline {
+  background: white;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.outline:hover {
+  background: #eff6ff;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.message {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 9px;
+  display: none;
+  line-height: 1.4;
+}
+
+.success {
+  display: block;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.error {
+  display: block;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.warning {
+  display: block;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.info {
+  display: block;
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.user-box .name {
+  font-weight: bold;
+  color: #111827;
+}
+
+.user-box .email {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.user-box button {
+  width: auto;
+  margin: 0;
+  padding: 9px 16px;
+  font-size: 13px;
+}
+
+.panel {
+  margin-top: 22px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.panel-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-desc {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 14px;
+}
+
+.device-box {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #eff6ff;
+}
+
+.device-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid #dbeafe;
+}
+
+.device-row:last-child {
+  border-bottom: 0;
+}
+
+.available {
+  color: #16a34a;
+  font-weight: bold;
+}
+
+.busy {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.connected {
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.status-box {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #f3f4f6;
+}
+
+.status-title {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.connection {
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.sensor {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+}
+
+.sensor-title {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.sensor-value {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.loader {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 15px;
+  display: none;
+}
+
+.small {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+/* =====================================================
+   ECG
+   ===================================================== */
+
+.ecg-box {
+  margin-top: 16px;
+  width: 100%;
+  border: 1px solid #fecdd3;
+  border-radius: 14px;
+  padding: 14px;
+  background-color: #fff5f5;
+
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(220,38,38,.09) 0,
+      rgba(220,38,38,.09) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(220,38,38,.09) 0,
+      rgba(220,38,38,.09) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(220,38,38,.18) 0,
+      rgba(220,38,38,.18) 1px,
+      transparent 1px,
+      transparent 100px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(220,38,38,.18) 0,
+      rgba(220,38,38,.18) 1px,
+      transparent 1px,
+      transparent 100px
+    );
+}
+
+.ecg-box .ecg-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #991b1b;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ecg-title .live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #dc2626;
+  margin-right: 6px;
+  box-shadow: 0 0 0 0 rgba(220,38,38,.6);
+  animation: pulseDot 1.3s infinite;
+}
+
+@keyframes pulseDot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220,38,38,.55);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgba(220,38,38,0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(220,38,38,0);
+  }
+}
+
+.ecg-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #dc2626 #fee2e2;
+}
+
+.ecg-scroll::-webkit-scrollbar {
+  height: 9px;
+}
+
+.ecg-scroll::-webkit-scrollbar-track {
+  background: #fee2e2;
+  border-radius: 10px;
+}
+
+.ecg-scroll::-webkit-scrollbar-thumb {
+  background: #dc2626;
+  border-radius: 10px;
+}
+
+.ecg-track {
+  width: 200%;
+  min-width: 200%;
+  height: 300px;
+}
+
+#ecgCanvas {
+  width: 100%;
+  height: 300px;
+  display: block;
+}
+
+/* =====================================================
+   BLOOD TEST
+   ===================================================== */
+
+.upload-box {
+  margin-top: 14px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+.upload-box:hover {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+.upload-box .icon {
+  font-size: 26px;
+}
+
+.upload-box .txt {
+  color: #374151;
+  font-weight: bold;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.upload-box .hint {
+  color: #9ca3af;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.file-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+}
+
+.file-chip .fname {
+  font-size: 13px;
+  font-weight: bold;
+  color: #166534;
+}
+
+.file-chip .fmeta {
+  font-size: 12px;
+  color: #16a34a;
+}
+
+.file-chip button {
+  width: auto;
+  margin: 0;
+  padding: 6px 10px;
+  font-size: 12px;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.file-chip button:hover {
+  background: #fecaca;
+}
+
+/* =====================================================
+   CHAT
+   ===================================================== */
+
+.chat-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #dc2626;
+  color: white;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(220,38,38,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  z-index: 60;
+  margin: 0;
+  transition:
+    transform .15s ease,
+    background .15s ease;
+}
+
+.chat-fab:hover {
+  background: #b91c1c;
+  transform: scale(1.06);
+}
+
+.chat-fab .fab-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid white;
+}
+
+.chat-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 100px;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  height: 480px;
+  max-height: calc(100vh - 140px);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 60;
+  opacity: 0;
+  transform: translateY(16px) scale(.98);
+  pointer-events: none;
+  transition:
+    opacity .18s ease,
+    transform .18s ease;
+}
+
+.chat-panel.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.chat-header {
+  background: #111827;
+  color: white;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-header .dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #dc2626;
+  flex-shrink: 0;
+}
+
+.chat-header .info {
+  flex: 1;
+}
+
+.chat-header .title {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.chat-header .status {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 1px;
+}
+
+.chat-header .closeBtn {
+  width: auto;
+  margin: 0;
+  padding: 6px 10px;
+  background: transparent;
+  color: #9ca3af;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.chat-header .closeBtn:hover {
+  color: white;
+  background: rgba(255,255,255,.08);
+}
+
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+  background: #f8fafc;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msg {
+  max-width: 82%;
+  padding: 10px 13px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.msg.bot {
+  align-self: flex-start;
+  background: white;
+  border: 1px solid #e5e7eb;
+  color: #111827;
+  border-bottom-left-radius: 4px;
+}
+
+.msg.user {
+  align-self: flex-end;
+  background: #2563eb;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.msg.typing {
+  align-self: flex-start;
+  background: white;
+  border: 1px solid #e5e7eb;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.chat-input-row input {
+  margin: 0;
+}
+
+.chat-input-row button {
+  width: auto;
+  margin: 0;
+  padding: 13px 18px;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   CHAT HISTORY BUTTONS
+   ===================================================== */
+
+.chat-history-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 12px;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.chat-history-label {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.clear-chat-button {
+  width: auto;
+  margin: 0;
+  padding: 5px 8px;
+  font-size: 11px;
+  background: transparent;
+  color: #dc2626;
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+  body {
+    padding: 10px 0;
+  }
+
+  .container,
+  .container.wide {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .sensor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ecg-track {
+    height: 260px;
+  }
+
+  #ecgCanvas {
+    height: 260px;
+  }
+
+  .chat-fab {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .chat-panel {
+    right: 16px;
+    bottom: 90px;
+  }
+}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/iconfont/tabler-icons.min.css">
+</head>
 
-<div style="position:relative;background:#FDF3F0;border-radius:14px;overflow:hidden;padding:56px 32px 0;">
-  <div style="max-width:560px;margin:0 auto;text-align:center;">
-    <div class="pl-mono" style="font-size:11px;letter-spacing:.12em;color:#8A5A50;text-transform:uppercase;margin-bottom:14px;">ESP32 &middot; MAX30102 &middot; DS18B20 &middot; AD8232</div>
-    <h1 class="pl-serif" style="font-size:40px;font-weight:600;line-height:1.15;margin:0 0 14px;">Pulsi yt, ne kohe reale</h1>
-    <p style="font-size:15px;line-height:1.6;color:#5A4A45;margin:0 0 24px;">Nje sistem monitorimi shendetesor qe lexon rrahjet, oksigjenimin, temperaturen dhe aktivitetin e zemres tende, dhe nje asistent qe i shpjegon te dhenat sebashku me analizat e gjakut.</p>
-    <button class="pl-btn" id="pl-cta">Shiko te dhenat e mia</button>
-  </div>
-  <svg width="100%" height="70" viewBox="0 0 700 70" preserveAspectRatio="none" style="display:block;margin-top:36px;">
-    <polyline points="0,35 130,35 148,10 166,60 184,35 340,35 358,10 376,60 394,35 550,35 568,10 586,60 604,35 700,35"
-      fill="none" stroke="#C1121F" stroke-width="2" stroke-dasharray="2000" stroke-dashoffset="0" style="animation: pl-trace 5.5s linear infinite;" />
-  </svg>
+<body>
+
+<div class="container" id="pageContainer">
+
+<div class="card" id="pageCard">
+
+<h1>DOK AI</h1>
+
+<div class="subtitle">
+  ESP32 Medical Device
 </div>
 
-<div id="pl-data" style="margin-top:36px;">
-  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:6px;">
-    <div class="pl-serif" style="font-size:20px;font-weight:600;">Te dhenat aktuale</div>
-    <div id="pl-status" class="pl-mono" style="font-size:11px;color:#8A5A50;">duke lidhur...</div>
+<!-- ================================================= -->
+<!-- AUTH -->
+<!-- ================================================= -->
+
+<div id="authSection">
+
+  <div class="section">
+
+    <label>Email</label>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Email"
+    >
+
   </div>
 
-  <div class="pl-card" style="margin-bottom:12px;">
-    <label class="pl-label">Firebase Database URL</label>
-    <input id="pl-dburl" class="pl-input" placeholder="p.sh. https://dokai-f8e14-default-rtdb.europe-west1.firebasedatabase.app" value="https://dokai-f8e14-default-rtdb.europe-west1.firebasedatabase.app" />
+  <div class="section">
+
+    <label>Password</label>
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+    >
+
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;">
-    <div class="pl-card">
-      <div class="pl-label">Rrahjet (BPM)</div>
-      <div id="pl-bpm" class="pl-mono" style="font-size:26px;font-weight:700;color:#C1121F;">--</div>
-    </div>
-    <div class="pl-card">
-      <div class="pl-label">SpO2</div>
-      <div id="pl-spo2" class="pl-mono" style="font-size:26px;font-weight:700;color:#0E7C7B;">--</div>
-    </div>
-    <div class="pl-card">
-      <div class="pl-label">Temperatura</div>
-      <div id="pl-temp" class="pl-mono" style="font-size:26px;font-weight:700;color:#D98C3D;">--</div>
-    </div>
-  </div>
+  <button
+    id="loginButton"
+    class="primary"
+  >
+    Login
+  </button>
 
-  <div class="pl-card" style="margin-bottom:12px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <span class="pl-label" style="margin:0;">ECG live</span>
-      <span id="pl-ecg-lead" class="pl-mono" style="font-size:11px;color:#8A5A50;"></span>
-    </div>
-    <canvas id="pl-ecg-canvas" width="720" height="130" style="width:100%;height:130px;display:block;background:#FDF3F0;border-radius:4px;"></canvas>
-  </div>
+  <button
+    id="registerButton"
+    class="green"
+  >
+    Register
+  </button>
 
-  <div class="pl-card">
-    <div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;" id="pl-blood-toggle">
-      <span class="pl-label" style="margin:0;">Analiza e gjakut (opsionale, per chatbot-in)</span>
-      <span id="pl-blood-arrow" class="pl-mono" style="font-size:12px;color:#8A5A50;">shfaq &darr;</span>
-    </div>
-    <div id="pl-blood-body" style="display:none;margin-top:12px;">
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px;">
-        <div><label class="pl-label">Hemoglobina (g/dL)</label><input id="pl-hgb" class="pl-input" placeholder="normale ~13-17" /></div>
-        <div><label class="pl-label">Glukoza (mg/dL)</label><input id="pl-glu" class="pl-input" placeholder="normale ~70-99" /></div>
-        <div><label class="pl-label">Kolesteroli total (mg/dL)</label><input id="pl-chol" class="pl-input" placeholder="normale <200" /></div>
-        <div><label class="pl-label">Leukocitet (x10^9/L)</label><input id="pl-wbc" class="pl-input" placeholder="normale ~4-11" /></div>
-        <div><label class="pl-label">Trombocitet (x10^9/L)</label><input id="pl-plt" class="pl-input" placeholder="normale ~150-400" /></div>
-        <div><label class="pl-label">Tjeter (opsionale)</label><input id="pl-other" class="pl-input" placeholder="p.sh. HbA1c 5.4%" /></div>
-      </div>
-      <button class="pl-btn" id="pl-blood-save" style="background:#fff;color:#1B2430;border:1px solid #D9B8B2;">Ruaj per chatbot-in</button>
-      <span id="pl-blood-saved" style="font-size:12px;color:#0E7C7B;margin-left:8px;display:none;">u ruajt</span>
-    </div>
-  </div>
+  <div
+    id="authMessage"
+    class="message"
+  ></div>
+
 </div>
 
-<div style="position:relative;min-height:40px;">
-  <div class="pl-drawer" id="pl-drawer">
-    <div class="pl-drawer-head">
-      <div class="pl-drawer-title">
-        <div class="pl-avatar"><i class="ti ti-heartbeat" aria-hidden="true"></i></div>
-        <div>
-          <div style="font-weight:600;font-size:13.5px;">Asistenti shendetesor</div>
-          <div class="pl-mono" style="font-size:10px;color:#B98D85;letter-spacing:.04em;">online &middot; lexon te dhenat live</div>
-        </div>
-      </div>
-      <button id="pl-drawer-close" style="background:rgba(255,255,255,0.08);border:none;color:#FDF3F0;cursor:pointer;font-size:15px;line-height:1;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;transition:background .2s;" aria-label="Mbyll" onmouseover="this.style.background='rgba(255,255,255,0.18)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'"><i class="ti ti-x" aria-hidden="true"></i></button>
-    </div>
-    <div id="pl-messages" class="pl-scroll" style="height:280px;overflow-y:auto;padding:16px;background:#FBF9F5;display:flex;flex-direction:column;gap:10px;"></div>
-    <div style="display:flex;gap:8px;padding:12px;border-top:1px solid #E3E0D8;background:#fff;">
-      <input id="pl-text" class="pl-input" style="flex:1;" placeholder="si eshte gjendja ime tani?" />
-      <button id="pl-send" class="pl-btn" style="padding:8px 16px;display:flex;align-items:center;justify-content:center;"><i class="ti ti-send" aria-hidden="true" style="font-size:16px;"></i></button>
-    </div>
-  </div>
+<!-- ================================================= -->
+<!-- MAIN -->
+<!-- ================================================= -->
 
-  <div class="pl-fab-wrap">
-    <span class="pl-fab-tip" id="pl-fab-tip">Bisedo per shendetin tend</span>
-    <div class="pl-fab-ring"></div>
-    <div class="pl-fab-ring d2"></div>
-    <button class="pl-fab" id="pl-fab" aria-label="Hap chatbot-in shendetesor">
-      <svg id="pl-fab-icon-open" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M4 8.5C4 6.01 6.01 4 8.5 4h11C21.99 4 24 6.01 24 8.5v7c0 2.49-2.01 4.5-4.5 4.5H12l-5.2 4.16A1 1 0 0 1 5 23.4V20h-.5C2.01 20 4 17.99 4 15.5v-7Z" fill="#fff" fill-opacity="0.14"/>
-        <path d="M4 8.5C4 6.01 6.01 4 8.5 4h11C21.99 4 24 6.01 24 8.5v7c0 2.49-2.01 4.5-4.5 4.5H12l-5.2 4.16A1 1 0 0 1 5 23.4V20h-.5C2.01 20 4 17.99 4 15.5v-7Z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
-        <path d="M6.5 13h3l1.6-3.2 2 6 1.6-4.8 1.4 2h4.4" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <i class="ti ti-x" id="pl-fab-icon-close" aria-hidden="true" style="display:none;"></i>
-      <span class="pl-fab-dot"></span>
+<div id="mainSection" class="hidden">
+
+  <div class="user-box">
+
+    <div>
+
+      <div
+        class="name"
+        id="homeUserName"
+      >
+        -
+      </div>
+
+      <div
+        class="email"
+        id="homeUserEmail"
+      >
+        -
+      </div>
+
+    </div>
+
+    <button
+      id="logoutButton"
+      class="gray"
+    >
+      Dil
     </button>
+
   </div>
+
+  <!-- ================================================= -->
+  <!-- DEVICE -->
+  <!-- ================================================= -->
+
+  <div class="panel">
+
+    <div class="panel-title">
+      💓 Pajisja
+    </div>
+
+    <div class="panel-desc">
+      Lidhu me pajisjen ESP32 dhe shiko të dhënat live
+    </div>
+
+    <label>
+      Device ID
+    </label>
+
+    <input
+      id="deviceId"
+      type="text"
+      placeholder="DOK-ESP32-A7F3"
+      autocomplete="off"
+    >
+
+    <button
+      id="checkDeviceButton"
+      class="primary"
+    >
+      Kontrollo pajisjen
+    </button>
+
+    <div
+      id="loader"
+      class="loader"
+    >
+      Duke kontrolluar...
+    </div>
+
+    <div
+      id="deviceMessage"
+      class="message"
+    ></div>
+
+    <div
+      id="deviceInfo"
+      class="device-box hidden"
+    >
+
+      <div class="device-row">
+        <span>Device</span>
+
+        <strong id="displayDeviceId">
+          -
+        </strong>
+      </div>
+
+      <div class="device-row">
+        <span>Status</span>
+
+        <strong id="displayStatus">
+          -
+        </strong>
+      </div>
+
+      <div class="device-row">
+        <span>Connected</span>
+
+        <strong id="displayConnected">
+          -
+        </strong>
+      </div>
+
+      <div class="device-row">
+        <span>Session</span>
+
+        <strong id="displaySession">
+          -
+        </strong>
+      </div>
+
+      <button
+        id="connectButton"
+        class="green"
+      >
+        Connecto pajisjen
+      </button>
+
+      <button
+        id="disconnectButton"
+        class="red hidden"
+      >
+        Disconnect
+      </button>
+
+    </div>
+
+    <!-- ================================================= -->
+    <!-- LIVE DATA -->
+    <!-- ================================================= -->
+
+    <div
+      id="connectionStatus"
+      class="status-box hidden"
+    >
+
+      <div class="status-title">
+        Connection Status
+      </div>
+
+      <div
+        id="connectionText"
+        class="connection"
+      >
+        -
+      </div>
+
+      <div
+        id="lastSeenText"
+        class="small"
+      >
+        Last seen: -
+      </div>
+
+      <div
+        id="sensorGrid"
+        class="sensor-grid"
+      >
+
+        <div class="sensor">
+
+          <div class="sensor-title">
+            Heart Rate
+          </div>
+
+          <div
+            id="heartRate"
+            class="sensor-value"
+          >
+            0
+          </div>
+
+        </div>
+
+        <div class="sensor">
+
+          <div class="sensor-title">
+            SpO₂
+          </div>
+
+          <div
+            id="spo2"
+            class="sensor-value"
+          >
+            0%
+          </div>
+
+        </div>
+
+        <div class="sensor">
+
+          <div class="sensor-title">
+            Temperature
+          </div>
+
+          <div
+            id="temperature"
+            class="sensor-value"
+          >
+            0 °C
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================================================= -->
+      <!-- ECG -->
+      <!-- ================================================= -->
+
+      <div class="ecg-box">
+
+        <div class="ecg-title">
+
+          <span>
+            <span class="live-dot"></span>
+            ECG LIVE · 30S
+          </span>
+
+          <span id="ecgBpmTag">
+            0 BPM
+          </span>
+
+        </div>
+
+        <div
+          id="ecgScroll"
+          class="ecg-scroll"
+        >
+
+          <div
+            id="ecgTrack"
+            class="ecg-track"
+          >
+
+            <canvas
+              id="ecgCanvas"
+            ></canvas>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================================================= -->
+  <!-- BLOOD TEST -->
+  <!-- ================================================= -->
+
+  <div class="panel">
+
+    <div class="panel-title">
+      🩸 Analizat e Gjakut
+    </div>
+
+    <div class="panel-desc">
+      Ngarko PDF ose Word (.docx) me rezultatet — DOK AI do t'i përdorë kur të përgjigjet në chat
+    </div>
+
+    <div
+      id="uploadBox"
+      class="upload-box"
+    >
+
+      <div class="icon">
+        📄
+      </div>
+
+      <div class="txt">
+        Kliko për të ngarkuar
+      </div>
+
+      <div class="hint">
+        PDF ose .docx
+      </div>
+
+    </div>
+
+    <input
+      id="bloodFileInput"
+      type="file"
+      accept=".pdf,.docx"
+      class="hidden"
+    >
+
+    <div
+      id="bloodStatus"
+      class="message"
+    ></div>
+
+    <div
+      id="fileChip"
+      class="file-chip hidden"
+    >
+
+      <div>
+
+        <div
+          class="fname"
+          id="fileChipName"
+        >
+          -
+        </div>
+
+        <div
+          class="fmeta"
+          id="fileChipMeta"
+        >
+          -
+        </div>
+
+      </div>
+
+      <button
+        id="removeFileButton"
+      >
+        Hiq
+      </button>
+
+    </div>
+
+  </div>
+
 </div>
-<div id="pl-error" style="font-size:12px;color:#C1121F;margin-top:8px;display:none;"></div>
+
+</div>
 </div>
 
-<script>
-(function(){
-  var latest = {};
-  var bloodPanel = null;
-  var ecgPoints = [];
-  var MAX_ECG_POINTS = 150;
+<!-- ================================================= -->
+<!-- CHAT FAB -->
+<!-- ================================================= -->
 
-  // API key nuk qendron me ketu — thirret /api/chat, nje Vercel serverless function
-  // qe mban GROQ_API_KEY si environment variable ne server (shih api/chat.js).
+<button
+  id="chatFab"
+  class="chat-fab hidden"
+  title="Bisedo me DOK AI"
+>
+  💬
+  <span class="fab-badge"></span>
+</button>
 
-  function dbUrl(){
-    var v = document.getElementById('pl-dburl').value.trim();
-    return v.replace(/\/$/, '');
+<!-- ================================================= -->
+<!-- CHAT PANEL -->
+<!-- ================================================= -->
+
+<div
+  id="chatPanel"
+  class="chat-panel"
+>
+
+  <div class="chat-header">
+
+    <div class="dot"></div>
+
+    <div class="info">
+
+      <div class="title">
+        DOK AI Assistant
+      </div>
+
+      <div class="status">
+        online · lexon të dhënat live
+      </div>
+
+    </div>
+
+    <button
+      id="chatCloseButton"
+      class="closeBtn"
+    >
+      ✕
+    </button>
+
+  </div>
+
+  <div class="chat-history-bar">
+
+    <span class="chat-history-label">
+      💾 Biseda ruhet automatikisht
+    </span>
+
+    <button
+      id="clearChatButton"
+      class="clear-chat-button"
+    >
+      Pastro historikun
+    </button>
+
+  </div>
+
+  <div
+    id="chatWindow"
+    class="chat-window"
+  ></div>
+
+  <div class="chat-input-row">
+
+    <input
+      id="chatInput"
+      type="text"
+      placeholder="Shkruaj një mesazh..."
+      autocomplete="off"
+    >
+
+    <button
+      id="chatSendButton"
+      class="primary"
+    >
+      Dërgo
+    </button>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+// =====================================================
+// FIREBASE IMPORTS
+// =====================================================
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  update,
+  remove,
+  push,
+  runTransaction,
+  onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// =====================================================
+// FIREBASE CONFIG
+// =====================================================
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyBjAmAzuKQJZUZNqsJzXghd1ZMUqFBpu5Y",
+
+  authDomain:
+    "dok-ai-1a458.firebaseapp.com",
+
+  databaseURL:
+    "https://dok-ai-1a458-default-rtdb.europe-west1.firebasedatabase.app",
+
+  projectId:
+    "dok-ai-1a458",
+
+  storageBucket:
+    "dok-ai-1a458.firebasestorage.app",
+
+  messagingSenderId:
+    "46005336237",
+
+  appId:
+    "1:46005336237:web:95da73c06d0f77b0d6ae24"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const database = getDatabase(app);
+
+// =====================================================
+// PDF WORKER
+// =====================================================
+
+if (window.pdfjsLib) {
+
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+}
+
+// =====================================================
+// STATE
+// =====================================================
+
+let connectedDeviceId = null;
+
+let activeSessionId = null;
+
+let deviceConnected = false;
+
+let deviceHeartbeatTimer = null;
+
+let sensorListener = null;
+
+// =====================================================
+// ECG SETTINGS
+// =====================================================
+
+const ECG_WINDOW_SECONDS = 30;
+
+const ECG_VISIBLE_SECONDS = 15;
+
+let ecgHistory = [];
+
+let ecgStartTime = null;
+
+let ecgCycle = 0;
+
+let lastEcgValue = null;
+
+// =====================================================
+// CHAT STATE
+// =====================================================
+
+let chatMessages = [];
+
+let chatBusy = false;
+
+let chatOpen = false;
+
+let chatHistoryLoaded = false;
+
+// =====================================================
+// BLOOD TEST
+// =====================================================
+
+let bloodTestText = "";
+
+let bloodTestFileName = "";
+
+// =====================================================
+// ELEMENTS
+// =====================================================
+
+const authSection =
+  document.getElementById("authSection");
+
+const mainSection =
+  document.getElementById("mainSection");
+
+const emailInput =
+  document.getElementById("email");
+
+const passwordInput =
+  document.getElementById("password");
+
+const loginButton =
+  document.getElementById("loginButton");
+
+const registerButton =
+  document.getElementById("registerButton");
+
+const logoutButton =
+  document.getElementById("logoutButton");
+
+const authMessage =
+  document.getElementById("authMessage");
+
+const homeUserName =
+  document.getElementById("homeUserName");
+
+const homeUserEmail =
+  document.getElementById("homeUserEmail");
+
+const deviceMessage =
+  document.getElementById("deviceMessage");
+
+const deviceIdInput =
+  document.getElementById("deviceId");
+
+const checkDeviceButton =
+  document.getElementById("checkDeviceButton");
+
+const connectButton =
+  document.getElementById("connectButton");
+
+const disconnectButton =
+  document.getElementById("disconnectButton");
+
+const deviceInfo =
+  document.getElementById("deviceInfo");
+
+const connectionStatus =
+  document.getElementById("connectionStatus");
+
+const connectionText =
+  document.getElementById("connectionText");
+
+const loader =
+  document.getElementById("loader");
+
+const ecgCanvas =
+  document.getElementById("ecgCanvas");
+
+const ecgCtx =
+  ecgCanvas.getContext("2d");
+
+const ecgScroll =
+  document.getElementById("ecgScroll");
+
+const ecgTrack =
+  document.getElementById("ecgTrack");
+
+const ecgBpmTag =
+  document.getElementById("ecgBpmTag");
+
+const uploadBox =
+  document.getElementById("uploadBox");
+
+const bloodFileInput =
+  document.getElementById("bloodFileInput");
+
+const bloodStatus =
+  document.getElementById("bloodStatus");
+
+const fileChip =
+  document.getElementById("fileChip");
+
+const fileChipName =
+  document.getElementById("fileChipName");
+
+const fileChipMeta =
+  document.getElementById("fileChipMeta");
+
+const removeFileButton =
+  document.getElementById("removeFileButton");
+
+const chatFab =
+  document.getElementById("chatFab");
+
+const chatPanel =
+  document.getElementById("chatPanel");
+
+const chatCloseButton =
+  document.getElementById("chatCloseButton");
+
+const chatWindow =
+  document.getElementById("chatWindow");
+
+const chatInput =
+  document.getElementById("chatInput");
+
+const chatSendButton =
+  document.getElementById("chatSendButton");
+
+const clearChatButton =
+  document.getElementById("clearChatButton");
+
+// =====================================================
+// PAGE
+// =====================================================
+
+function showPage(page) {
+
+  authSection.classList.toggle(
+    "hidden",
+    page !== "auth"
+  );
+
+  mainSection.classList.toggle(
+    "hidden",
+    page !== "main"
+  );
+
+  chatFab.classList.toggle(
+    "hidden",
+    page !== "main"
+  );
+
+  document
+    .getElementById("pageContainer")
+    .classList.toggle(
+      "wide",
+      page === "main"
+    );
+
+  if (page !== "main") {
+    closeChat();
   }
 
-  function setError(msg){
-    var el = document.getElementById('pl-error');
-    if(msg){ el.textContent = msg; el.style.display = 'block'; }
-    else { el.style.display = 'none'; }
+}
+
+// =====================================================
+// HELPERS
+// =====================================================
+
+function currentUser() {
+  return auth.currentUser;
+}
+
+function getDeviceRef(deviceId) {
+
+  return ref(
+    database,
+    "devices/" + deviceId
+  );
+
+}
+
+function getChatHistoryRef(uid) {
+
+  return ref(
+    database,
+    "users/" + uid + "/chatHistory"
+  );
+
+}
+
+function showMessage(
+  element,
+  text,
+  type
+) {
+
+  element.textContent = text;
+
+  element.className =
+    "message " + type;
+
+}
+
+function hideMessage(element) {
+
+  element.textContent = "";
+
+  element.className = "message";
+
+}
+
+// =====================================================
+// CHAT DATABASE
+// =====================================================
+
+async function saveChatMessage(
+  role,
+  content
+) {
+
+  const user =
+    currentUser();
+
+  if (!user || !content) {
+    return;
   }
 
-  document.getElementById('pl-cta').addEventListener('click', function(){
-    document.getElementById('pl-data').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  try {
 
-  function toggleBlood(){
-    var body = document.getElementById('pl-blood-body');
-    var arrow = document.getElementById('pl-blood-arrow');
-    var isHidden = body.style.display === 'none';
-    body.style.display = isHidden ? 'block' : 'none';
-    arrow.textContent = isHidden ? 'fshih \u2191' : 'shfaq \u2193';
-  }
+    const messagesRef =
+      getChatHistoryRef(
+        user.uid
+      );
 
-  function saveBlood(){
-    bloodPanel = {
-      hemoglobina: document.getElementById('pl-hgb').value.trim(),
-      glukoza: document.getElementById('pl-glu').value.trim(),
-      kolesteroli: document.getElementById('pl-chol').value.trim(),
-      leukocitet: document.getElementById('pl-wbc').value.trim(),
-      trombocitet: document.getElementById('pl-plt').value.trim(),
-      tjeter: document.getElementById('pl-other').value.trim()
-    };
-    var saved = document.getElementById('pl-blood-saved');
-    saved.style.display = 'inline';
-    setTimeout(function(){ saved.style.display = 'none'; }, 2000);
-  }
+    const messageRef =
+      push(messagesRef);
 
-  function fmt(v, digits){
-    if(v === undefined || v === null) return '--';
-    var n = Number(v);
-    if(isNaN(n)) return '--';
-    return digits != null ? n.toFixed(digits) : Math.round(n);
-  }
-
-  async function pollLatest(){
-    var statusEl = document.getElementById('pl-status');
-    var base = dbUrl();
-    if(!base){ statusEl.textContent = 'vendos Database URL'; return; }
-    try{
-      var res = await fetch(base + '/vitals/latest.json');
-      if(!res.ok) throw new Error('HTTP ' + res.status);
-      var data = await res.json();
-      if(data){
-        latest = data;
-        document.getElementById('pl-bpm').textContent = fmt(latest.bpm);
-        document.getElementById('pl-spo2').textContent = latest.spo2 != null ? fmt(latest.spo2) + '%' : '--';
-        document.getElementById('pl-temp').textContent = latest.temp != null ? fmt(latest.temp, 1) + '\u00b0C' : '--';
-        document.getElementById('pl-ecg-lead').textContent = latest.ecg_leads_off ? 'elektrodat jane shkeputur' : '';
+    await set(
+      messageRef,
+      {
+        role: role,
+        content: String(content),
+        timestamp: Date.now()
       }
-      statusEl.textContent = 'i lidhur';
-      setError(null);
-    }catch(err){
-      statusEl.textContent = 'gabim lidhjeje';
-      setError('Nuk u lexuan dot te dhenat nga Firebase. Kontrollo Database URL dhe rregullat e leximit (.read: true).');
-    }
+    );
+
+  } catch (error) {
+
+    console.error(
+      "CHAT SAVE ERROR:",
+      error
+    );
+
   }
 
-  async function pollECG(){
-    var base = dbUrl();
-    if(!base) return;
-    try{
-      var url = base + '/vitals/ecg_history.json?orderBy="$key"&limitToLast=' + MAX_ECG_POINTS;
-      var res = await fetch(url);
-      if(!res.ok) return;
-      var data = await res.json();
-      if(!data) return;
-      var entries = Object.keys(data).map(function(k){ return data[k]; });
-      entries.sort(function(a,b){ return (a.ms||0) - (b.ms||0); });
-      ecgPoints = entries.map(function(e){ return e.ecg; }).slice(-MAX_ECG_POINTS);
-      drawECG();
-    }catch(err){
-    }
+}
+
+// =====================================================
+// LOAD CHAT HISTORY
+// =====================================================
+
+async function loadChatHistory() {
+
+  const user =
+    currentUser();
+
+  if (!user) {
+    return;
   }
 
-  function drawECG(){
-    var canvas = document.getElementById('pl-ecg-canvas');
-    var ctx = canvas.getContext('2d');
-    var w = canvas.width, h = canvas.height;
-    ctx.clearRect(0, 0, w, h);
+  chatHistoryLoaded = false;
 
-    ctx.strokeStyle = '#F0B8AE';
-    ctx.lineWidth = 1;
-    for(var gx = 0; gx < w; gx += 20){
-      ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
+  chatMessages = [];
+
+  chatWindow.innerHTML = "";
+
+  try {
+
+    const snapshot =
+      await get(
+        getChatHistoryRef(
+          user.uid
+        )
+      );
+
+    if (snapshot.exists()) {
+
+      const raw =
+        snapshot.val() || {};
+
+      const loadedMessages =
+        Object.values(raw)
+          .filter(
+            item =>
+              item &&
+              (
+                item.role === "user" ||
+                item.role === "assistant"
+              ) &&
+              typeof item.content === "string"
+          )
+          .sort(
+            (a, b) =>
+              Number(a.timestamp || 0) -
+              Number(b.timestamp || 0)
+          );
+
+      chatMessages =
+        loadedMessages.map(
+          item => ({
+            role: item.role,
+            content: item.content
+          })
+        );
+
+      /*
+        Shfaqim maksimum 100 mesazhe në UI.
+        Historiku në Firebase mbetet i ruajtur.
+      */
+
+      const displayMessages =
+        loadedMessages.slice(-100);
+
+      displayMessages.forEach(
+        message => {
+
+          if (
+            message.role === "user"
+          ) {
+
+            renderUserMessage(
+              message.content
+            );
+
+          }
+
+          else if (
+            message.role === "assistant"
+          ) {
+
+            renderBotMessage(
+              message.content
+            );
+
+          }
+
+        }
+      );
+
     }
-    for(var gy = 0; gy < h; gy += 20){
-      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+
+    chatHistoryLoaded = true;
+
+    /*
+      Nëse nuk ka histori, mos vendosim
+      mesazh artificial në Firebase.
+      Mesazhi i mirëseardhjes shfaqet vetëm në UI.
+    */
+
+    if (
+      chatMessages.length === 0
+    ) {
+
+      renderBotMessage(
+        "Përshëndetje! Unë jam asistenti yt shëndetësor. Mund të të tregoj gjendjen aktuale të BPM, SpO2, temperaturës dhe ECG-së, ose të analizoj rezultatet e gjakut. Si mund të të ndihmoj?"
+      );
+
     }
 
-    if(ecgPoints.length < 2) return;
+  } catch (error) {
 
-    var minV = Math.min.apply(null, ecgPoints);
-    var maxV = Math.max.apply(null, ecgPoints);
-    if(maxV === minV){ maxV = minV + 1; }
-    var pad = 10;
+    console.error(
+      "CHAT LOAD ERROR:",
+      error
+    );
 
-    ctx.strokeStyle = '#C1121F';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    var stepX = w / (MAX_ECG_POINTS - 1);
-    var offset = MAX_ECG_POINTS - ecgPoints.length;
-    ecgPoints.forEach(function(v, i){
-      var x = (offset + i) * stepX;
-      var norm = (v - minV) / (maxV - minV);
-      var y = h - pad - norm * (h - pad * 2);
-      if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
+    chatHistoryLoaded = true;
+
+    renderBotMessage(
+      "Nuk arrita të ngarkoj historikun e bisedës."
+    );
+
   }
 
-  function addMessage(role, text, isTyping){
-    var wrap = document.getElementById('pl-messages');
-    var bubble = document.createElement('div');
-    bubble.style.maxWidth = '85%';
-    bubble.style.padding = '10px 13px';
-    bubble.style.borderRadius = role === 'user' ? '12px 12px 3px 12px' : '12px 12px 12px 3px';
-    bubble.style.fontSize = '14px';
-    bubble.style.lineHeight = '1.5';
-    bubble.style.whiteSpace = 'pre-wrap';
-    bubble.style.opacity = '0';
-    bubble.style.transform = 'translateY(6px)';
-    bubble.style.transition = 'opacity .22s ease, transform .22s ease';
-    if(role === 'user'){
-      bubble.style.alignSelf = 'flex-end';
-      bubble.style.background = 'linear-gradient(135deg,#232F3F,#1B2430)';
-      bubble.style.color = '#FDF3F0';
-      bubble.style.boxShadow = '0 2px 8px rgba(27,36,48,0.18)';
-    } else {
-      bubble.style.alignSelf = 'flex-start';
-      bubble.style.background = '#fff';
-      bubble.style.border = '1px solid #EFE2DC';
-      bubble.style.color = '#1B2430';
-      bubble.style.boxShadow = '0 2px 6px rgba(27,36,48,0.06)';
-    }
-    if(isTyping){
-      bubble.innerHTML = '<div class="pl-typing"><span></span><span></span><span></span></div>';
-    } else {
-      bubble.textContent = text;
-    }
-    wrap.appendChild(bubble);
-    wrap.scrollTop = wrap.scrollHeight;
-    requestAnimationFrame(function(){
-      bubble.style.opacity = '1';
-      bubble.style.transform = 'translateY(0)';
-    });
-    return bubble;
+}
+
+// =====================================================
+// CLEAR CHAT HISTORY
+// =====================================================
+
+async function clearChatHistory() {
+
+  const user =
+    currentUser();
+
+  if (!user) {
+    return;
   }
 
-  function bloodContext(){
-    if(!bloodPanel) return 'Perdoruesi nuk ka dhene ende analiza gjaku.';
-    var parts = [];
-    if(bloodPanel.hemoglobina) parts.push('Hemoglobina: ' + bloodPanel.hemoglobina + ' g/dL');
-    if(bloodPanel.glukoza) parts.push('Glukoza: ' + bloodPanel.glukoza + ' mg/dL');
-    if(bloodPanel.kolesteroli) parts.push('Kolesteroli total: ' + bloodPanel.kolesteroli + ' mg/dL');
-    if(bloodPanel.leukocitet) parts.push('Leukocitet: ' + bloodPanel.leukocitet + ' x10^9/L');
-    if(bloodPanel.trombocitet) parts.push('Trombocitet: ' + bloodPanel.trombocitet + ' x10^9/L');
-    if(bloodPanel.tjeter) parts.push('Tjeter: ' + bloodPanel.tjeter);
-    return parts.length ? parts.join(', ') : 'Perdoruesi hapi panelin e analizave por s\'ka plotesuar vlera.';
+  const confirmed =
+    confirm(
+      "A dëshiron ta fshish të gjithë historikun e bisedës?"
+    );
+
+  if (!confirmed) {
+    return;
   }
 
-  async function sendMessage(){
-    var input = document.getElementById('pl-text');
-    var sendBtn = document.getElementById('pl-send');
-    var text = input.value.trim();
-    if(!text) return;
-    input.value = '';
-    addMessage('user', text);
-    sendBtn.disabled = true;
-    var thinking = addMessage('bot', '', true);
+  clearChatButton.disabled = true;
 
-    var vitalsContext = 'BPM: ' + (latest.bpm != null ? latest.bpm : 'i panjohur') +
-      ', SpO2: ' + (latest.spo2 != null ? latest.spo2 + '%' : 'i panjohur') +
-      ', Temperatura: ' + (latest.temp != null ? latest.temp + 'C' : 'e panjohur') +
-      (latest.ecg_leads_off ? ', ECG: elektrodat jane shkeputur' : '');
+  try {
 
-    var systemPrompt = 'Je nje asistent per nje sistem monitorimi shendetesor IoT (ESP32 + MAX30102 + DS18B20 + AD8232 ECG). ' +
-      'Te dhenat aktuale te sensoreve jane: ' + vitalsContext + '. ' +
-      'Analiza e gjakut e dhene nga perdoruesi: ' + bloodContext() + '. ' +
-      'Pergjigju ne shqip, shkurt e qarte. ' +
-      'Nese perdoruesi pyet per gjendjen e tij te pergjithshme dhe s\'ka dhene ende analiza gjaku, pyete nese ka rezultate analizash gjaku (hemoglobine, glukoze, kolesterol, etj.) qe mund t\'i shtoje ne panelin siper, per te dhene nje pamje me te plote. ' +
-      'Kur ke te dhena sensori dhe/ose analiza gjaku, kombinoji ne nje vleresim te pergjithshem, duke theksuar qarte çdo vlere jashte intervalit normal (BPM pushimi ~60-100, SpO2 >=95%, temp trupi ~36.1-37.2C). ' +
-      'Mos jep diagnoza mjekesore te sakta - jep vetem vezhgime te pergjithshme dhe sygjero konsultim me mjek nese diçka duket shqetesuese.';
+    await remove(
+      getChatHistoryRef(
+        user.uid
+      )
+    );
 
-    try{
-      var response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          systemPrompt: systemPrompt,
-          messages: [{ role: "user", content: text }]
-        })
-      });
-      var data = await response.json();
-      if(!response.ok){
-        thinking.innerHTML = '';
-        thinking.textContent = (data && data.error) ? 'Gabim: ' + data.error : 'Gabim ne komunikim me chatbot-in.';
+    chatMessages = [];
+
+    chatWindow.innerHTML = "";
+
+    renderBotMessage(
+      "Historiku u fshi. Mund të fillojmë një bisedë të re."
+    );
+
+  } catch (error) {
+
+    console.error(
+      "CHAT CLEAR ERROR:",
+      error
+    );
+
+    alert(
+      "Nuk u fshi historiku: " +
+      error.message
+    );
+
+  }
+
+  clearChatButton.disabled = false;
+
+}
+
+clearChatButton.addEventListener(
+  "click",
+  clearChatHistory
+);
+
+// =====================================================
+// REGISTER
+// =====================================================
+
+registerButton.addEventListener(
+  "click",
+  async () => {
+
+    const email =
+      emailInput.value.trim();
+
+    const password =
+      passwordInput.value;
+
+    if (!email || !password) {
+
+      showMessage(
+        authMessage,
+        "Shkruaj email dhe password.",
+        "error"
+      );
+
+      return;
+    }
+
+    if (password.length < 6) {
+
+      showMessage(
+        authMessage,
+        "Password duhet të ketë së paku 6 karaktere.",
+        "error"
+      );
+
+      return;
+    }
+
+    registerButton.disabled = true;
+
+    try {
+
+      const credential =
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+      const user =
+        credential.user;
+
+      await set(
+        ref(
+          database,
+          "users/" + user.uid
+        ),
+        {
+          email: user.email,
+          name: "",
+          surname: "",
+          createdAt:
+            new Date().toISOString()
+        }
+      );
+
+      showMessage(
+        authMessage,
+        "Account u krijua me sukses.",
+        "success"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "REGISTER ERROR:",
+        error
+      );
+
+      showMessage(
+        authMessage,
+        "Register dështoi: " +
+        error.message,
+        "error"
+      );
+
+    }
+
+    registerButton.disabled = false;
+
+  }
+);
+
+// =====================================================
+// LOGIN
+// =====================================================
+
+loginButton.addEventListener(
+  "click",
+  async () => {
+
+    const email =
+      emailInput.value.trim();
+
+    const password =
+      passwordInput.value;
+
+    if (!email || !password) {
+
+      showMessage(
+        authMessage,
+        "Shkruaj email dhe password.",
+        "error"
+      );
+
+      return;
+    }
+
+    loginButton.disabled = true;
+
+    try {
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      showMessage(
+        authMessage,
+        "Login u krye me sukses.",
+        "success"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "LOGIN ERROR:",
+        error
+      );
+
+      let message =
+        "Login dështoi.";
+
+      if (
+        error.code ===
+        "auth/invalid-credential"
+      ) {
+
+        message =
+          "Email ose password është gabim.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/user-not-found"
+      ) {
+
+        message =
+          "Ky user nuk ekziston.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/wrong-password"
+      ) {
+
+        message =
+          "Password është gabim.";
+
+      }
+
+      showMessage(
+        authMessage,
+        message,
+        "error"
+      );
+
+    }
+
+    loginButton.disabled = false;
+
+  }
+);
+
+// =====================================================
+// AUTH STATE
+// =====================================================
+
+onAuthStateChanged(
+  auth,
+  async (user) => {
+
+    if (user) {
+
+      showPage("main");
+
+      homeUserEmail.textContent =
+        user.email || "-";
+
+      await loadUserData();
+
+      /*
+        KËTU NGARKOHET HISTORIKU.
+        Pra pas login-it biseda rikthehet.
+      */
+
+      await loadChatHistory();
+
+    }
+
+    else {
+
+      showPage("auth");
+
+      stopDeviceHeartbeat();
+
+      stopSensorListener();
+
+      resetConnection();
+
+      /*
+        Nuk e fshijmë Firebase chat history.
+        Vetëm e pastrojmë nga RAM/UI.
+      */
+
+      chatMessages = [];
+
+      chatHistoryLoaded = false;
+
+      chatWindow.innerHTML = "";
+
+      clearBloodTest();
+
+    }
+
+  }
+);
+
+// =====================================================
+// LOAD USER
+// =====================================================
+
+async function loadUserData() {
+
+  const user =
+    currentUser();
+
+  if (!user) return;
+
+  try {
+
+    const snap =
+      await get(
+        ref(
+          database,
+          "users/" + user.uid
+        )
+      );
+
+    let displayName =
+      user.email;
+
+    if (snap.exists()) {
+
+      const data =
+        snap.val() || {};
+
+      const name =
+        (data.name || "") +
+        " " +
+        (data.surname || "");
+
+      if (name.trim()) {
+
+        displayName =
+          name.trim();
+
+      }
+
+    }
+
+    homeUserName.textContent =
+      displayName;
+
+  } catch (error) {
+
+    console.error(
+      "USER LOAD ERROR:",
+      error
+    );
+
+    homeUserName.textContent =
+      user.email;
+
+  }
+
+}
+
+// =====================================================
+// CHECK DEVICE
+// =====================================================
+
+checkDeviceButton.addEventListener(
+  "click",
+  async () => {
+
+    const deviceId =
+      deviceIdInput.value.trim();
+
+    if (!deviceId) {
+
+      showMessage(
+        deviceMessage,
+        "Shkruaj Device ID.",
+        "error"
+      );
+
+      return;
+    }
+
+    loader.style.display =
+      "block";
+
+    hideMessage(deviceMessage);
+
+    try {
+
+      const snap =
+        await get(
+          getDeviceRef(deviceId)
+        );
+
+      if (!snap.exists()) {
+
+        showMessage(
+          deviceMessage,
+          "Kjo pajisje nuk ekziston.",
+          "error"
+        );
+
+        loader.style.display =
+          "none";
+
         return;
       }
-      var reply = (data && data.reply) ? data.reply.trim() : 'Nuk mora pergjigje te vlefshme.';
-      thinking.innerHTML = '';
-      thinking.textContent = reply;
-    }catch(err){
-      thinking.innerHTML = '';
-      thinking.textContent = 'Gabim ne komunikim me chatbot-in.';
-    }finally{
-      sendBtn.disabled = false;
+
+      const device =
+        snap.val() || {};
+
+      connectedDeviceId =
+        deviceId;
+
+      document.getElementById(
+        "displayDeviceId"
+      ).textContent =
+        deviceId;
+
+      document.getElementById(
+        "displayConnected"
+      ).textContent =
+        device.connected === true
+          ? "Po"
+          : "Jo";
+
+      document.getElementById(
+        "displaySession"
+      ).textContent =
+        device.sessionId || "-";
+
+      deviceInfo.classList.remove(
+        "hidden"
+      );
+
+      if (
+        !device.activeUserUid ||
+        device.activeUserUid === ""
+      ) {
+
+        document.getElementById(
+          "displayStatus"
+        ).textContent =
+          "AVAILABLE";
+
+        document.getElementById(
+          "displayStatus"
+        ).className =
+          "available";
+
+        showMessage(
+          deviceMessage,
+          "Pajisja është e lirë. Mund ta lidhësh.",
+          "success"
+        );
+
+        connectButton.classList.remove(
+          "hidden"
+        );
+
+        disconnectButton.classList.add(
+          "hidden"
+        );
+
+      }
+
+      else if (
+        device.activeUserUid ===
+        currentUser().uid
+      ) {
+
+        activeSessionId =
+          device.sessionId;
+
+        deviceConnected =
+          true;
+
+        document.getElementById(
+          "displayStatus"
+        ).textContent =
+          "CONNECTED";
+
+        document.getElementById(
+          "displayStatus"
+        ).className =
+          "connected";
+
+        showMessage(
+          deviceMessage,
+          "Pajisja është e lidhur me llogarinë tënde.",
+          "success"
+        );
+
+        connectButton.classList.add(
+          "hidden"
+        );
+
+        disconnectButton.classList.remove(
+          "hidden"
+        );
+
+        connectionStatus.classList.remove(
+          "hidden"
+        );
+
+        connectionText.textContent =
+          "Connected";
+
+        startDeviceHeartbeat();
+
+        startSensorListener();
+
+      }
+
+      else {
+
+        document.getElementById(
+          "displayStatus"
+        ).textContent =
+          "BUSY";
+
+        document.getElementById(
+          "displayStatus"
+        ).className =
+          "busy";
+
+        showMessage(
+          deviceMessage,
+          "Pajisja është duke u përdorur nga një përdorues tjetër.",
+          "warning"
+        );
+
+        connectButton.classList.add(
+          "hidden"
+        );
+
+        disconnectButton.classList.add(
+          "hidden"
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "CHECK DEVICE ERROR:",
+        error
+      );
+
+      showMessage(
+        deviceMessage,
+        "Gabim gjatë kontrollimit të pajisjes: " +
+        error.message,
+        "error"
+      );
+
     }
+
+    loader.style.display =
+      "none";
+
   }
+);
 
-  var drawer = document.getElementById('pl-drawer');
-  var fabOpenIcon = document.getElementById('pl-fab-icon-open');
-  var fabCloseIcon = document.getElementById('pl-fab-icon-close');
-  var drawerOpen = false;
+// =====================================================
+// CONNECT DEVICE
+// =====================================================
 
-  function openDrawer(){
-    drawerOpen = true;
-    document.getElementById('pl-fab-tip').style.display = 'none';
-    drawer.classList.add('pl-open');
-    fabOpenIcon.style.display = 'none';
-    fabCloseIcon.style.display = 'block';
-    requestAnimationFrame(function(){ drawer.classList.add('pl-show'); });
-    document.getElementById('pl-text').focus({ preventScroll: true });
-    if(document.getElementById('pl-messages').children.length === 0){
-      setTimeout(function(){
-        addMessage('bot', 'Pershendetje! Une jam asistenti yt shendetesor. Mund te te tregoj gjendjen aktuale te BPM, SpO2, temperatures dhe ECG-se, ose te analizoj rezultate analizash gjaku nese i shton lart. Si mund te te ndihmoj?');
-      }, 180);
+connectButton.addEventListener(
+  "click",
+  async () => {
+
+    const user =
+      currentUser();
+
+    if (!user) {
+
+      showMessage(
+        deviceMessage,
+        "Duhet të bësh login.",
+        "error"
+      );
+
+      return;
     }
+
+    if (!connectedDeviceId) {
+
+      showMessage(
+        deviceMessage,
+        "Shkruaj Device ID dhe kontrolloje.",
+        "error"
+      );
+
+      return;
+    }
+
+    connectButton.disabled = true;
+
+    try {
+
+      const deviceRef =
+        getDeviceRef(
+          connectedDeviceId
+        );
+
+      const sessionId =
+        crypto.randomUUID();
+
+      const result =
+        await runTransaction(
+          deviceRef,
+          (currentData) => {
+
+            const current =
+              currentData || {};
+
+            const owner =
+              current.activeUserUid;
+
+            if (
+              owner &&
+              owner !== "" &&
+              owner !== user.uid
+            ) {
+
+              return;
+
+            }
+
+            current.activeUserUid =
+              user.uid;
+
+            current.connected =
+              true;
+
+            current.sessionId =
+              sessionId;
+
+            current.sessionStartedAt =
+              Date.now();
+
+            current.lastSeen =
+              Date.now();
+
+            current.status =
+              "connected";
+
+            return current;
+
+          }
+        );
+
+      if (!result.committed) {
+
+        showMessage(
+          deviceMessage,
+          "Pajisja nuk u mor. Mund të jetë zënë nga një përdorues tjetër.",
+          "warning"
+        );
+
+        connectButton.disabled =
+          false;
+
+        return;
+
+      }
+
+      const device =
+        result.snapshot.val() || {};
+
+      if (
+        device.activeUserUid !==
+        user.uid
+      ) {
+
+        throw new Error(
+          "Device claim verification failed."
+        );
+
+      }
+
+      activeSessionId =
+        device.sessionId;
+
+      deviceConnected =
+        true;
+
+      document.getElementById(
+        "displayStatus"
+      ).textContent =
+        "CONNECTED";
+
+      document.getElementById(
+        "displayStatus"
+      ).className =
+        "connected";
+
+      document.getElementById(
+        "displayConnected"
+      ).textContent =
+        "Po";
+
+      document.getElementById(
+        "displaySession"
+      ).textContent =
+        activeSessionId;
+
+      showMessage(
+        deviceMessage,
+        "Pajisja u lidh me sukses.",
+        "success"
+      );
+
+      connectButton.classList.add(
+        "hidden"
+      );
+
+      disconnectButton.classList.remove(
+        "hidden"
+      );
+
+      connectionStatus.classList.remove(
+        "hidden"
+      );
+
+      connectionText.textContent =
+        "Connected";
+
+      startDeviceHeartbeat();
+
+      startSensorListener();
+
+    } catch (error) {
+
+      console.error(
+        "CONNECT ERROR:",
+        error
+      );
+
+      showMessage(
+        deviceMessage,
+        "Nuk u bë lidhja: " +
+        error.message,
+        "error"
+      );
+
+    }
+
+    connectButton.disabled = false;
+
+  }
+);
+
+// =====================================================
+// HEARTBEAT
+// =====================================================
+
+function startDeviceHeartbeat() {
+
+  stopDeviceHeartbeat();
+
+  deviceHeartbeatTimer =
+    setInterval(
+      async () => {
+
+        const user =
+          currentUser();
+
+        if (
+          !user ||
+          !connectedDeviceId ||
+          !deviceConnected ||
+          !activeSessionId
+        ) {
+
+          return;
+
+        }
+
+        try {
+
+          const snap =
+            await get(
+              getDeviceRef(
+                connectedDeviceId
+              )
+            );
+
+          if (!snap.exists()) {
+
+            stopDeviceHeartbeat();
+
+            return;
+
+          }
+
+          const device =
+            snap.val() || {};
+
+          if (
+            device.activeUserUid !==
+              user.uid ||
+            device.sessionId !==
+              activeSessionId
+          ) {
+
+            deviceConnected =
+              false;
+
+            stopDeviceHeartbeat();
+
+            stopSensorListener();
+
+            connectionText.textContent =
+              "Disconnected";
+
+            showMessage(
+              deviceMessage,
+              "Pajisja nuk është më e lidhur me sesionin tënd.",
+              "warning"
+            );
+
+            disconnectButton.classList.add(
+              "hidden"
+            );
+
+            connectButton.classList.remove(
+              "hidden"
+            );
+
+            return;
+
+          }
+
+          await update(
+            getDeviceRef(
+              connectedDeviceId
+            ),
+            {
+              lastSeen:
+                Date.now()
+            }
+          );
+
+        } catch (error) {
+
+          console.error(
+            "HEARTBEAT ERROR:",
+            error
+          );
+
+        }
+
+      },
+      5000
+    );
+
+}
+
+function stopDeviceHeartbeat() {
+
+  if (deviceHeartbeatTimer) {
+
+    clearInterval(
+      deviceHeartbeatTimer
+    );
+
+    deviceHeartbeatTimer =
+      null;
+
   }
 
-  function closeDrawer(){
-    drawerOpen = false;
-    document.getElementById('pl-fab-tip').style.display = '';
-    drawer.classList.remove('pl-show');
-    fabOpenIcon.style.display = 'block';
-    fabCloseIcon.style.display = 'none';
-    setTimeout(function(){ if(!drawerOpen) drawer.classList.remove('pl-open'); }, 280);
+}
+
+// =====================================================
+// ECG RESET
+// =====================================================
+
+function resetEcgGraph() {
+
+  ecgHistory = [];
+
+  ecgStartTime = null;
+
+  lastEcgValue = null;
+
+  ecgCycle++;
+
+  resizeEcgCanvas();
+
+  drawEcgChart();
+
+  ecgScroll.scrollLeft = 0;
+
+}
+
+// =====================================================
+// ADD REAL ECG SAMPLE
+// =====================================================
+
+function addRealEcgSample(rawValue) {
+
+  const value =
+    Number(rawValue);
+
+  if (!Number.isFinite(value)) {
+    return;
   }
 
-  document.getElementById('pl-fab').addEventListener('click', function(){
-    drawerOpen ? closeDrawer() : openDrawer();
-  });
-  document.getElementById('pl-drawer-close').addEventListener('click', closeDrawer);
+  const now =
+    performance.now();
 
-  document.getElementById('pl-blood-toggle').addEventListener('click', toggleBlood);
-  document.getElementById('pl-blood-save').addEventListener('click', saveBlood);
-  document.getElementById('pl-send').addEventListener('click', sendMessage);
-  document.getElementById('pl-text').addEventListener('keydown', function(e){
-    if(e.key === 'Enter') sendMessage();
-  });
-  document.getElementById('pl-dburl').addEventListener('change', function(){
-    pollLatest(); pollECG();
+  if (ecgStartTime === null) {
+    ecgStartTime = now;
+  }
+
+  const elapsed =
+    (now - ecgStartTime) / 1000;
+
+  if (
+    elapsed >=
+    ECG_WINDOW_SECONDS
+  ) {
+
+    resetEcgGraph();
+
+    ecgStartTime =
+      performance.now();
+
+  }
+
+  const timestamp =
+    (performance.now() -
+      ecgStartTime) / 1000;
+
+  ecgHistory.push({
+    time: timestamp,
+    value: value
   });
 
-  drawECG();
-  pollLatest();
-  pollECG();
-  setInterval(pollLatest, 400);
-  setInterval(pollECG, 150);
-})();
+  lastEcgValue =
+    value;
+
+  drawEcgChart();
+
+  requestAnimationFrame(
+    () => {
+
+      ecgScroll.scrollLeft =
+        ecgScroll.scrollWidth -
+        ecgScroll.clientWidth;
+
+    }
+  );
+
+}
+
+// =====================================================
+// GET ECG
+// =====================================================
+
+function getEcgFromData(data) {
+
+  if (
+    data &&
+    data.ecg !== undefined &&
+    data.ecg !== null
+  ) {
+
+    return data.ecg;
+
+  }
+
+  if (
+    data &&
+    data.ECG !== undefined &&
+    data.ECG !== null
+  ) {
+
+    return data.ECG;
+
+  }
+
+  if (
+    data &&
+    data.ecgValue !== undefined &&
+    data.ecgValue !== null
+  ) {
+
+    return data.ecgValue;
+
+  }
+
+  return null;
+
+}
+
+// =====================================================
+// SENSOR LISTENER
+// =====================================================
+
+function startSensorListener() {
+
+  stopSensorListener();
+
+  if (!connectedDeviceId) {
+    return;
+  }
+
+  const dataRef =
+    ref(
+      database,
+      "devices/" +
+      connectedDeviceId +
+      "/currentData"
+    );
+
+  sensorListener =
+    onValue(
+      dataRef,
+      (snap) => {
+
+        if (!snap.exists()) {
+          return;
+        }
+
+        const data =
+          snap.val() || {};
+
+        const hr =
+          Number(
+            data.heartRate || 0
+          );
+
+        document.getElementById(
+          "heartRate"
+        ).textContent =
+          hr.toFixed(0);
+
+        ecgBpmTag.textContent =
+          hr.toFixed(0) +
+          " BPM";
+
+        const spo2 =
+          Number(
+            data.spo2 || 0
+          );
+
+        document.getElementById(
+          "spo2"
+        ).textContent =
+          spo2.toFixed(0) +
+          "%";
+
+        const temperature =
+          Number(
+            data.temperature || 0
+          );
+
+        document.getElementById(
+          "temperature"
+        ).textContent =
+          temperature.toFixed(1) +
+          " °C";
+
+        document.getElementById(
+          "lastSeenText"
+        ).textContent =
+          "Last seen: " +
+          new Date().toLocaleTimeString();
+
+        const ecgValue =
+          getEcgFromData(data);
+
+        if (
+          ecgValue !== null
+        ) {
+
+          addRealEcgSample(
+            ecgValue
+          );
+
+        }
+
+      }
+    );
+
+}
+
+// =====================================================
+// STOP SENSOR
+// =====================================================
+
+function stopSensorListener() {
+
+  if (sensorListener) {
+
+    sensorListener();
+
+    sensorListener = null;
+
+  }
+
+  ecgHistory = [];
+
+  ecgStartTime = null;
+
+  lastEcgValue = null;
+
+  drawEcgChart();
+
+}
+
+// =====================================================
+// ECG RESIZE
+// =====================================================
+
+function resizeEcgCanvas() {
+
+  const trackRect =
+    ecgTrack.getBoundingClientRect();
+
+  const dpr =
+    window.devicePixelRatio || 1;
+
+  const cssWidth =
+    Math.max(
+      1,
+      trackRect.width
+    );
+
+  const cssHeight =
+    Math.max(
+      1,
+      trackRect.height
+    );
+
+  ecgCanvas.width =
+    Math.floor(
+      cssWidth * dpr
+    );
+
+  ecgCanvas.height =
+    Math.floor(
+      cssHeight * dpr
+    );
+
+  ecgCtx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+}
+
+// =====================================================
+// ECG RANGE
+// =====================================================
+
+function calculateEcgRange() {
+
+  if (
+    ecgHistory.length === 0
+  ) {
+
+    return {
+      min: -1,
+      max: 1
+    };
+
+  }
+
+  let min =
+    Infinity;
+
+  let max =
+    -Infinity;
+
+  for (
+    const sample of ecgHistory
+  ) {
+
+    if (
+      sample.value < min
+    ) {
+
+      min =
+        sample.value;
+
+    }
+
+    if (
+      sample.value > max
+    ) {
+
+      max =
+        sample.value;
+
+    }
+
+  }
+
+  if (
+    min === max
+  ) {
+
+    const extra =
+      Math.max(
+        Math.abs(min) * 0.1,
+        1
+      );
+
+    min -= extra;
+
+    max += extra;
+
+  }
+
+  const padding =
+    (max - min) *
+    0.12;
+
+  return {
+
+    min:
+      min - padding,
+
+    max:
+      max + padding
+
+  };
+
+}
+
+// =====================================================
+// ECG DRAW
+// =====================================================
+
+function drawEcgChart() {
+
+  const w =
+    ecgCanvas.getBoundingClientRect().width;
+
+  const h =
+    ecgCanvas.getBoundingClientRect().height;
+
+  if (
+    !w ||
+    !h
+  ) {
+
+    return;
+
+  }
+
+  ecgCtx.clearRect(
+    0,
+    0,
+    w,
+    h
+  );
+
+  if (
+    ecgHistory.length < 2
+  ) {
+
+    return;
+
+  }
+
+  const range =
+    calculateEcgRange();
+
+  const min =
+    range.min;
+
+  const max =
+    range.max;
+
+  const valueRange =
+    max - min;
+
+  const graphWidth =
+    w;
+
+  const paddingTop =
+    20;
+
+  const paddingBottom =
+    20;
+
+  const graphHeight =
+    h -
+    paddingTop -
+    paddingBottom;
+
+  function pointAt(sample) {
+
+    const x =
+      (
+        sample.time /
+        ECG_WINDOW_SECONDS
+      ) *
+      graphWidth;
+
+    const normalized =
+      (
+        sample.value -
+        min
+      ) /
+      valueRange;
+
+    const y =
+      h -
+      paddingBottom -
+      normalized *
+      graphHeight;
+
+    return [
+      x,
+      y
+    ];
+
+  }
+
+  ecgCtx.beginPath();
+
+  const firstPoint =
+    pointAt(
+      ecgHistory[0]
+    );
+
+  ecgCtx.moveTo(
+    firstPoint[0],
+    firstPoint[1]
+  );
+
+  for (
+    let i = 1;
+    i < ecgHistory.length;
+    i++
+  ) {
+
+    const point =
+      pointAt(
+        ecgHistory[i]
+      );
+
+    ecgCtx.lineTo(
+      point[0],
+      point[1]
+    );
+
+  }
+
+  const lastPoint =
+    pointAt(
+      ecgHistory[
+        ecgHistory.length - 1
+      ]
+    );
+
+  ecgCtx.lineTo(
+    lastPoint[0],
+    h
+  );
+
+  ecgCtx.lineTo(
+    firstPoint[0],
+    h
+  );
+
+  ecgCtx.closePath();
+
+  ecgCtx.fillStyle =
+    "rgba(220,38,38,.06)";
+
+  ecgCtx.fill();
+
+  ecgCtx.beginPath();
+
+  const first =
+    pointAt(
+      ecgHistory[0]
+    );
+
+  ecgCtx.moveTo(
+    first[0],
+    first[1]
+  );
+
+  for (
+    let i = 1;
+    i < ecgHistory.length;
+    i++
+  ) {
+
+    const previous =
+      pointAt(
+        ecgHistory[i - 1]
+      );
+
+    const current =
+      pointAt(
+        ecgHistory[i]
+      );
+
+    const middleX =
+      (
+        previous[0] +
+        current[0]
+      ) / 2;
+
+    const middleY =
+      (
+        previous[1] +
+        current[1]
+      ) / 2;
+
+    ecgCtx.quadraticCurveTo(
+      previous[0],
+      previous[1],
+      middleX,
+      middleY
+    );
+
+  }
+
+  const finalPoint =
+    pointAt(
+      ecgHistory[
+        ecgHistory.length - 1
+      ]
+    );
+
+  ecgCtx.lineTo(
+    finalPoint[0],
+    finalPoint[1]
+  );
+
+  ecgCtx.strokeStyle =
+    "#dc2626";
+
+  ecgCtx.lineWidth =
+    2.5;
+
+  ecgCtx.lineJoin =
+    "round";
+
+  ecgCtx.lineCap =
+    "round";
+
+  ecgCtx.stroke();
+
+  ecgCtx.beginPath();
+
+  ecgCtx.arc(
+    finalPoint[0],
+    finalPoint[1],
+    4,
+    0,
+    Math.PI * 2
+  );
+
+  ecgCtx.fillStyle =
+    "#dc2626";
+
+  ecgCtx.fill();
+
+}
+
+// =====================================================
+// WINDOW RESIZE
+// =====================================================
+
+window.addEventListener(
+  "resize",
+  () => {
+
+    resizeEcgCanvas();
+
+    drawEcgChart();
+
+  }
+);
+
+// =====================================================
+// DISCONNECT
+// =====================================================
+
+disconnectButton.addEventListener(
+  "click",
+  async () => {
+
+    const user =
+      currentUser();
+
+    if (
+      !user ||
+      !connectedDeviceId ||
+      !activeSessionId
+    ) {
+
+      return;
+
+    }
+
+    disconnectButton.disabled =
+      true;
+
+    try {
+
+      const deviceRef =
+        getDeviceRef(
+          connectedDeviceId
+        );
+
+      const result =
+        await runTransaction(
+          deviceRef,
+          (currentData) => {
+
+            if (
+              currentData === null
+            ) {
+
+              return;
+
+            }
+
+            const device =
+              currentData || {};
+
+            if (
+              device.activeUserUid !==
+                user.uid ||
+              device.sessionId !==
+                activeSessionId
+            ) {
+
+              return;
+
+            }
+
+            device.activeUserUid =
+              "";
+
+            device.connected =
+              false;
+
+            device.sessionId =
+              "";
+
+            device.sessionStartedAt =
+              0;
+
+            device.lastSeen =
+              Date.now();
+
+            device.status =
+              "available";
+
+            return device;
+
+          }
+        );
+
+      stopDeviceHeartbeat();
+
+      stopSensorListener();
+
+      if (result.committed) {
+
+        showMessage(
+          deviceMessage,
+          "Pajisja u lirua me sukses.",
+          "success"
+        );
+
+      }
+
+      else {
+
+        showMessage(
+          deviceMessage,
+          "Sesioni nuk ishte më aktiv.",
+          "warning"
+        );
+
+      }
+
+      resetConnection();
+
+    } catch (error) {
+
+      console.error(
+        "DISCONNECT ERROR:",
+        error
+      );
+
+      showMessage(
+        deviceMessage,
+        "Gabim gjatë disconnect: " +
+        error.message,
+        "error"
+      );
+
+    }
+
+    disconnectButton.disabled =
+      false;
+
+  }
+);
+
+// =====================================================
+// RESET CONNECTION
+// =====================================================
+
+function resetConnection() {
+
+  connectedDeviceId =
+    null;
+
+  activeSessionId =
+    null;
+
+  deviceConnected =
+    false;
+
+  stopDeviceHeartbeat();
+
+  stopSensorListener();
+
+  connectionStatus.classList.add(
+    "hidden"
+  );
+
+  disconnectButton.classList.add(
+    "hidden"
+  );
+
+  connectButton.classList.remove(
+    "hidden"
+  );
+
+  resetEcgGraph();
+
+}
+
+// =====================================================
+// LOGOUT
+// =====================================================
+
+logoutButton.addEventListener(
+  "click",
+  async () => {
+
+    const user =
+      currentUser();
+
+    try {
+
+      if (
+        user &&
+        connectedDeviceId &&
+        activeSessionId
+      ) {
+
+        const deviceRef =
+          getDeviceRef(
+            connectedDeviceId
+          );
+
+        await runTransaction(
+          deviceRef,
+          (currentData) => {
+
+            if (
+              currentData === null
+            ) {
+
+              return;
+
+            }
+
+            const device =
+              currentData || {};
+
+            if (
+              device.activeUserUid ===
+                user.uid &&
+              device.sessionId ===
+                activeSessionId
+            ) {
+
+              device.activeUserUid =
+                "";
+
+              device.connected =
+                false;
+
+              device.sessionId =
+                "";
+
+              device.sessionStartedAt =
+                0;
+
+              device.lastSeen =
+                Date.now();
+
+              device.status =
+                "available";
+
+              return device;
+
+            }
+
+            return;
+
+          }
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "LOGOUT RELEASE ERROR:",
+        error
+      );
+
+    }
+
+    stopDeviceHeartbeat();
+
+    stopSensorListener();
+
+    resetConnection();
+
+    /*
+      SHUMË E RËNDËSISHME:
+
+      Nuk bëjmë remove(chatHistory).
+      Historiku mbetet në Firebase.
+
+      Vetëm signOut.
+    */
+
+    await signOut(auth);
+
+  }
+);
+
+// =====================================================
+// BLOOD TEST UPLOAD
+// =====================================================
+
+uploadBox.addEventListener(
+  "click",
+  () => {
+
+    bloodFileInput.click();
+
+  }
+);
+
+bloodFileInput.addEventListener(
+  "change",
+  async () => {
+
+    const file =
+      bloodFileInput.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    hideMessage(
+      bloodStatus
+    );
+
+    showMessage(
+      bloodStatus,
+      "Duke lexuar dokumentin...",
+      "info"
+    );
+
+    try {
+
+      const lowerName =
+        file.name.toLowerCase();
+
+      let text = "";
+
+      if (
+        lowerName.endsWith(".pdf")
+      ) {
+
+        text =
+          await extractPdfText(
+            file
+          );
+
+      }
+
+      else if (
+        lowerName.endsWith(".docx")
+      ) {
+
+        text =
+          await extractDocxText(
+            file
+          );
+
+      }
+
+      else {
+
+        showMessage(
+          bloodStatus,
+          "Vetëm PDF ose .docx mbështeten.",
+          "error"
+        );
+
+        bloodFileInput.value =
+          "";
+
+        return;
+
+      }
+
+      text =
+        text.trim();
+
+      if (!text) {
+
+        showMessage(
+          bloodStatus,
+          "Nuk u gjet tekst i lexueshëm në këtë dokument.",
+          "warning"
+        );
+
+        return;
+
+      }
+
+      bloodTestText =
+        text.slice(0, 6000);
+
+      bloodTestFileName =
+        file.name;
+
+      fileChipName.textContent =
+        file.name;
+
+      fileChipMeta.textContent =
+        bloodTestText.length +
+        " karaktere u lexuan";
+
+      fileChip.classList.remove(
+        "hidden"
+      );
+
+      hideMessage(
+        bloodStatus
+      );
+
+      showMessage(
+        bloodStatus,
+        "Analizat u ngarkuan. DOK AI tani i sheh në chat.",
+        "success"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "BLOOD FILE ERROR:",
+        error
+      );
+
+      showMessage(
+        bloodStatus,
+        "Gabim gjatë leximit të dokumentit: " +
+        error.message,
+        "error"
+      );
+
+    }
+
+  }
+);
+
+removeFileButton.addEventListener(
+  "click",
+  (e) => {
+
+    e.stopPropagation();
+
+    clearBloodTest();
+
+  }
+);
+
+function clearBloodTest() {
+
+  bloodTestText =
+    "";
+
+  bloodTestFileName =
+    "";
+
+  bloodFileInput.value =
+    "";
+
+  fileChip.classList.add(
+    "hidden"
+  );
+
+  hideMessage(
+    bloodStatus
+  );
+
+}
+
+async function extractPdfText(file) {
+
+  const arrayBuffer =
+    await file.arrayBuffer();
+
+  const pdf =
+    await window.pdfjsLib.getDocument({
+      data: arrayBuffer
+    }).promise;
+
+  let text =
+    "";
+
+  for (
+    let i = 1;
+    i <= pdf.numPages;
+    i++
+  ) {
+
+    const page =
+      await pdf.getPage(i);
+
+    const content =
+      await page.getTextContent();
+
+    text +=
+      content.items
+        .map(
+          item => item.str
+        )
+        .join(" ") +
+      "\n";
+
+  }
+
+  return text;
+
+}
+
+async function extractDocxText(file) {
+
+  const arrayBuffer =
+    await file.arrayBuffer();
+
+  const result =
+    await window.mammoth.extractRawText({
+      arrayBuffer
+    });
+
+  return result.value;
+
+}
+
+// =====================================================
+// CHAT OPEN
+// =====================================================
+
+function openChat() {
+
+  chatOpen =
+    true;
+
+  chatPanel.classList.add(
+    "open"
+  );
+
+  setTimeout(
+    () => chatInput.focus(),
+    150
+  );
+
+}
+
+function closeChat() {
+
+  chatOpen =
+    false;
+
+  chatPanel.classList.remove(
+    "open"
+  );
+
+}
+
+chatFab.addEventListener(
+  "click",
+  () => {
+
+    if (chatOpen) {
+      closeChat();
+    }
+
+    else {
+      openChat();
+    }
+
+  }
+);
+
+chatCloseButton.addEventListener(
+  "click",
+  closeChat
+);
+
+// =====================================================
+// SYSTEM PROMPT
+// =====================================================
+
+function getSystemPrompt() {
+
+  let liveData =
+    "Nuk ka të dhëna live nga pajisja në këtë moment.";
+
+  if (deviceConnected) {
+
+    const hr =
+      document.getElementById(
+        "heartRate"
+      ).textContent;
+
+    const spo2 =
+      document.getElementById(
+        "spo2"
+      ).textContent;
+
+    const temp =
+      document.getElementById(
+        "temperature"
+      ).textContent;
+
+    liveData =
+      `Rrahjet e zemrës: ${hr} bpm, SpO2: ${spo2}, Temperatura: ${temp}.`;
+
+  }
+
+  let bloodInfo =
+    "Përdoruesi nuk ka ngarkuar analiza gjaku.";
+
+  if (bloodTestText) {
+
+    bloodInfo =
+      `Rezultatet e analizave të gjakut (nga dokumenti "${bloodTestFileName}"):\n${bloodTestText}`;
+
+  }
+
+  return (
+    "Ti je DOK AI, asistent shëndetësor për aplikacionin e pajisjes ESP32 DOK AI. " +
+
+    "Përgjigju gjithmonë në shqip, shkurt dhe qartë. " +
+
+    "Ndihmo përdoruesin të kuptojë të dhënat e tij " +
+
+    "(rrahjet e zemrës, SpO2, temperaturë, ECG) " +
+
+    "dhe analizat e gjakut që ka ngarkuar. " +
+
+    "Nuk jep asnjëherë diagnozë mjekësore; " +
+
+    "për shqetësime serioze rekomando gjithmonë konsultim me mjek. " +
+
+    "Të dhënat aktuale nga pajisja: " +
+
+    liveData +
+
+    "\n\n" +
+
+    bloodInfo
+  );
+
+}
+
+// =====================================================
+// CHAT RENDER
+// =====================================================
+
+function renderUserMessage(text) {
+
+  const el =
+    document.createElement(
+      "div"
+    );
+
+  el.className =
+    "msg user";
+
+  el.textContent =
+    text;
+
+  chatWindow.appendChild(
+    el
+  );
+
+  chatWindow.scrollTop =
+    chatWindow.scrollHeight;
+
+}
+
+function renderBotMessage(text) {
+
+  const el =
+    document.createElement(
+      "div"
+    );
+
+  el.className =
+    "msg bot";
+
+  el.textContent =
+    text;
+
+  chatWindow.appendChild(
+    el
+  );
+
+  chatWindow.scrollTop =
+    chatWindow.scrollHeight;
+
+}
+
+function showTypingIndicator() {
+
+  const el =
+    document.createElement(
+      "div"
+    );
+
+  el.className =
+    "msg typing";
+
+  el.id =
+    "typingIndicator";
+
+  el.textContent =
+    "DOK AI po shkruan...";
+
+  chatWindow.appendChild(
+    el
+  );
+
+  chatWindow.scrollTop =
+    chatWindow.scrollHeight;
+
+}
+
+function hideTypingIndicator() {
+
+  const el =
+    document.getElementById(
+      "typingIndicator"
+    );
+
+  if (el) {
+    el.remove();
+  }
+
+}
+
+// =====================================================
+// SEND CHAT
+// =====================================================
+
+async function sendChatMessage() {
+
+  const text =
+    chatInput.value.trim();
+
+  if (
+    !text ||
+    chatBusy
+  ) {
+
+    return;
+
+  }
+
+  const user =
+    currentUser();
+
+  if (!user) {
+
+    renderBotMessage(
+      "Duhet të bësh login për të përdorur chat-in."
+    );
+
+    return;
+
+  }
+
+  chatBusy =
+    true;
+
+  chatInput.value =
+    "";
+
+  chatInput.disabled =
+    true;
+
+  chatSendButton.disabled =
+    true;
+
+  renderUserMessage(
+    text
+  );
+
+  /*
+    Shtoje menjëherë në memory.
+  */
+
+  chatMessages.push({
+
+    role:
+      "user",
+
+    content:
+      text
+
+  });
+
+  /*
+    RUJE USER MESSAGE NË FIREBASE.
+  */
+
+  await saveChatMessage(
+    "user",
+    text
+  );
+
+  showTypingIndicator();
+
+  try {
+
+    /*
+      AI merr vetëm 20 mesazhet e fundit.
+      Historiku komplet mbetet në Firebase.
+    */
+
+    const aiMessages =
+      chatMessages.slice(-20);
+
+    const response =
+      await fetch(
+        "/api/chat",
+        {
+
+          method:
+            "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+
+              messages:
+                aiMessages,
+
+              systemPrompt:
+                getSystemPrompt()
+
+            })
+
+        }
+      );
+
+    const data =
+      await response.json();
+
+    hideTypingIndicator();
+
+    if (!response.ok) {
+
+      renderBotMessage(
+        "Gabim: " +
+        (
+          data.error ||
+          "Diçka shkoi keq."
+        )
+      );
+
+    }
+
+    else {
+
+      const reply =
+        data.reply ||
+        "Nuk mora përgjigje.";
+
+      renderBotMessage(
+        reply
+      );
+
+      /*
+        Shto përgjigjen në memory.
+      */
+
+      chatMessages.push({
+
+        role:
+          "assistant",
+
+        content:
+          reply
+
+      });
+
+      /*
+        RUJE PËRGJIGJEN E AI NË FIREBASE.
+      */
+
+      await saveChatMessage(
+        "assistant",
+        reply
+      );
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "CHAT ERROR:",
+      error
+    );
+
+    hideTypingIndicator();
+
+    renderBotMessage(
+      "Nuk u lidha dot me serverin. Provo përsëri."
+    );
+
+  }
+
+  chatInput.disabled =
+    false;
+
+  chatSendButton.disabled =
+    false;
+
+  chatBusy =
+    false;
+
+  chatInput.focus();
+
+}
+
+// =====================================================
+// CHAT EVENTS
+// =====================================================
+
+chatSendButton.addEventListener(
+  "click",
+  sendChatMessage
+);
+
+chatInput.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key ===
+      "Enter"
+    ) {
+
+      event.preventDefault();
+
+      sendChatMessage();
+
+    }
+
+  }
+);
+
+// =====================================================
+// ENTER LOGIN
+// =====================================================
+
+passwordInput.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key ===
+      "Enter"
+    ) {
+
+      loginButton.click();
+
+    }
+
+  }
+);
+
+// =====================================================
+// ENTER DEVICE
+// =====================================================
+
+deviceIdInput.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key ===
+      "Enter"
+    ) {
+
+      checkDeviceButton.click();
+
+    }
+
+  }
+);
+
+// =====================================================
+// INIT
+// =====================================================
+
+window.addEventListener(
+  "load",
+  () => {
+
+    resizeEcgCanvas();
+
+    drawEcgChart();
+
+  }
+);
+
 </script>
+
 </body>
 </html>
