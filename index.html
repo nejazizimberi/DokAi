@@ -21,6 +21,38 @@
    GLOBAL
    ===================================================== */
 
+:root {
+  --bg: #f4f6f9;
+  --card-bg: #ffffff;
+  --text-main: #111827;
+  --text-sub: #6b7280;
+  --text-label: #374151;
+  --border: #d1d5db;
+  --border-soft: #e5e7eb;
+  --input-bg: #ffffff;
+  --panel-bg: #f8fafc;
+  --status-bg: #f3f4f6;
+  --chat-window-bg: #f8fafc;
+  --chat-bot-bg: #ffffff;
+  --shadow: rgba(0,0,0,.08);
+}
+
+body.dark {
+  --bg: #0f1420;
+  --card-bg: #1a2030;
+  --text-main: #f3f4f6;
+  --text-sub: #9ca3af;
+  --text-label: #d1d5db;
+  --border: #374151;
+  --border-soft: #2d3444;
+  --input-bg: #111827;
+  --panel-bg: #161c2a;
+  --status-bg: #161c2a;
+  --chat-window-bg: #12172400;
+  --chat-bot-bg: #1f2637;
+  --shadow: rgba(0,0,0,.35);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -29,7 +61,7 @@
 }
 
 body {
-  background: #f4f6f9;
+  background: var(--bg);
   min-height: 100vh;
 
   display: flex;
@@ -37,6 +69,8 @@ body {
   align-items: flex-start;
 
   padding: 30px 0;
+
+  transition: background .2s ease, color .2s ease;
 }
 
 .container {
@@ -50,24 +84,45 @@ body {
 }
 
 .card {
-  background: white;
+  background: var(--card-bg);
   border-radius: 18px;
   padding: 30px;
 
   box-shadow:
-    0 10px 35px rgba(0,0,0,.08);
+    0 10px 35px var(--shadow);
 }
 
 h1 {
   text-align: center;
-  color: #111827;
+  color: var(--text-main);
   margin-bottom: 8px;
 }
 
 .subtitle {
   text-align: center;
-  color: #6b7280;
-  margin-bottom: 25px;
+  color: var(--text-sub);
+  margin-bottom: 12px;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.theme-toggle {
+  width: auto;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+  background: var(--panel-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-soft);
+}
+
+.theme-toggle:hover {
+  background: var(--status-bg);
 }
 
 /* =====================================================
@@ -85,7 +140,7 @@ label {
 
   margin-bottom: 8px;
 
-  color: #374151;
+  color: var(--text-label);
 }
 
 input,
@@ -94,7 +149,7 @@ textarea {
 
   padding: 13px;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border);
 
   border-radius: 9px;
 
@@ -103,11 +158,62 @@ textarea {
   outline: none;
 
   font-family: inherit;
+
+  background: var(--input-bg);
+
+  color: var(--text-main);
 }
 
 input:focus,
 textarea:focus {
   border-color: #2563eb;
+}
+
+.input-with-action {
+  position: relative;
+}
+
+.input-with-action input {
+  padding-right: 46px;
+}
+
+.input-action-btn {
+  width: auto;
+  margin: 0;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  bottom: 6px;
+  padding: 0 10px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--text-sub);
+}
+
+.input-action-btn:hover {
+  background: var(--panel-bg);
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+
+  width: 0;
+
+  height: 0;
+}
+
+input::-webkit-credentials-auto-fill-button,
+input::-webkit-strong-password-auto-fill-button {
+  visibility: hidden;
+
+  display: none !important;
+
+  pointer-events: none;
+
+  position: absolute;
+
+  right: 0;
 }
 
 /* =====================================================
@@ -179,7 +285,7 @@ button:disabled {
 }
 
 .outline {
-  background: white;
+  background: var(--card-bg);
 
   color: #2563eb;
 
@@ -187,7 +293,7 @@ button:disabled {
 }
 
 .outline:hover {
-  background: #eff6ff;
+  background: var(--panel-bg);
 }
 
 .hidden {
@@ -246,44 +352,130 @@ button:disabled {
    USER
    ===================================================== */
 
-.user-box {
+.user-greeting {
+  font-size: 15px;
+
+  color: var(--text-sub);
+
+  margin-bottom: 16px;
+
+  text-align: center;
+}
+
+.user-greeting strong {
+  color: var(--text-main);
+}
+
+.profile-icon-btn {
+  width: 42px;
+
+  height: 42px;
+
+  border-radius: 50%;
+
+  padding: 0;
+
+  margin: 0;
+
+  font-size: 20px;
+
+  background: var(--panel-bg);
+
+  color: var(--text-main);
+
+  border: 1px solid var(--border-soft);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.profile-icon-btn:hover {
+  background: var(--status-bg);
+}
+
+/* =====================================================
+   PROFILE INFO ROWS
+   ===================================================== */
+
+.info-row {
   display: flex;
 
   align-items: center;
 
   justify-content: space-between;
 
-  background: #f8fafc;
+  gap: 10px;
 
-  padding: 15px;
-
-  border-radius: 10px;
-
-  margin-bottom: 10px;
+  padding: 10px 0;
 }
 
-.user-box .name {
+.info-row-label {
+  font-size: 12px;
+
+  color: var(--text-sub);
+
+  margin-bottom: 3px;
+}
+
+.info-row-value {
+  font-size: 15px;
+
   font-weight: bold;
 
-  color: #111827;
+  color: var(--text-main);
+
+  word-break: break-all;
 }
 
-.user-box .email {
-  font-size: 13px;
-
-  color: #6b7280;
-
-  margin-top: 2px;
-}
-
-.user-box button {
+.edit-icon-btn {
   width: auto;
 
   margin: 0;
 
-  padding: 9px 16px;
+  padding: 8px 10px;
 
-  font-size: 13px;
+  font-size: 14px;
+
+  background: var(--panel-bg);
+
+  color: var(--text-main);
+
+  border: 1px solid var(--border-soft);
+
+  flex-shrink: 0;
+}
+
+.edit-icon-btn:hover {
+  background: var(--status-bg);
+}
+
+.info-row-edit {
+  padding-top: 6px;
+}
+
+.row-edit-actions {
+  display: flex;
+
+  gap: 8px;
+
+  margin-top: 4px;
+}
+
+.row-edit-actions button {
+  margin-top: 0;
+}
+
+.small-btn {
+  width: auto;
+
+  flex: 1;
+
+  padding: 10px;
+
+  font-size: 14px;
 }
 
 /* =====================================================
@@ -293,7 +485,7 @@ button:disabled {
 .panel {
   margin-top: 22px;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-soft);
 
   border-radius: 14px;
 
@@ -305,7 +497,7 @@ button:disabled {
 
   font-weight: bold;
 
-  color: #111827;
+  color: var(--text-main);
 
   margin-bottom: 4px;
 
@@ -319,7 +511,7 @@ button:disabled {
 .panel-desc {
   font-size: 13px;
 
-  color: #6b7280;
+  color: var(--text-sub);
 
   margin-bottom: 14px;
 }
@@ -335,7 +527,7 @@ button:disabled {
 
   border-radius: 12px;
 
-  background: #eff6ff;
+  background: var(--panel-bg);
 }
 
 .device-row {
@@ -345,7 +537,11 @@ button:disabled {
 
   padding: 7px 0;
 
-  border-bottom: 1px solid #dbeafe;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+#displayDeviceId {
+  letter-spacing: .05em;
 }
 
 .device-row:last-child {
@@ -381,7 +577,7 @@ button:disabled {
 
   border-radius: 12px;
 
-  background: #f3f4f6;
+  background: var(--status-bg);
 }
 
 .status-title {
@@ -390,6 +586,8 @@ button:disabled {
   font-weight: bold;
 
   margin-bottom: 10px;
+
+  color: var(--text-main);
 }
 
 .connection {
@@ -414,9 +612,9 @@ button:disabled {
 }
 
 .sensor {
-  background: white;
+  background: var(--card-bg);
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-soft);
 
   border-radius: 10px;
 
@@ -426,7 +624,7 @@ button:disabled {
 }
 
 .sensor-title {
-  color: #6b7280;
+  color: var(--text-sub);
 
   font-size: 13px;
 }
@@ -437,12 +635,14 @@ button:disabled {
   font-weight: bold;
 
   margin-top: 5px;
+
+  color: var(--text-main);
 }
 
 .loader {
   text-align: center;
 
-  color: #6b7280;
+  color: var(--text-sub);
 
   margin-top: 15px;
 
@@ -452,7 +652,7 @@ button:disabled {
 .small {
   font-size: 12px;
 
-  color: #6b7280;
+  color: var(--text-sub);
 
   margin-top: 8px;
 }
@@ -623,7 +823,7 @@ button:disabled {
 .upload-box {
   margin-top: 14px;
 
-  border: 2px dashed #cbd5e1;
+  border: 2px dashed var(--border);
 
   border-radius: 12px;
 
@@ -631,7 +831,7 @@ button:disabled {
 
   text-align: center;
 
-  background: #f8fafc;
+  background: var(--panel-bg);
 
   cursor: pointer;
 }
@@ -639,7 +839,7 @@ button:disabled {
 .upload-box:hover {
   border-color: #93c5fd;
 
-  background: #eff6ff;
+  background: var(--status-bg);
 }
 
 .upload-box .icon {
@@ -647,7 +847,7 @@ button:disabled {
 }
 
 .upload-box .txt {
-  color: #374151;
+  color: var(--text-label);
 
   font-weight: bold;
 
@@ -657,7 +857,7 @@ button:disabled {
 }
 
 .upload-box .hint {
-  color: #9ca3af;
+  color: var(--text-sub);
 
   font-size: 12px;
 
@@ -800,7 +1000,7 @@ button:disabled {
   max-height:
     calc(100vh - 140px);
 
-  background: white;
+  background: var(--card-bg);
 
   border-radius: 16px;
 
@@ -910,7 +1110,7 @@ button:disabled {
 
   overflow-y: auto;
 
-  background: #f8fafc;
+  background: var(--chat-window-bg);
 
   padding: 14px;
 
@@ -940,11 +1140,11 @@ button:disabled {
 .msg.bot {
   align-self: flex-start;
 
-  background: white;
+  background: var(--chat-bot-bg);
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-soft);
 
-  color: #111827;
+  color: var(--text-main);
 
   border-bottom-left-radius: 4px;
 }
@@ -962,11 +1162,11 @@ button:disabled {
 .msg.typing {
   align-self: flex-start;
 
-  background: white;
+  background: var(--chat-bot-bg);
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-soft);
 
-  color: #9ca3af;
+  color: var(--text-sub);
 
   font-style: italic;
 }
@@ -978,7 +1178,7 @@ button:disabled {
 
   padding: 12px;
 
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--border-soft);
 }
 
 .chat-input-row input {
@@ -1008,15 +1208,15 @@ button:disabled {
 
   padding: 7px 12px;
 
-  background: #f1f5f9;
+  background: var(--panel-bg);
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border-soft);
 }
 
 .chat-history-label {
   font-size: 11px;
 
-  color: #64748b;
+  color: var(--text-sub);
 }
 
 .clear-chat-button {
@@ -1031,6 +1231,74 @@ button:disabled {
   background: transparent;
 
   color: #dc2626;
+}
+
+/* =====================================================
+   PROFILE
+   ===================================================== */
+
+.profile-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 8px;
+}
+
+.back-btn {
+  width: auto;
+
+  margin: 0;
+
+  padding: 9px 14px;
+
+  font-size: 13px;
+
+  background: var(--panel-bg);
+
+  color: var(--text-main);
+
+  border: 1px solid var(--border-soft);
+}
+
+.back-btn:hover {
+  background: var(--status-bg);
+}
+
+.profile-avatar {
+  width: 64px;
+
+  height: 64px;
+
+  border-radius: 50%;
+
+  background: #2563eb;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 24px;
+
+  font-weight: bold;
+
+  margin: 10px auto 4px;
+}
+
+.field-note {
+  font-size: 12px;
+
+  color: var(--text-sub);
+
+  margin-top: 8px;
+
+  margin-bottom: 14px;
 }
 
 /* =====================================================
@@ -1097,6 +1365,29 @@ button:disabled {
   class="card"
   id="pageCard"
 >
+
+<div class="top-bar">
+
+  <button
+    id="themeToggleButton"
+    class="theme-toggle"
+    type="button"
+  >
+    🌙 Dark
+  </button>
+
+
+  <button
+    id="profileIconButton"
+    class="profile-icon-btn hidden"
+    type="button"
+    title="Profili"
+  >
+    👤
+  </button>
+
+</div>
+
 
 <h1>DOK AI</h1>
 
@@ -1301,34 +1592,11 @@ button:disabled {
        USER
        =================================================== -->
 
-  <div class="user-box">
-
-    <div>
-
-      <div
-        class="name"
-        id="homeUserName"
-      >
-        -
-      </div>
-
-      <div
-        class="email"
-        id="homeUserEmail"
-      >
-        -
-      </div>
-
-    </div>
-
-
-    <button
-      id="logoutButton"
-      class="gray"
-    >
-      Dil
-    </button>
-
+  <div
+    class="user-greeting"
+    id="userGreeting"
+  >
+    Mirë se erdhe, <strong id="homeUserName">-</strong>
   </div>
 
 
@@ -1351,12 +1619,29 @@ button:disabled {
       Device ID
     </label>
 
-    <input
-      id="deviceId"
-      type="text"
-      placeholder="DOK-ESP32-A7F3"
-      autocomplete="off"
-    >
+    <div class="input-with-action">
+
+      <input
+        id="deviceId"
+        type="password"
+        placeholder="DOK-ESP32-A7F3"
+        autocomplete="off"
+      >
+
+      <button
+        id="toggleDeviceIdButton"
+        class="input-action-btn"
+        type="button"
+        title="Shfaq/fsheh Device ID"
+      >
+        👁
+      </button>
+
+    </div>
+
+    <div class="field-note">
+      Device ID-në e sheh vetëm ti. Askush tjetër nuk e sheh në ekranin tënd.
+    </div>
 
 
     <button
@@ -1684,6 +1969,337 @@ button:disabled {
 
 </div>
 
+
+<!-- =====================================================
+     PROFILE
+     ===================================================== -->
+
+<div
+  id="profileSection"
+  class="hidden"
+>
+
+  <div class="profile-header">
+
+    <button
+      id="backFromProfileButton"
+      class="back-btn"
+      type="button"
+    >
+      ← Kthehu
+    </button>
+
+    <div>
+      <div class="name" style="font-weight:bold;">Profili</div>
+    </div>
+
+  </div>
+
+
+  <div
+    id="profileAvatarInitial"
+    class="profile-avatar"
+  >
+    -
+  </div>
+
+
+  <div class="panel">
+
+    <div class="panel-title">
+      👤 Të dhënat personale
+    </div>
+
+    <div class="panel-desc">
+      Emri dhe mbiemri yt
+    </div>
+
+
+    <div
+      class="info-row"
+      id="nameDisplayRow"
+    >
+
+      <div>
+
+        <div class="info-row-label">
+          Emër &amp; Mbiemër
+        </div>
+
+        <div
+          class="info-row-value"
+          id="nameValueDisplay"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <button
+        id="editNameButton"
+        class="edit-icon-btn"
+        type="button"
+        title="Ndrysho"
+      >
+        ✎
+      </button>
+
+    </div>
+
+
+    <div
+      id="nameEditBox"
+      class="info-row-edit hidden"
+    >
+
+      <div class="section">
+
+        <label>Emër</label>
+
+        <input
+          id="profileNameInput"
+          type="text"
+          autocomplete="given-name"
+        >
+
+      </div>
+
+
+      <div class="section">
+
+        <label>Mbiemër</label>
+
+        <input
+          id="profileSurnameInput"
+          type="text"
+          autocomplete="family-name"
+        >
+
+      </div>
+
+
+      <div class="row-edit-actions">
+
+        <button
+          id="saveProfileInfoButton"
+          class="primary small-btn"
+          type="button"
+        >
+          Ruaj
+        </button>
+
+
+        <button
+          id="cancelNameEditButton"
+          class="outline small-btn"
+          type="button"
+        >
+          Anulo
+        </button>
+
+      </div>
+
+
+      <div
+        id="profileInfoMessage"
+        class="message"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <div class="panel">
+
+    <div class="panel-title">
+      ✉️ Email
+    </div>
+
+    <div class="panel-desc">
+      Email-i me të cilin hyn në llogari
+    </div>
+
+
+    <div
+      class="info-row"
+      id="emailDisplayRow"
+    >
+
+      <div>
+
+        <div class="info-row-label">
+          Email
+        </div>
+
+        <div
+          class="info-row-value"
+          id="emailValueDisplay"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <button
+        id="editEmailButton"
+        class="edit-icon-btn"
+        type="button"
+        title="Ndrysho"
+      >
+        ✎
+      </button>
+
+    </div>
+
+
+    <div
+      id="emailEditBox"
+      class="info-row-edit hidden"
+    >
+
+      <div class="section">
+
+        <label>Email i ri</label>
+
+        <input
+          id="newEmailInput"
+          type="email"
+          autocomplete="email"
+        >
+
+      </div>
+
+
+      <div class="section">
+
+        <label>Password aktual (për konfirmim)</label>
+
+        <input
+          id="emailChangePasswordInput"
+          type="password"
+          autocomplete="current-password"
+        >
+
+      </div>
+
+
+      <div class="row-edit-actions">
+
+        <button
+          id="saveEmailButton"
+          class="primary small-btn"
+          type="button"
+        >
+          Ruaj
+        </button>
+
+
+        <button
+          id="cancelEmailEditButton"
+          class="outline small-btn"
+          type="button"
+        >
+          Anulo
+        </button>
+
+      </div>
+
+
+      <div
+        id="emailChangeMessage"
+        class="message"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <div class="panel">
+
+    <div class="panel-title">
+      🔒 Ndrysho Password
+    </div>
+
+    <div class="panel-desc">
+      Duhet të konfirmosh password-in aktual
+    </div>
+
+
+    <div class="section">
+
+      <label>Password aktual</label>
+
+      <input
+        id="currentPasswordInput"
+        type="password"
+        autocomplete="current-password"
+      >
+
+    </div>
+
+
+    <div class="section">
+
+      <label>Password i ri</label>
+
+      <input
+        id="newPasswordInput"
+        type="password"
+        placeholder="Minimum 6 karaktere"
+        autocomplete="new-password"
+      >
+
+    </div>
+
+
+    <div class="section">
+
+      <label>Konfirmo Password e ri</label>
+
+      <input
+        id="confirmNewPasswordInput"
+        type="password"
+        autocomplete="new-password"
+      >
+
+    </div>
+
+
+    <button
+      id="savePasswordButton"
+      class="primary"
+      type="button"
+    >
+      Ndrysho Password
+    </button>
+
+
+    <div
+      id="passwordChangeMessage"
+      class="message"
+    ></div>
+
+  </div>
+
+
+  <div class="panel">
+
+    <button
+      id="logoutButton"
+      class="red"
+      type="button"
+    >
+      Dil nga llogaria
+    </button>
+
+  </div>
+
+</div>
+
 </div>
 
 </div>
@@ -1804,7 +2420,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut
+  signOut,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  updateEmail,
+  updatePassword
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -2053,9 +2673,9 @@ const homeUserName =
   );
 
 
-const homeUserEmail =
+const profileIconButton =
   document.getElementById(
-    "homeUserEmail"
+    "profileIconButton"
   );
 
 
@@ -2235,6 +2855,168 @@ const clearChatButton =
   );
 
 
+/* THEME */
+
+const themeToggleButton =
+  document.getElementById(
+    "themeToggleButton"
+  );
+
+
+/* DEVICE ID TOGGLE */
+
+const toggleDeviceIdButton =
+  document.getElementById(
+    "toggleDeviceIdButton"
+  );
+
+
+/* PROFILE */
+
+const profileSection =
+  document.getElementById(
+    "profileSection"
+  );
+
+
+const backFromProfileButton =
+  document.getElementById(
+    "backFromProfileButton"
+  );
+
+
+const profileAvatarInitial =
+  document.getElementById(
+    "profileAvatarInitial"
+  );
+
+
+const nameValueDisplay =
+  document.getElementById(
+    "nameValueDisplay"
+  );
+
+
+const editNameButton =
+  document.getElementById(
+    "editNameButton"
+  );
+
+
+const nameEditBox =
+  document.getElementById(
+    "nameEditBox"
+  );
+
+
+const cancelNameEditButton =
+  document.getElementById(
+    "cancelNameEditButton"
+  );
+
+
+const profileNameInput =
+  document.getElementById(
+    "profileNameInput"
+  );
+
+
+const profileSurnameInput =
+  document.getElementById(
+    "profileSurnameInput"
+  );
+
+
+const saveProfileInfoButton =
+  document.getElementById(
+    "saveProfileInfoButton"
+  );
+
+
+const profileInfoMessage =
+  document.getElementById(
+    "profileInfoMessage"
+  );
+
+
+const emailValueDisplay =
+  document.getElementById(
+    "emailValueDisplay"
+  );
+
+
+const editEmailButton =
+  document.getElementById(
+    "editEmailButton"
+  );
+
+
+const emailEditBox =
+  document.getElementById(
+    "emailEditBox"
+  );
+
+
+const cancelEmailEditButton =
+  document.getElementById(
+    "cancelEmailEditButton"
+  );
+
+
+const newEmailInput =
+  document.getElementById(
+    "newEmailInput"
+  );
+
+
+const emailChangePasswordInput =
+  document.getElementById(
+    "emailChangePasswordInput"
+  );
+
+
+const saveEmailButton =
+  document.getElementById(
+    "saveEmailButton"
+  );
+
+
+const emailChangeMessage =
+  document.getElementById(
+    "emailChangeMessage"
+  );
+
+
+const currentPasswordInput =
+  document.getElementById(
+    "currentPasswordInput"
+  );
+
+
+const newPasswordInput =
+  document.getElementById(
+    "newPasswordInput"
+  );
+
+
+const confirmNewPasswordInput =
+  document.getElementById(
+    "confirmNewPasswordInput"
+  );
+
+
+const savePasswordButton =
+  document.getElementById(
+    "savePasswordButton"
+  );
+
+
+const passwordChangeMessage =
+  document.getElementById(
+    "passwordChangeMessage"
+  );
+
+
 // =====================================================
 // PAGE
 // =====================================================
@@ -2248,6 +3030,18 @@ function showPage(page) {
 
 
   mainSection.classList.toggle(
+    "hidden",
+    page !== "main"
+  );
+
+
+  profileSection.classList.toggle(
+    "hidden",
+    page !== "profile"
+  );
+
+
+  profileIconButton.classList.toggle(
     "hidden",
     page !== "main"
   );
@@ -2336,6 +3130,192 @@ function hideMessage(element) {
     "message";
 
 }
+
+
+// =====================================================
+// THEME
+// =====================================================
+
+function applyTheme(theme) {
+
+  if (theme === "dark") {
+
+    document.body.classList.add(
+      "dark"
+    );
+
+
+    themeToggleButton.textContent =
+      "☀️ Light";
+
+  }
+
+  else {
+
+    document.body.classList.remove(
+      "dark"
+    );
+
+
+    themeToggleButton.textContent =
+      "🌙 Dark";
+
+  }
+
+}
+
+
+function initTheme() {
+
+  let saved =
+    null;
+
+
+  try {
+
+    saved =
+      localStorage.getItem(
+        "dokai-theme"
+      );
+
+  }
+
+  catch (error) {
+
+    saved =
+      null;
+
+  }
+
+
+  if (!saved) {
+
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+
+
+    saved =
+      prefersDark
+        ? "dark"
+        : "light";
+
+  }
+
+
+  applyTheme(
+    saved
+  );
+
+}
+
+
+themeToggleButton.addEventListener(
+  "click",
+  () => {
+
+    const isDark =
+      document.body.classList.contains(
+        "dark"
+      );
+
+
+    const next =
+      isDark
+        ? "light"
+        : "dark";
+
+
+    applyTheme(
+      next
+    );
+
+
+    try {
+
+      localStorage.setItem(
+        "dokai-theme",
+        next
+      );
+
+    }
+
+    catch (error) {
+
+      // ignore storage errors
+
+    }
+
+  }
+);
+
+
+initTheme();
+
+
+// =====================================================
+// DEVICE ID MASK
+// =====================================================
+
+function maskDeviceId(
+  deviceId
+) {
+
+  if (
+    !deviceId ||
+    deviceId.length <= 4
+  ) {
+
+    return "••••••••";
+
+  }
+
+
+  const visibleStart =
+    deviceId.slice(
+      0,
+      3
+    );
+
+
+  const visibleEnd =
+    deviceId.slice(
+      -2
+    );
+
+
+  return (
+    visibleStart +
+    "••••" +
+    visibleEnd
+  );
+
+}
+
+
+toggleDeviceIdButton.addEventListener(
+  "click",
+  () => {
+
+    const isPassword =
+      deviceIdInput.type === "password";
+
+
+    deviceIdInput.type =
+      isPassword
+        ? "text"
+        : "password";
+
+
+    toggleDeviceIdButton.textContent =
+      isPassword
+        ? "🙈"
+        : "👁";
+
+  }
+);
 
 
 // =====================================================
@@ -3110,11 +4090,6 @@ onAuthStateChanged(
       );
 
 
-      homeUserEmail.textContent =
-        user.email ||
-        "-";
-
-
       await loadUserData();
 
 
@@ -3149,6 +4124,33 @@ onAuthStateChanged(
 
 
       clearBloodTest();
+
+
+      // Fshi fushat e login-it dhe device id-në
+
+      emailInput.value =
+        "";
+
+
+      passwordInput.value =
+        "";
+
+
+      deviceIdInput.value =
+        "";
+
+
+      deviceIdInput.type =
+        "password";
+
+
+      toggleDeviceIdButton.textContent =
+        "👁";
+
+
+      hideMessage(
+        authMessage
+      );
 
     }
 
@@ -3186,7 +4188,10 @@ async function loadUserData() {
 
 
     let displayName =
-      user.email;
+      (
+        user.email ||
+        "Përdorues"
+      ).split("@")[0];
 
 
     if (snap.exists()) {
@@ -3234,11 +4239,821 @@ async function loadUserData() {
 
 
     homeUserName.textContent =
-      user.email;
+      (
+        user.email ||
+        "Përdorues"
+      ).split("@")[0];
 
   }
 
 }
+
+
+// =====================================================
+// PROFILE NAVIGATION
+// =====================================================
+
+function closeAllEditBoxes() {
+
+  nameEditBox.classList.add(
+    "hidden"
+  );
+
+
+  emailEditBox.classList.add(
+    "hidden"
+  );
+
+
+  hideMessage(
+    profileInfoMessage
+  );
+
+
+  hideMessage(
+    emailChangeMessage
+  );
+
+}
+
+
+async function openProfilePage() {
+
+  const user =
+    currentUser();
+
+
+  if (!user) {
+
+    return;
+
+  }
+
+
+  closeAllEditBoxes();
+
+
+  hideMessage(
+    passwordChangeMessage
+  );
+
+
+  newEmailInput.value =
+    "";
+
+
+  emailChangePasswordInput.value =
+    "";
+
+
+  currentPasswordInput.value =
+    "";
+
+
+  newPasswordInput.value =
+    "";
+
+
+  confirmNewPasswordInput.value =
+    "";
+
+
+  emailValueDisplay.textContent =
+    user.email ||
+    "-";
+
+
+  let firstLetter =
+    (
+      user.email ||
+      "?"
+    )
+      .charAt(0)
+      .toUpperCase();
+
+
+  let fullName =
+    user.email ||
+    "-";
+
+
+  try {
+
+    const snap =
+      await get(
+        ref(
+          database,
+          "users/" +
+          user.uid
+        )
+      );
+
+
+    if (snap.exists()) {
+
+      const data =
+        snap.val() ||
+        {};
+
+
+      profileNameInput.value =
+        data.name ||
+        "";
+
+
+      profileSurnameInput.value =
+        data.surname ||
+        "";
+
+
+      const combined =
+        (
+          data.name ||
+          ""
+        ) +
+        " " +
+        (
+          data.surname ||
+          ""
+        );
+
+
+      if (
+        combined.trim()
+      ) {
+
+        fullName =
+          combined.trim();
+
+      }
+
+
+      if (
+        data.name
+      ) {
+
+        firstLetter =
+          data.name
+            .charAt(0)
+            .toUpperCase();
+
+      }
+
+    }
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "PROFILE LOAD ERROR:",
+      error
+    );
+
+  }
+
+
+  nameValueDisplay.textContent =
+    fullName;
+
+
+  profileAvatarInitial.textContent =
+    firstLetter;
+
+
+  showPage(
+    "profile"
+  );
+
+}
+
+
+profileIconButton.addEventListener(
+  "click",
+  openProfilePage
+);
+
+
+backFromProfileButton.addEventListener(
+  "click",
+  () => {
+
+    showPage(
+      "main"
+    );
+
+  }
+);
+
+
+// =====================================================
+// EDIT TOGGLES
+// =====================================================
+
+editNameButton.addEventListener(
+  "click",
+  () => {
+
+    closeAllEditBoxes();
+
+
+    nameEditBox.classList.remove(
+      "hidden"
+    );
+
+
+    profileNameInput.focus();
+
+  }
+);
+
+
+cancelNameEditButton.addEventListener(
+  "click",
+  () => {
+
+    nameEditBox.classList.add(
+      "hidden"
+    );
+
+
+    hideMessage(
+      profileInfoMessage
+    );
+
+  }
+);
+
+
+editEmailButton.addEventListener(
+  "click",
+  () => {
+
+    closeAllEditBoxes();
+
+
+    emailEditBox.classList.remove(
+      "hidden"
+    );
+
+
+    newEmailInput.focus();
+
+  }
+);
+
+
+cancelEmailEditButton.addEventListener(
+  "click",
+  () => {
+
+    emailEditBox.classList.add(
+      "hidden"
+    );
+
+
+    hideMessage(
+      emailChangeMessage
+    );
+
+  }
+);
+
+
+// =====================================================
+// SAVE NAME / SURNAME
+// =====================================================
+
+saveProfileInfoButton.addEventListener(
+  "click",
+  async () => {
+
+    const user =
+      currentUser();
+
+
+    if (!user) {
+
+      return;
+
+    }
+
+
+    const name =
+      profileNameInput.value.trim();
+
+
+    const surname =
+      profileSurnameInput.value.trim();
+
+
+    if (
+      name.length < 2 ||
+      surname.length < 2
+    ) {
+
+      showMessage(
+        profileInfoMessage,
+        "Emri dhe mbiemri duhet të kenë së paku 2 karaktere.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    saveProfileInfoButton.disabled =
+      true;
+
+
+    try {
+
+      await update(
+        ref(
+          database,
+          "users/" +
+          user.uid
+        ),
+        {
+
+          name:
+            name,
+
+          surname:
+            surname
+
+        }
+      );
+
+
+      showMessage(
+        profileInfoMessage,
+        "Të dhënat u ruajtën me sukses.",
+        "success"
+      );
+
+
+      profileAvatarInitial.textContent =
+        name.charAt(0).toUpperCase();
+
+
+      nameValueDisplay.textContent =
+        name +
+        " " +
+        surname;
+
+
+      await loadUserData();
+
+
+      setTimeout(
+        () => {
+
+          nameEditBox.classList.add(
+            "hidden"
+          );
+
+
+          hideMessage(
+            profileInfoMessage
+          );
+
+        },
+        900
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "PROFILE SAVE ERROR:",
+        error
+      );
+
+
+      showMessage(
+        profileInfoMessage,
+        "Gabim gjatë ruajtjes: " +
+        error.message,
+        "error"
+      );
+
+    }
+
+
+    saveProfileInfoButton.disabled =
+      false;
+
+  }
+);
+
+
+// =====================================================
+// CHANGE EMAIL
+// =====================================================
+
+saveEmailButton.addEventListener(
+  "click",
+  async () => {
+
+    const user =
+      currentUser();
+
+
+    if (!user) {
+
+      return;
+
+    }
+
+
+    const newEmail =
+      newEmailInput.value.trim();
+
+
+    const currentPassword =
+      emailChangePasswordInput.value;
+
+
+    if (
+      !newEmail ||
+      !currentPassword
+    ) {
+
+      showMessage(
+        emailChangeMessage,
+        "Plotëso email-in e ri dhe password-in aktual.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      newEmail ===
+      user.email
+    ) {
+
+      showMessage(
+        emailChangeMessage,
+        "Ky është email-i yt aktual.",
+        "warning"
+      );
+
+      return;
+
+    }
+
+
+    saveEmailButton.disabled =
+      true;
+
+
+    try {
+
+      const credential =
+        EmailAuthProvider.credential(
+          user.email,
+          currentPassword
+        );
+
+
+      await reauthenticateWithCredential(
+        user,
+        credential
+      );
+
+
+      await updateEmail(
+        user,
+        newEmail
+      );
+
+
+      await update(
+        ref(
+          database,
+          "users/" +
+          user.uid
+        ),
+        {
+
+          email:
+            newEmail
+
+        }
+      );
+
+
+      emailValueDisplay.textContent =
+        newEmail;
+
+
+      newEmailInput.value =
+        "";
+
+
+      emailChangePasswordInput.value =
+        "";
+
+
+      showMessage(
+        emailChangeMessage,
+        "Email-i u ndryshua me sukses.",
+        "success"
+      );
+
+
+      setTimeout(
+        () => {
+
+          emailEditBox.classList.add(
+            "hidden"
+          );
+
+
+          hideMessage(
+            emailChangeMessage
+          );
+
+        },
+        900
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "EMAIL CHANGE ERROR:",
+        error
+      );
+
+
+      let message =
+        "Ndryshimi i email-it dështoi.";
+
+
+      if (
+        error.code ===
+        "auth/wrong-password" ||
+        error.code ===
+        "auth/invalid-credential"
+      ) {
+
+        message =
+          "Password aktual është gabim.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/email-already-in-use"
+      ) {
+
+        message =
+          "Ky email përdoret tashmë nga një llogari tjetër.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/invalid-email"
+      ) {
+
+        message =
+          "Email-i nuk është valid.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/requires-recent-login"
+      ) {
+
+        message =
+          "Ju lutem dilni dhe hyni përsëri, pastaj provoni sërish.";
+
+      }
+
+      else {
+
+        message +=
+          " " +
+          error.message;
+
+      }
+
+
+      showMessage(
+        emailChangeMessage,
+        message,
+        "error"
+      );
+
+    }
+
+
+    saveEmailButton.disabled =
+      false;
+
+  }
+);
+
+
+// =====================================================
+// CHANGE PASSWORD
+// =====================================================
+
+savePasswordButton.addEventListener(
+  "click",
+  async () => {
+
+    const user =
+      currentUser();
+
+
+    if (!user) {
+
+      return;
+
+    }
+
+
+    const currentPassword =
+      currentPasswordInput.value;
+
+
+    const newPassword =
+      newPasswordInput.value;
+
+
+    const confirmPassword =
+      confirmNewPasswordInput.value;
+
+
+    if (
+      !currentPassword ||
+      !newPassword ||
+      !confirmPassword
+    ) {
+
+      showMessage(
+        passwordChangeMessage,
+        "Plotëso të gjitha fushat.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (newPassword.length < 6) {
+
+      showMessage(
+        passwordChangeMessage,
+        "Password i ri duhet të ketë së paku 6 karaktere.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      newPassword !==
+      confirmPassword
+    ) {
+
+      showMessage(
+        passwordChangeMessage,
+        "Password-et nuk përputhen.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    savePasswordButton.disabled =
+      true;
+
+
+    try {
+
+      const credential =
+        EmailAuthProvider.credential(
+          user.email,
+          currentPassword
+        );
+
+
+      await reauthenticateWithCredential(
+        user,
+        credential
+      );
+
+
+      await updatePassword(
+        user,
+        newPassword
+      );
+
+
+      currentPasswordInput.value =
+        "";
+
+
+      newPasswordInput.value =
+        "";
+
+
+      confirmNewPasswordInput.value =
+        "";
+
+
+      showMessage(
+        passwordChangeMessage,
+        "Password u ndryshua me sukses.",
+        "success"
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "PASSWORD CHANGE ERROR:",
+        error
+      );
+
+
+      let message =
+        "Ndryshimi i password-it dështoi.";
+
+
+      if (
+        error.code ===
+        "auth/wrong-password" ||
+        error.code ===
+        "auth/invalid-credential"
+      ) {
+
+        message =
+          "Password aktual është gabim.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/weak-password"
+      ) {
+
+        message =
+          "Password i ri duhet të ketë së paku 6 karaktere.";
+
+      }
+
+      else if (
+        error.code ===
+        "auth/requires-recent-login"
+      ) {
+
+        message =
+          "Ju lutem dilni dhe hyni përsëri, pastaj provoni sërish.";
+
+      }
+
+      else {
+
+        message +=
+          " " +
+          error.message;
+
+      }
+
+
+      showMessage(
+        passwordChangeMessage,
+        message,
+        "error"
+      );
+
+    }
+
+
+    savePasswordButton.disabled =
+      false;
+
+  }
+);
 
 
 // =====================================================
@@ -3315,7 +5130,9 @@ checkDeviceButton.addEventListener(
       document.getElementById(
         "displayDeviceId"
       ).textContent =
-        deviceId;
+        maskDeviceId(
+          deviceId
+        );
 
 
       document.getElementById(
