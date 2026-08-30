@@ -749,12 +749,6 @@ button:disabled {
     pulseDot 1.3s infinite;
 }
 
-.live-dot.stalled {
-  animation: none;
-  background: #9ca3af;
-  box-shadow: none;
-}
-
 @keyframes pulseDot {
 
   0% {
@@ -772,28 +766,6 @@ button:disabled {
       0 0 0 0 rgba(220,38,38,0);
   }
 
-}
-
-.ecg-pause-btn {
-  width: auto;
-  margin: 0;
-  padding: 4px 9px;
-  font-size: 13px;
-  background: rgba(220,38,38,.12);
-  color: #991b1b;
-  border: 1px solid rgba(220,38,38,.3);
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.ecg-pause-btn:hover {
-  background: rgba(220,38,38,.2);
-}
-
-.ecg-pause-btn.resumed {
-  background: rgba(22,163,74,.12);
-  color: #166534;
-  border-color: rgba(22,163,74,.3);
 }
 
 .ecg-scroll {
@@ -1872,28 +1844,15 @@ button:disabled {
 
           <span>
 
-            <span class="live-dot" id="ecgLiveDot"></span>
+            <span class="live-dot"></span>
 
-            <span id="ecgLiveLabel">ECG LIVE · 30S</span>
+            ECG LIVE · 30S
 
           </span>
 
 
-          <span style="display:flex; align-items:center; gap:8px;">
-
-            <span id="ecgBpmTag">
-              0 BPM
-            </span>
-
-            <button
-              id="ecgPauseButton"
-              class="ecg-pause-btn"
-              type="button"
-              title="Ndalo"
-            >
-              ⏸
-            </button>
-
+          <span id="ecgBpmTag">
+            0 BPM
           </span>
 
         </div>
@@ -2561,7 +2520,7 @@ let sensorListener = null;
 // ECG
 // =====================================================
 
-const ECG_WINDOW_SECONDS = 45;
+const ECG_WINDOW_SECONDS = 30;
 
 const ECG_VISIBLE_SECONDS = 15;
 
@@ -2572,25 +2531,6 @@ let ecgStartTime = null;
 let ecgCycle = 0;
 
 let lastEcgValue = null;
-
-
-// ECG pause / stall-detection / flatline taper
-
-let ecgPaused = false;
-
-let ecgStalled = false;
-
-let lastSampleAt = null;
-
-let stallWatchdog = null;
-
-const STALL_THRESHOLD_MS = 2500;
-
-let flatlineTimer = null;
-
-const FLATLINE_STEPS = 15;
-
-const FLATLINE_INTERVAL_MS = 100; // ~1.5 sek total
 
 
 // =====================================================
@@ -2824,24 +2764,6 @@ const ecgTrack =
 const ecgBpmTag =
   document.getElementById(
     "ecgBpmTag"
-  );
-
-
-const ecgPauseButton =
-  document.getElementById(
-    "ecgPauseButton"
-  );
-
-
-const ecgLiveDot =
-  document.getElementById(
-    "ecgLiveDot"
-  );
-
-
-const ecgLiveLabel =
-  document.getElementById(
-    "ecgLiveLabel"
   );
 
 
@@ -5797,186 +5719,12 @@ function resetEcgGraph() {
 
 
 // =====================================================
-// FLATLINE TAPER
-// =====================================================
-
-function startFlatlineTaper() {
-
-  if (
-    flatlineTimer ||
-    ecgHistory.length === 0
-  ) {
-
-    return;
-
-  }
-
-
-  const startValue =
-    lastEcgValue;
-
-
-  const recent =
-    ecgHistory.slice(-10);
-
-
-  const baseline =
-    recent.reduce(
-      (sum, s) => sum + s.value,
-      0
-    ) / recent.length;
-
-
-  let step =
-    0;
-
-
-  flatlineTimer =
-    setInterval(
-      () => {
-
-        step++;
-
-
-        const t =
-          step / FLATLINE_STEPS;
-
-
-        const value =
-          startValue +
-          (baseline - startValue) * t;
-
-
-        const elapsed =
-          (performance.now() - ecgStartTime) / 1000;
-
-
-        if (
-          elapsed >= ECG_WINDOW_SECONDS
-        ) {
-
-          clearInterval(
-            flatlineTimer
-          );
-
-
-          flatlineTimer =
-            null;
-
-
-          return;
-
-        }
-
-
-        ecgHistory.push({
-
-          time:
-            elapsed,
-
-          value:
-            value
-
-        });
-
-
-        drawEcgChart();
-
-
-        if (
-          step >= FLATLINE_STEPS
-        ) {
-
-          clearInterval(
-            flatlineTimer
-          );
-
-
-          flatlineTimer =
-            null;
-
-
-          ecgStalled =
-            true;
-
-
-          ecgLiveDot.classList.add(
-            "stalled"
-          );
-
-
-          ecgLiveLabel.textContent =
-            "NDËRPRERË";
-
-        }
-
-      },
-
-      FLATLINE_INTERVAL_MS
-    );
-
-}
-
-
-// =====================================================
 // ADD ECG
 // =====================================================
 
 function addRealEcgSample(
   rawValue
 ) {
-
-  if (ecgPaused) {
-
-    return;
-
-  }
-
-
-  if (
-    flatlineTimer
-  ) {
-
-    clearInterval(
-      flatlineTimer
-    );
-
-
-    flatlineTimer =
-      null;
-
-  }
-
-
-  lastSampleAt =
-    performance.now();
-
-
-  if (
-    ecgStalled
-  ) {
-
-    ecgStalled =
-      false;
-
-
-    ecgLiveDot.classList.remove(
-      "stalled"
-    );
-
-
-    ecgLiveLabel.textContent =
-      "ECG LIVE · 30S";
-
-
-    resetEcgGraph();
-
-
-    ecgStartTime =
-      performance.now();
-
-  }
-
 
   const value =
     Number(rawValue);
@@ -6127,45 +5875,6 @@ function startSensorListener() {
   }
 
 
-  lastSampleAt =
-    performance.now();
-
-
-  stallWatchdog =
-    setInterval(
-      () => {
-
-        if (
-          ecgPaused ||
-          lastSampleAt === null
-        ) {
-
-          return;
-
-        }
-
-
-        const gap =
-          performance.now() -
-          lastSampleAt;
-
-
-        if (
-          gap > STALL_THRESHOLD_MS &&
-          !ecgStalled &&
-          !flatlineTimer
-        ) {
-
-          startFlatlineTaper();
-
-        }
-
-      },
-
-      1000
-    );
-
-
   const dataRef =
     ref(
       database,
@@ -6190,14 +5899,6 @@ function startSensorListener() {
         const data =
           snap.val() ||
           {};
-
-
-        // Pajisja është "gjallë" sa herë vjen çdo snapshot,
-        // jo vetëm kur ka fushën ecg — kjo parandalon
-        // nd\u00ebrprerje t\u00eb rreme.
-
-        lastSampleAt =
-          performance.now();
 
 
         const hr =
@@ -6294,55 +5995,6 @@ function stopSensorListener() {
   }
 
 
-  if (
-    stallWatchdog
-  ) {
-
-    clearInterval(
-      stallWatchdog
-    );
-
-
-    stallWatchdog =
-      null;
-
-  }
-
-
-  if (
-    flatlineTimer
-  ) {
-
-    clearInterval(
-      flatlineTimer
-    );
-
-
-    flatlineTimer =
-      null;
-
-  }
-
-
-  ecgStalled =
-    false;
-
-
-  ecgLiveDot?.classList.remove(
-    "stalled"
-  );
-
-
-  if (
-    ecgLiveLabel
-  ) {
-
-    ecgLiveLabel.textContent =
-      "ECG LIVE · 30S";
-
-  }
-
-
   ecgHistory =
     [];
 
@@ -6358,91 +6010,6 @@ function stopSensorListener() {
   drawEcgChart();
 
 }
-
-
-// =====================================================
-// ECG PAUSE BUTTON
-// =====================================================
-
-ecgPauseButton.addEventListener(
-  "click",
-  () => {
-
-    ecgPaused =
-      !ecgPaused;
-
-
-    if (
-      ecgPaused
-    ) {
-
-      ecgPauseButton.textContent =
-        "▶";
-
-
-      ecgPauseButton.classList.add(
-        "resumed"
-      );
-
-
-      ecgPauseButton.title =
-        "Vazhdo";
-
-
-      if (
-        flatlineTimer
-      ) {
-
-        clearInterval(
-          flatlineTimer
-        );
-
-
-        flatlineTimer =
-          null;
-
-      }
-
-    }
-
-    else {
-
-      ecgPauseButton.textContent =
-        "⏸";
-
-
-      ecgPauseButton.classList.remove(
-        "resumed"
-      );
-
-
-      ecgPauseButton.title =
-        "Ndalo";
-
-
-      ecgStalled =
-        false;
-
-
-      ecgLiveDot.classList.remove(
-        "stalled"
-      );
-
-
-      ecgLiveLabel.textContent =
-        "ECG LIVE · 30S";
-
-
-      resetEcgGraph();
-
-
-      lastSampleAt =
-        performance.now();
-
-    }
-
-  }
-);
 
 
 // =====================================================
@@ -6537,7 +6104,7 @@ function calculateEcgRange() {
   ) {
 
     if (
-      sample.value <
+      sample.value 
       min
     ) {
 
