@@ -169,7 +169,7 @@ export default async function handler(req, res) {
             JSON.stringify({
 
               model:
-                'openai/gpt-oss-120b',
+                'llama-3.3-70b-versatile',
 
               max_tokens:
                 400,
