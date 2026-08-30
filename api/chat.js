@@ -172,7 +172,7 @@ export default async function handler(req, res) {
                 'openai/gpt-oss-120b',
 
               max_tokens:
-                400,
+                800,
 
               temperature:
                 0.3,
